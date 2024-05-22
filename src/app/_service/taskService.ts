@@ -1,31 +1,40 @@
-import { taskRepo } from "../_repository/taskRepo";
-import { NewTask, Task, createNewTask } from "../_types/task";
-import { User } from "../_types/user";
+"use server";
 
-export const taskService = {
-  createNewTask: async (task: string, dueDate: Date, creator: User) => {
-    const newTask: Task = createNewTask({
-      task: task,
-      createdBy: creator,
-      assignedTo: null,
-      expiration: dueDate,
-    });
-    const result = await taskRepo.save(newTask);
-    return result;
-  },
+import {
+  deleteTaskById,
+  findTaskById,
+  saveTask,
+  updateTask,
+} from "../_repository/taskRepo";
+import { NewTask, Task, TaskFactory } from "../_types/task";
 
-  getTaskById: async (id: string) => {
-    const task = await taskRepo.getById(id);
-    return task;
-  },
+export const createNewTask = async (newTaskJson: string) => {
+  const newTaskObj = JSON.parse(newTaskJson);
 
-  updateTask: async (task: Task) => {
-    const result = await taskRepo.update(task);
-    return result;
-  },
+  const newTask: NewTask = {
+    task: newTaskObj.task,
+    date: newTaskObj.date,
+    createdById: newTaskObj.createdById,
+    assignedToId: newTaskObj.assignedToId,
+    expiration: newTaskObj.expiration,
+  };
 
-  deleteTask: async (id: string) => {
-    const result = await taskRepo.delete(id);
-    return result;
-  },
+  const createdTask: Task = TaskFactory(newTask);
+  const result = await saveTask(createdTask);
+  return result;
+};
+
+export const getTaskById = async (id: string) => {
+  const task = await findTaskById(id);
+  return task;
+};
+
+export const editTask = async (task: Task) => {
+  const result = await updateTask(task);
+  return result;
+};
+
+export const deleteTask = async (id: string) => {
+  const result = await deleteTaskById(id);
+  return result;
 };

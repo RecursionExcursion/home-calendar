@@ -1,17 +1,18 @@
 import { ObjectId } from "mongodb";
 import { User } from "./user";
+import { validateUTCDate } from "../_lib/util";
 
 export type Task = {
   _id: ObjectId;
   task: string;
-  date: Date;
+  date: string;
   status: TaskStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  creadtedBy: User;
-  updatedBy: User | null;
-  assignedTo: User | null;
-  expiration: Date | null;
+  createdAt: string;
+  updatedAt: string;
+  createdById: string;
+  updatedById: string | null;
+  assignedToId: string | null;
+  expiration: string | null;
 };
 
 export enum TaskStatus {
@@ -23,22 +24,23 @@ export enum TaskStatus {
 
 export type NewTask = {
   task: string;
-  createdBy: User;
-  assignedTo: User | null;
-  expiration: Date | null;
+  date: string;
+  createdById: string;
+  assignedToId: string | null;
+  expiration: string | null;
 };
 
-export const createNewTask = (newTask: NewTask): Task => {
+export const TaskFactory = (newTask: NewTask): Task => {
   return {
     _id: new ObjectId(),
     task: newTask.task,
-    date: new Date(),
+    date: newTask.date,
     status: TaskStatus.Pending,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    creadtedBy: newTask.createdBy,
-    updatedBy: null,
-    assignedTo: newTask.assignedTo,
-    expiration: newTask.expiration,
+    createdAt: new Date().toUTCString(),
+    updatedAt: new Date().toUTCString(),
+    createdById: newTask.createdById,
+    updatedById: null,
+    assignedToId: newTask.assignedToId,
+    expiration: newTask.expiration ? newTask.expiration : null,
   };
 };

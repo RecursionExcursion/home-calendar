@@ -5,7 +5,7 @@ import { Task } from "./task";
 type BaseUser = {
   username: string;
   password: string;
-  created: Date;
+  created: string;
   friends: User[];
   message_ids: string[];
   task_ids: string[];
@@ -26,7 +26,7 @@ export const createNewUser = (newUser: NewUser): User => {
     _id: new ObjectId(),
     username: newUser.username,
     password: newUser.password,
-    created: new Date(),
+    created: new Date().toISOString(),
     friends: [],
     message_ids: [],
     task_ids: [],
