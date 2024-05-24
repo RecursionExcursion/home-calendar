@@ -1,12 +1,10 @@
 import { ObjectId } from "mongodb";
-import { User } from "./user";
-import { validateUTCDate } from "../../_lib/util";
 
 export type Task = {
   _id: ObjectId;
   task: string;
   date: string;
-  priority: Priority | null;
+  priority: number;
   status: TaskStatus;
   createdAt: string;
   updatedAt: string;
@@ -29,7 +27,7 @@ export type NewTask = {
   createdById: string;
   assignedToId: string | null;
   expiration: string | null;
-  priortiy: Priority | null;
+  priortiy: number;
 };
 
 export const TaskFactory = (newTask: NewTask): Task => {
@@ -37,7 +35,7 @@ export const TaskFactory = (newTask: NewTask): Task => {
     _id: new ObjectId(),
     task: newTask.task,
     date: newTask.date,
-    priority: newTask.priortiy ? newTask.priortiy : null,
+    priority: newTask.priortiy,
     status: TaskStatus.Pending,
     createdAt: new Date().toUTCString(),
     updatedAt: new Date().toUTCString(),
@@ -47,5 +45,3 @@ export const TaskFactory = (newTask: NewTask): Task => {
     expiration: newTask.expiration ? newTask.expiration : null,
   };
 };
-
-type Priority = 1 | 2 | 3 | 4 | 5;

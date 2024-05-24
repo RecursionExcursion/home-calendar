@@ -10,7 +10,7 @@ type DaySquareProps = {
   forecast: DailyForecast | undefined;
 };
 
-const baseStyle = `h-full w-full border border-white flex flex-col `;
+const baseStyle = `h-40 w-full border border-white flex flex-col `;
 
 const styles = {
   blue: baseStyle + "bg-blue-500",

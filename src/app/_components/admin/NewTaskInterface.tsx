@@ -5,30 +5,37 @@ import { useAppContext } from "../../_contexts/AppContext";
 import { createNewTask } from "../../_service/taskService";
 
 import { NewTask } from "../../_types/models/task";
+import React from "react";
+import { dateAndTimeToDate, getDateAndTime } from "./util";
 
 export default function NewTaskInterface() {
   const { showToast } = useAppContext();
 
+  const [newTaskForm, setNewTaskForm] = React.useState<NewTaskForm>(
+    getBaseTaskForm()
+  );
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target as HTMLFormElement;
+    const newExpiration = newTaskForm.expiration;
+    const newDate = dateAndTimeToDate({
+      date: newTaskForm.date,
+      time: newTaskForm.time,
+    });
 
-    const task: NewTask = {
-      task: form.task.value,
-      date: new Date(form.date.value).toUTCString(),
-      createdById: "ADMIN",
-      assignedToId: "ALL",
-      expiration:
-        form.expiration.value !== ""
-          ? new Date(form.expiration.value).toUTCString()
-          : null,
-      priortiy: null,
+    const taskToSubmit: NewTask = {
+      task: newTaskForm.task,
+      date: newDate.toUTCString(),
+      createdById: newTaskForm.createdById,
+      assignedToId: newTaskForm.assignedToId,
+      expiration: newExpiration ? new Date(newExpiration).toUTCString() : null,
+      priortiy: newTaskForm.priortiy,
     };
 
-    const foo = await createNewTask(JSON.stringify(task));
+    const response = await createNewTask(JSON.stringify(taskToSubmit));
 
-    if (foo.acknowledged) {
+    if (response.acknowledged) {
       showToast({
         title: "Task Created",
         message: "Task has been created successfully",
@@ -41,8 +48,65 @@ export default function NewTaskInterface() {
         type: "warning",
       });
     }
-    
-    form.reset();
+
+    setNewTaskForm(getBaseTaskForm());
+  };
+
+  const priorities: number[] = [0, 1, 2, 3];
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetName = e.target.name;
+    let targetValue: string | number = e.target.value;
+
+    if (targetName === "priortiy") {
+      targetValue = parseInt(targetValue);
+      if (!priorities.includes(parseInt(e.target.value))) {
+        return;
+      }
+    }
+
+    if (targetName === "task") {
+      if (String(targetValue).length > 10) {
+        return;
+      }
+    }
+
+    setNewTaskForm({
+      ...newTaskForm,
+      [targetName]: targetValue,
+    });
+  };
+
+  /* TODO: For Testing */
+  const addNumTasks = async (num: number) => {
+    const insert20Prom = Array.from({ length: num }).map(async (_, i) => {
+      const dateString = dateAndTimeToDate({
+        date: newTaskForm.date,
+        time: newTaskForm.time,
+      }).toUTCString();
+
+      const taskToSubmit: NewTask = {
+        task: `Task ${i}`,
+        date: dateString,
+        createdById: "ADMIN",
+        assignedToId: "ALL",
+        expiration: null,
+        priortiy: 0,
+      };
+
+      return createNewTask(JSON.stringify(taskToSubmit));
+    });
+
+    Promise.all(insert20Prom).then((res) => {
+      const success = res.filter((r) => r.acknowledged).length;
+      const failed = res.length - success;
+
+      showToast({
+        title: "Tasks Created",
+        message: `${success} tasks created, ${failed} failed.`,
+        type: failed > 0 ? "warning" : "success",
+      });
+    });
   };
 
   return (
@@ -57,13 +121,24 @@ export default function NewTaskInterface() {
               id="task"
               name="task"
               placeholder="Task"
+              value={newTaskForm.task}
+              onChange={handleFormChange}
               required
             />
             <DashboardInput
               type="date"
               id="date"
               name="date"
-              placeholder="Date"
+              value={newTaskForm.date}
+              onChange={handleFormChange}
+              required
+            />
+            <DashboardInput
+              type="time"
+              id="time"
+              name="time"
+              value={newTaskForm.time}
+              onChange={handleFormChange}
               required
             />
             <DashboardInput
@@ -71,26 +146,68 @@ export default function NewTaskInterface() {
               id="createdBy"
               name="createdBy"
               placeholder="Created By"
+              value={newTaskForm.createdById}
+              onChange={handleFormChange}
+              //TODO Disabled for now
+              disabled
             />
             <DashboardInput
               type="text"
               id="assignedTo"
               name="assignedTo"
               placeholder="Assigned To"
+              value={newTaskForm.assignedToId ?? undefined}
+              onChange={handleFormChange}
+              //TODO Disabled for now
+              disabled
             />
             <DashboardInput
               type="date"
               id="expiration"
               name="expiration"
               placeholder="Expiration"
+              value={newTaskForm.expiration ?? undefined}
+              onChange={handleFormChange}
+              //TODO Disabled for now
+              disabled
+            />
+            {/* TODO: Will need to be a select that pulls down the priority */}
+            <DashboardInput
+              type="number"
+              id="priortiy"
+              name="priortiy"
+              value={newTaskForm.priortiy}
+              onChange={handleFormChange}
             />
           </div>
           <CustomButton type="submit" text={"Submit"} />
         </div>
       </form>
+      {/* TODO: For testing */}
+      <CustomButton text="Add 20" onClick={() => addNumTasks(20)} />
     </div>
   );
 }
+
+type NewTaskForm = NewTask & {
+  time: string;
+};
+
+const getBaseTaskForm = () => {
+  const now = getDateAndTime(new Date());
+
+  const baseTaskForm: NewTaskForm = {
+    task: "",
+    date: now.date,
+    time: now.time,
+    createdById: "ADMIN",
+    assignedToId: "ALL",
+    expiration: null,
+    priortiy: 0,
+  };
+
+  return { ...baseTaskForm };
+};
 
 type DashboardInputProps = React.ComponentPropsWithoutRef<"input">;
 

@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import Calendar, { Mode } from "./Calendar";
 
 export default function CalenderController() {
-  const [mode, setMode] = useState<Mode>(Mode.Month);
+  const modes: Mode[] = [Mode.Month, Mode.Week];
   const [modeIndex, setModeIndex] = useState<number>(0);
-
-  const modes: Mode[] = [Mode.Month, Mode.Week, Mode.Day];
+  const [mode, setMode] = useState<Mode>(modes[0]);
 
   const fiveMinutes = 300000;
 
