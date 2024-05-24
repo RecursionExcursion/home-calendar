@@ -15,6 +15,7 @@ export const createNewTask = async (newTaskJson: string) => {
   const newTask: NewTask = {
     task: newTaskObj.task,
     date: newTaskObj.date,
+    allDay: newTaskObj.allDay,
     createdById: newTaskObj.createdById,
     assignedToId: newTaskObj.assignedToId,
     expiration: newTaskObj.expiration,

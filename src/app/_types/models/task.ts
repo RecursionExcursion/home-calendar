@@ -4,6 +4,7 @@ export type Task = {
   _id: ObjectId;
   task: string;
   date: string;
+  allDay: boolean;
   priority: number;
   status: TaskStatus;
   createdAt: string;
@@ -24,6 +25,7 @@ export enum TaskStatus {
 export type NewTask = {
   task: string;
   date: string;
+  allDay: boolean;
   createdById: string;
   assignedToId: string | null;
   expiration: string | null;
@@ -35,6 +37,7 @@ export const TaskFactory = (newTask: NewTask): Task => {
     _id: new ObjectId(),
     task: newTask.task,
     date: newTask.date,
+    allDay: newTask.allDay,
     priority: newTask.priortiy,
     status: TaskStatus.Pending,
     createdAt: new Date().toUTCString(),

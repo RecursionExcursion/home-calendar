@@ -18,20 +18,30 @@ export default function NewTaskInterface() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newExpiration = newTaskForm.expiration;
+    const form = e.currentTarget;
+
     const newDate = dateAndTimeToDate({
       date: newTaskForm.date,
       time: newTaskForm.time,
     });
 
+    console.log({allDay: form.allDay.checked});
+    
+
     const taskToSubmit: NewTask = {
       task: newTaskForm.task,
       date: newDate.toUTCString(),
+      allDay: form.allDay.checked,
       createdById: newTaskForm.createdById,
       assignedToId: newTaskForm.assignedToId,
-      expiration: newExpiration ? new Date(newExpiration).toUTCString() : null,
+      expiration: newTaskForm.expiration
+        ? new Date(newTaskForm.expiration).toUTCString()
+        : null,
       priortiy: newTaskForm.priortiy,
     };
+
+    console.log({taskToSubmit});
+    
 
     const response = await createNewTask(JSON.stringify(taskToSubmit));
 
@@ -88,6 +98,7 @@ export default function NewTaskInterface() {
       const taskToSubmit: NewTask = {
         task: `Task ${i}`,
         date: dateString,
+        allDay: false,
         createdById: "ADMIN",
         assignedToId: "ALL",
         expiration: null,
@@ -133,14 +144,20 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <DashboardInput
-              type="time"
-              id="time"
-              name="time"
-              value={newTaskForm.time}
-              onChange={handleFormChange}
-              required
-            />
+            <div className="flex justify-evenly items-center">
+              <DashboardInput
+                type="time"
+                id="time"
+                name="time"
+                value={newTaskForm.time}
+                onChange={handleFormChange}
+                required
+              />
+              <div className="flex flex-col gap-1">
+                <label htmlFor="allDay">All Day</label>
+                <DashboardInput type="checkbox" id="allDay" name="allDay" />
+              </div>
+            </div>
             <DashboardInput
               type="text"
               id="createdBy"
@@ -200,6 +217,7 @@ const getBaseTaskForm = () => {
     task: "",
     date: now.date,
     time: now.time,
+    allDay: false,
     createdById: "ADMIN",
     assignedToId: "ALL",
     expiration: null,

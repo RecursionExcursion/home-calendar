@@ -2,7 +2,7 @@ import { DailyForecast } from "../../_types/display/weather";
 import { Task } from "../../_types/models/task";
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
-import { isSameDate } from "./util";
+import { isSameDate, sortTasks } from "./util";
 
 type DaySquareProps = {
   date: Date;
@@ -31,6 +31,8 @@ export default function DaySquare(props: DaySquareProps) {
 
   const day = date.getDate();
 
+  const sortedTasks = sortTasks(tasks);
+
   return (
     <div className={wrapperStyle}>
       <div className="flex h-7">
@@ -41,7 +43,7 @@ export default function DaySquare(props: DaySquareProps) {
           <ForecastBar forecast={forecast} />
         </div>
       </div>
-      {tasks.length > 0 && <TaskList tasks={tasks} />}
+      {tasks.length > 0 && <TaskList tasks={sortedTasks} />}
     </div>
   );
 }
