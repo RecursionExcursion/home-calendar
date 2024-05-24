@@ -1,10 +1,10 @@
 "use server";
 
-import { get } from "http";
-
-import { getProjectedForecast } from "../../_service/weatherService";
+import { DisplayProvider } from "../../_contexts/DisplayContext";
+import { getAllTasks } from "../../_service/taskService";
+import { getProjectedForecastJson } from "../../_service/weatherService";
 import { Coords } from "../../_types/display/weather";
-import DisplayUI from "./UI";
+import CalenderController from "../../_components/calendar/CalendarController";
 
 export default async function DisplayPage() {
   const coordArr = process.env.COORDS?.split(",");
@@ -18,8 +18,12 @@ export default async function DisplayPage() {
     lng: parseFloat(coordArr[1]),
   };
 
-  const forecast = await getProjectedForecast(coords ?? { lat: 0, lng: 0 });
-  const forecastJSON = JSON.stringify(forecast);
+  const forecastJSON = await getProjectedForecastJson(coords ?? { lat: 0, lng: 0 });
+  const tasksJSON = await getAllTasks();
 
-  return <DisplayUI weatherJson={forecastJSON} />;
+  return (
+    <DisplayProvider weatherJson={forecastJSON} tasksJson={tasksJSON}>
+      <CalenderController />
+    </DisplayProvider>
+  );
 }

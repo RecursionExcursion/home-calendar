@@ -23,7 +23,8 @@ export const TaskList = (props: TaskListProps) => {
      * This needs to be around the height of the textarea
      * Lower number will make the scrolling hang at the bottom
      */
-    const scrollHeight = textareaRef.current.scrollHeight - 70;
+    const textAreaHeight = textareaRef.current.clientHeight;
+    const scrollHeight = textareaRef.current.scrollHeight - textAreaHeight + 10;
 
     setTimeout(() => {
       textareaRef.current?.scrollTo({
@@ -42,11 +43,13 @@ export const TaskList = (props: TaskListProps) => {
   }, [scrollIndex]);
 
   return (
-    <div className=" bg-white text-black flex flex-col items-center rounded-lg w-32 h-fit overflow-hidden my-10">
-      <h3 className="font-semibold text-lg">Tasks</h3>
+    <div className="  text-black flex flex-col items-center rounded-lg w-full h-full overflow-hidden p-2">
+      <h3 className="flex justify-center font-semibold text-lg bg-white w-full rounded-md rounded-b-none">
+        Tasks
+      </h3>
       <textarea
         ref={textareaRef}
-        className="w-full h-16 resize-none overflow-hidden p-2"
+        className="w-full h-full resize-none overflow-hidden pl-2 rounded-md rounded-t-none"
         value={tasks.map((t) => t.task).join("\n")}
         readOnly
         style={{ scrollBehavior: "smooth" }}

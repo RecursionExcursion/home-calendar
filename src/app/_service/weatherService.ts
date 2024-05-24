@@ -8,9 +8,9 @@ const locationUrl = `${baseUrl}/points`;
 
 //https://api.weather.gov/points/43.06307,-86.22839
 
-export const getProjectedForecast = async (
+export const getProjectedForecastJson = async (
   coords: Coords
-): Promise<DailyForecast[]> => {
+): Promise<string> => {
   const forecast = await getWeatherForcast(coords);
 
   const forecastMap = new Map<string, DailyForecast>();
@@ -51,7 +51,7 @@ export const getProjectedForecast = async (
 
   const weeklyForcast = Array.from(forecastMap.values());
 
-  return weeklyForcast;
+  return JSON.stringify(weeklyForcast);
 };
 
 const getWeatherForcast = async (coords: Coords) => {

@@ -1,14 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
 import { changeDate, isSameDate } from "./util";
-import { Task } from "../../_types/models/task";
-import { getAllTasks } from "../../_service/taskService";
 import { useDisplayContext } from "../../_contexts/DisplayContext";
-import { getProjectedForecast } from "../../_service/weatherService";
-import { DailyForecast } from "../../_types/display/weather";
 
 type CalendarProps = {
   mode?: Mode;
@@ -16,29 +11,10 @@ type CalendarProps = {
 
 export default function Calendar(props: CalendarProps) {
   const { mode = Mode.Month } = props;
-  const { coords, forecast } = useDisplayContext();
+  const { forecast, tasks } = useDisplayContext();
   const date = new Date();
 
-  const [tasks, setTasks] = useState<Task[]>([]);
-
-  // const [forecast, setForecast] = useState<DailyForecast[]>([]);
-
   const modeParams = createModeParams(mode, date);
-
-  useEffect(() => {
-    getAllTasks().then((tasks) => {
-      const taskArray = JSON.parse(tasks) as Task[];
-      setTasks(taskArray);
-    });
-  }, []);
-
-  // useEffect(() => {
-  //   if (coords.lat && coords.lng) {
-  //     getProjectedForecast(coords).then((forecast) => {
-  //       setForecast(forecast);
-  //     });
-  //   }
-  // }, [coords]);
 
   const gridStyle1 = `grid grid-cols-1 h-full w-full`;
   const gridStyle7 = `grid grid-cols-7 h-full w-full`;

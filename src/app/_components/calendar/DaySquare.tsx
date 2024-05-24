@@ -33,7 +33,7 @@ export default function DaySquare(props: DaySquareProps) {
 
   return (
     <div className={wrapperStyle}>
-      <div className="flex">
+      <div className="flex h-7">
         <div className="flex-2 px-2 border border-white border-t-0 border-l-0">
           {day}
         </div>

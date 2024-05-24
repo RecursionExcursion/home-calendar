@@ -2,24 +2,28 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { Coords, DailyForecast } from "../_types/display/weather";
+import { Task } from "../_types/models/task";
 
 type DisplayContextState = {
   coords: Coords;
   forecast: DailyForecast[];
+  tasks: Task[];
 };
 
 export const DisplayContext = createContext<DisplayContextState>({
   coords: { lat: null, lng: null },
   forecast: [],
+  tasks: [],
 });
 
 type DisplayProviderProps = {
   weatherJson?: string;
+  tasksJson?: string;
   children: React.ReactNode;
 };
 
 export const DisplayProvider = (props: DisplayProviderProps) => {
-  const { children, weatherJson } = props;
+  const { children, weatherJson, tasksJson } = props;
   const [coords, setCoords] = useState<Coords>({ lat: null, lng: null });
 
   useEffect(() => {
@@ -34,10 +38,12 @@ export const DisplayProvider = (props: DisplayProviderProps) => {
   }, []);
 
   const forecast = JSON.parse(weatherJson ?? "[]") as DailyForecast[];
+  const tasks = JSON.parse(tasksJson ?? "[]") as Task[];
 
   const state: DisplayContextState = {
     coords,
     forecast,
+    tasks
   };
 
   return (
