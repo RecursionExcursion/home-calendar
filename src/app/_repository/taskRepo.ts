@@ -2,7 +2,7 @@
 
 import { ObjectId } from "mongodb";
 import { getMongoConnection } from "./mongoConnection";
-import { Task } from "../_types/task";
+import { Task } from "../_types/models/task";
 
 const collectionName = "tasks";
 
@@ -31,7 +31,7 @@ export const findTaskById = async (id: string) => {
 
 export const findAllTasks = async () => {
   const db = await getMongoConnection();
-  return db.collection(collectionName).find().toArray();
+  return await db.collection(collectionName).find().toArray();
 };
 
 export const updateTask = async (task: Task) => {

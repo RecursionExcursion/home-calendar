@@ -1,4 +1,4 @@
-import { User, createNewUser } from "../_types/user";
+import { User, createNewUser } from "../_types/models/user";
 import { userRepo } from "../_repository/userRepo";
 
 export const userService = {

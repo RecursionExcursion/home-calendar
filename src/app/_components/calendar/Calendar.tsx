@@ -1,79 +1,114 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
-import ChangeDateButton, { ChangeDirection } from "./ChangeDateButton";
-import { changeDate } from "./util";
-import CustomButton from "../ui/CustomButton";
+import { changeDate, isSameDate } from "./util";
+import { Task } from "../../_types/models/task";
+import { getAllTasks } from "../../_service/taskService";
+import { useDisplayContext } from "../../_contexts/DisplayContext";
+import { getProjectedForecast } from "../../_service/weatherService";
+import { DailyForecast } from "../../_types/display/weather";
 
-export default function Calendar() {
-  const [date, setDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<Mode>("month");
+type CalendarProps = {
+  mode?: Mode;
+};
 
-  const [modeParams, setModeParams] = useState<ModeParams>(
-    createModeParams(mode, date)
-  );
+export default function Calendar(props: CalendarProps) {
+  const { mode = Mode.Month } = props;
+  const { coords, forecast } = useDisplayContext();
+  const date = new Date();
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  // const [forecast, setForecast] = useState<DailyForecast[]>([]);
+
+  const modeParams = createModeParams(mode, date);
 
   useEffect(() => {
-    setModeParams(createModeParams(mode, date));
-  }, [mode, date]);
+    getAllTasks().then((tasks) => {
+      const taskArray = JSON.parse(tasks) as Task[];
+      setTasks(taskArray);
+    });
+  }, []);
 
-  const gridStyle = {
-    one: "border border-white grid grid-cols-1",
-    seven: "border border-white grid grid-cols-7",
-  };
+  // useEffect(() => {
+  //   if (coords.lat && coords.lng) {
+  //     getProjectedForecast(coords).then((forecast) => {
+  //       setForecast(forecast);
+  //     });
+  //   }
+  // }, [coords]);
 
-  const gridStyleValue =
-    modeParams.rowSize === 1 ? gridStyle.one : gridStyle.seven;
+  const gridStyle1 = `grid grid-cols-1 h-full w-full`;
+  const gridStyle7 = `grid grid-cols-7 h-full w-full`;
+  const headerStyle1 = `border-b-0 grid grid-cols-1  w-full`;
+  const headerStyle7 = `border-b-0 grid grid-cols-7 w-full`;
 
-  const alterDate = (direction: ChangeDirection) => {
-    if (mode === "month") {
-      setDate(changeDate(date, direction === "Next" ? 1 : -1, "month"));
-    } else if (mode === "week") {
-      setDate(changeDate(date, direction === "Next" ? 7 : -7, "day"));
-    } else {
-      setDate(changeDate(date, direction === "Next" ? 1 : -1, "day"));
-    }
+  const style = {
+    grid: modeParams.rowSize === 1 ? gridStyle1 : gridStyle7,
+    head: modeParams.rowSize === 1 ? headerStyle1 : headerStyle7,
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center w-full h-full">
       <h1>{`${modeParams.fullMonthName} ${date.getFullYear()}`}</h1>
-      <button onClick={() => setDate(new Date())}>Today</button>
-      <div className="flex gap-8">
-        <CustomButton onClick={() => setMode("month")} text="Month" />
-        <CustomButton onClick={() => setMode("week")} text="Week" />
-        <CustomButton onClick={() => setMode("day")} text="Day" />
-      </div>
 
-      <div className={gridStyleValue}>
-        <DaysOfWeekCalenderHeader mode={mode} dayOfWeek={date.getDay()} />
-        {Array.from({ length: modeParams.calenderLength }).map((_, index) => (
-          <div key={index} className="border border-white">
-            <DaySquare date={changeDate(modeParams.startDate, index, "day")} />
-          </div>
-        ))}
+      <div className={style.head}>
+        <DaysOfWeekCalenderHeader
+          mode={mode ?? Mode.Month}
+          dayOfWeek={date.getDay()}
+        />
       </div>
-      <div className="flex justify-between w-full px-10">
-        <ChangeDateButton
-          direction="Previous"
-          handleClickCallBack={() => {
-            alterDate("Previous");
-          }}
-        />
-        <ChangeDateButton
-          direction="Next"
-          handleClickCallBack={() => {
-            alterDate("Next");
-          }}
-        />
+      <div className={style.grid}>
+        {Array.from({ length: modeParams.calenderLength }).map((_, index) => {
+          const date = changeDate(modeParams.startDate, index, "day");
+
+          const forecastForDate = forecast
+            .filter((forecast) => {
+              const forecastDate = new Date(forecast.date);
+              const adjustedForecastDate = new Date(
+                forecastDate.getUTCFullYear(),
+                forecastDate.getUTCMonth(),
+                forecastDate.getUTCDate()
+              );
+              const currentDate = new Date(date.toUTCString());
+
+              return isSameDate(adjustedForecastDate, currentDate);
+            })
+            .find((forecast) => forecast);
+
+          const tasksForDate = tasks.filter((task) => {
+            const taskDate = new Date(task.date);
+            const adjustedTaskDate = new Date(
+              taskDate.getUTCFullYear(),
+              taskDate.getUTCMonth(),
+              taskDate.getUTCDate()
+            );
+            const currentDate = new Date(date.toUTCString());
+
+            return isSameDate(adjustedTaskDate, currentDate);
+          });
+
+          return (
+            <DaySquare
+              key={index}
+              date={date}
+              tasks={tasksForDate}
+              forecast={forecastForDate}
+            />
+          );
+        })}
       </div>
     </div>
   );
 }
 
-type Mode = "month" | "week" | "day";
+export enum Mode {
+  Month = "month",
+  Week = "week",
+  Day = "day",
+}
 
 type ModeParams = {
   mode: Mode;

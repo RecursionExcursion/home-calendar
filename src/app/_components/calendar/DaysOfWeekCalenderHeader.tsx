@@ -17,7 +17,7 @@ export default function DaysOfWeekCalenderHeader(
   return (
     <>
       {daysOfWeek.map((day) => (
-        <div key={day} className="border border-white flex justify-center">
+        <div key={day} className="border border-white flex justify-center py-4">
           {day}
         </div>
       ))}

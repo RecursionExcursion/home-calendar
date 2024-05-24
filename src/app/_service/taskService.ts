@@ -2,11 +2,12 @@
 
 import {
   deleteTaskById,
+  findAllTasks,
   findTaskById,
   saveTask,
   updateTask,
 } from "../_repository/taskRepo";
-import { NewTask, Task, TaskFactory } from "../_types/task";
+import { NewTask, Task, TaskFactory } from "../_types/models/task";
 
 export const createNewTask = async (newTaskJson: string) => {
   const newTaskObj = JSON.parse(newTaskJson);
@@ -17,11 +18,18 @@ export const createNewTask = async (newTaskJson: string) => {
     createdById: newTaskObj.createdById,
     assignedToId: newTaskObj.assignedToId,
     expiration: newTaskObj.expiration,
+    priortiy: newTaskObj.priortiy,
   };
 
   const createdTask: Task = TaskFactory(newTask);
   const result = await saveTask(createdTask);
   return result;
+};
+
+export const getAllTasks = async (): Promise<string> => {
+  const tasks = (await findAllTasks()) as Task[];
+  const tasksArrayString = JSON.stringify(tasks);
+  return tasksArrayString;
 };
 
 export const getTaskById = async (id: string) => {

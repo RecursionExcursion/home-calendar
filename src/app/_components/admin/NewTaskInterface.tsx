@@ -1,11 +1,14 @@
 "use client";
 
-import CustomButton from "../../../_components/ui/CustomButton";
-import { createNewTask } from "../../../_service/taskService";
+import CustomButton from "../ui/CustomButton";
+import { useAppContext } from "../../_contexts/AppContext";
+import { createNewTask } from "../../_service/taskService";
 
-import { NewTask } from "../../../_types/task";
+import { NewTask } from "../../_types/models/task";
 
 export default function NewTaskInterface() {
+  const { showToast } = useAppContext();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -14,17 +17,32 @@ export default function NewTaskInterface() {
     const task: NewTask = {
       task: form.task.value,
       date: new Date(form.date.value).toUTCString(),
-      createdById: "me",
-      assignedToId: "them",
+      createdById: "ADMIN",
+      assignedToId: "ALL",
       expiration:
         form.expiration.value !== ""
           ? new Date(form.expiration.value).toUTCString()
           : null,
+      priortiy: null,
     };
 
     const foo = await createNewTask(JSON.stringify(task));
 
-    console.log({ foo });
+    if (foo.acknowledged) {
+      showToast({
+        title: "Task Created",
+        message: "Task has been created successfully",
+        type: "success",
+      });
+    } else {
+      showToast({
+        title: "Task Not Created",
+        message: "Task could not be created.",
+        type: "warning",
+      });
+    }
+    
+    form.reset();
   };
 
   return (
@@ -53,7 +71,6 @@ export default function NewTaskInterface() {
               id="createdBy"
               name="createdBy"
               placeholder="Created By"
-              required
             />
             <DashboardInput
               type="text"

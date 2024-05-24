@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { User } from "../_types/user";
+import { User } from "../_types/models/user";
 import { getMongoConnection } from "./mongoConnection";
 
 const collectionName = "users";
