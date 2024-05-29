@@ -1,3 +1,5 @@
+"use server";
+
 import { Db, MongoClient } from "mongodb";
 
 const connectionString = process.env.ATLAS_URI || "";

@@ -1,7 +1,7 @@
 "use server";
 
+import { stripTimeFromDate } from "../_lib/util";
 import { Coords, DailyForecast } from "../_types/display/weather";
-import { stripTimeFromDate } from "./util";
 
 const baseUrl = "https://api.weather.gov";
 const locationUrl = `${baseUrl}/points`;

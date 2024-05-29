@@ -1,6 +1,6 @@
 "use client";
 
-import CustomButton from "../ui/CustomButton";
+import Button from "../ui/Button";
 
 export type ChangeDirection = "Next" | "Previous";
 
@@ -17,6 +17,6 @@ export default function ChangeDateButton(props: ChangeDateButtonProps) {
   };
 
   return (
-    <CustomButton text={direction} onClick={handleClick} />
+    <Button text={direction} onClick={handleClick} />
   );
 }

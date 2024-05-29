@@ -6,8 +6,8 @@ import {
   findTaskById,
   saveTask,
   updateTask,
-} from "../_repository/taskRepo";
-import { NewTask, Task, TaskFactory } from "../_types/models/task";
+} from "../repository/taskRepo";
+import { NewTask, Task, TaskFactory } from "../../_types/models/task";
 
 export const createNewTask = async (newTaskJson: string) => {
   const newTaskObj = JSON.parse(newTaskJson);

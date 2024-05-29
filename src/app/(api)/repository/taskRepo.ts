@@ -2,7 +2,7 @@
 
 import { ObjectId } from "mongodb";
 import { getMongoConnection } from "./mongoConnection";
-import { Task } from "../_types/models/task";
+import { Task } from "../../_types/models/task";
 
 const collectionName = "tasks";
 

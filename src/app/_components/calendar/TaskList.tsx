@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../../_types/models/task";
-import { getDateAndTime } from "../admin/util";
+import { getDateAndTime } from "../dashboard/util";
 
 type TaskListProps = {
   tasks: Task[];

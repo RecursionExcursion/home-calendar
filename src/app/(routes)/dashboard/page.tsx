@@ -1,16 +1,12 @@
-"use client";
+"use server";
 
-import Link from "next/link";
-import NewTaskInterface from "../../_components/admin/NewTaskInterface";
+import { UserProvider } from "../../_contexts/UserContext";
+import DashBoard from "../../_components/dashboard/DashBoard";
 
-export default function DashBoardHome() {
+export default async function DashBoardHome() {
   return (
-    <div className="flex flex-col gap-4 items-center p-10">
-      <>DashBoardHome</>
-      <Link className="text-blue-500 underline" href={"/display"}>
-        Display
-      </Link>
-      <NewTaskInterface />
-    </div>
+    <UserProvider>
+      <DashBoard />
+    </UserProvider>
   );
 }

@@ -21,8 +21,6 @@ export default function RootLayout({
         {
           <main className="flex h-screen w-screen flex-col items-center justify-between p-4">
             <AppProvider>{children}</AppProvider>
-            {/* {children} */}
-
           </main>
         }
       </body>

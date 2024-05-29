@@ -1,8 +1,8 @@
 "use client";
 
-import CustomButton from "../ui/CustomButton";
+import Button from "../ui/Button";
 import { useAppContext } from "../../_contexts/AppContext";
-import { createNewTask } from "../../_service/taskService";
+import { createNewTask } from "../../(api)/service/taskService";
 
 import { NewTask } from "../../_types/models/task";
 import React from "react";
@@ -197,11 +197,11 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
             />
           </div>
-          <CustomButton type="submit" text={"Submit"} />
+          <Button type="submit" text={"Submit"} />
         </div>
       </form>
       {/* TODO: For testing */}
-      <CustomButton text="Add 20" onClick={() => addNumTasks(20)} />
+      <Button text="Add 20" onClick={() => addNumTasks(20)} />
     </div>
   );
 }
