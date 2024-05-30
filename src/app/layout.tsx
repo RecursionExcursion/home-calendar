@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {
-          <main className="flex h-screen w-screen flex-col items-center justify-between p-4">
+          <main className="h-screen w-screen">
             <AppProvider>{children}</AppProvider>
           </main>
         }

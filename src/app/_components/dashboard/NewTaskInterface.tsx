@@ -25,8 +25,7 @@ export default function NewTaskInterface() {
       time: newTaskForm.time,
     });
 
-    console.log({allDay: form.allDay.checked});
-    
+    console.log({ allDay: form.allDay.checked });
 
     const taskToSubmit: NewTask = {
       task: newTaskForm.task,
@@ -40,8 +39,7 @@ export default function NewTaskInterface() {
       priortiy: newTaskForm.priortiy,
     };
 
-    console.log({taskToSubmit});
-    
+    console.log({ taskToSubmit });
 
     const response = await createNewTask(JSON.stringify(taskToSubmit));
 
@@ -121,7 +119,7 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div className="border border-white p-2 flex flex-col gap-2 items-center">
+    <div className="p-2 flex flex-col gap-2 items-center">
       <h2 className="font-bold">Create a Task</h2>
 
       <form onSubmit={handleSubmit}>

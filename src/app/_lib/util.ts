@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash } from "crypto";
 
 export function validateUTCDate(dateString: string): string {
   // Regular expression to check if the date string is in UTC format

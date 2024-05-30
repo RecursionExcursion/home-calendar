@@ -1,7 +1,5 @@
 "use server";
 
-import { get } from "http";
-import { updateUser } from "../(api)/repository/userRepo";
 import { createUserCookie } from "../_lib/cookieManager";
 import {
   createSession,

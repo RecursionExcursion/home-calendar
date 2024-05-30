@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Coords, DailyForecast } from "../_types/display/weather";
 import { Task } from "../_types/models/task";
+import { usePathname, useRouter } from "next/navigation";
+import { getNextRoute } from "../_lib/dashboardRouter";
 
 type DisplayContextState = {
   coords: Coords;
@@ -43,7 +45,7 @@ export const DisplayProvider = (props: DisplayProviderProps) => {
   const state: DisplayContextState = {
     coords,
     forecast,
-    tasks
+    tasks,
   };
 
   return (

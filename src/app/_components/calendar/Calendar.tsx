@@ -5,21 +5,23 @@ import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
 import { changeDate, isSameDate } from "./util";
 import { useDisplayContext } from "../../_contexts/DisplayContext";
 
+type Mode = "month" | "week" | "day";
+
 type CalendarProps = {
   mode?: Mode;
 };
 
 export default function Calendar(props: CalendarProps) {
-  const { mode = Mode.Month } = props;
+  const { mode = "month" } = props;
   const { forecast, tasks } = useDisplayContext();
   const date = new Date();
 
   const modeParams = createModeParams(mode, date);
 
   const gridStyle1 = `grid grid-cols-1 h-full w-full`;
-  const gridStyle7 = `grid grid-cols-7 h-full w-full`;
-  const headerStyle1 = `border-b-0 grid grid-cols-1  w-full`;
-  const headerStyle7 = `border-b-0 grid grid-cols-7 w-full`;
+  const gridStyle7 = `grid grid-cols-3 md:grid-cols-7 h-full w-full`;
+  const headerStyle1 = `grid grid-cols-1 w-full border-b-0`;
+  const headerStyle7 = `hidden md:grid  grid-cols-7 w-full border-b-0`;
 
   const style = {
     grid: modeParams.rowSize === 1 ? gridStyle1 : gridStyle7,
@@ -32,7 +34,7 @@ export default function Calendar(props: CalendarProps) {
 
       <div className={style.head}>
         <DaysOfWeekCalenderHeader
-          mode={mode ?? Mode.Month}
+          mode={mode ?? "month"}
           dayOfWeek={date.getDay()}
         />
       </div>
@@ -78,12 +80,6 @@ export default function Calendar(props: CalendarProps) {
       </div>
     </div>
   );
-}
-
-export enum Mode {
-  Month = "month",
-  Week = "week",
-  Day = "day",
 }
 
 type ModeParams = {

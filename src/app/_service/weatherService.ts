@@ -60,11 +60,17 @@ const getWeatherForcast = async (coords: Coords) => {
   const weatherApiRespObj = await fetchApi(weatherUrl);
   const forecast = await fetchApi(weatherApiRespObj.properties.forecast);
 
+
+  console.log({ forecastpath: weatherApiRespObj.properties.forecast});
+  console.log({ forecast: forecast});
+  
+
   return forecast;
 };
 
 const fetchApi = async (url: string) => {
-  return fetch(url)
+  const { signal } = new AbortController()
+  return fetch(url, { cache: 'no-store' })
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);

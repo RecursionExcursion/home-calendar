@@ -1,13 +1,18 @@
 "use server";
 
-import { DisplayProvider } from "../../_contexts/DisplayContext";
 import { getAllTasks } from "../../(api)/service/taskService";
+import { DisplayProvider } from "../../_contexts/DisplayContext";
+import { UserProvider } from "../../_contexts/UserContext";
 import { getProjectedForecastJson } from "../../_service/weatherService";
 import { Coords } from "../../_types/display/weather";
-import CalenderController from "../../_components/calendar/CalendarController";
-import { UserProvider } from "../../_contexts/UserContext";
 
-export default async function DisplayPage() {
+type CalendarLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default async function CalendarLayout(props: CalendarLayoutProps) {
+  const { children } = props;
+
   const coordArr = process.env.COORDS?.split(",");
 
   if (!coordArr) {
@@ -27,7 +32,7 @@ export default async function DisplayPage() {
   return (
     <UserProvider>
       <DisplayProvider weatherJson={forecastJSON} tasksJson={tasksJSON}>
-        <CalenderController />
+        {children}
       </DisplayProvider>
     </UserProvider>
   );
