@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { ShowToastProps, useToast } from "../_hooks/useToast";
+import { ShowToastProps, useToast } from "../../hooks/useToast";
 
 type AppContextState = {
   showToast: (props: ShowToastProps) => void;
@@ -23,10 +23,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
           showToast({ title, message, type }),
       }}
     >
-      <>
+      <div className="relative">
         {children}
         <Toast />
-      </>
+      </div>
     </AppContext.Provider>
   );
 };
