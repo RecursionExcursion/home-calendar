@@ -1,5 +1,5 @@
 import { get } from "http";
-import { DailyForecast } from "../../_types/display/weather";
+import { DailyForecast, PartialForecast } from "../../_types/display/weather";
 import { ReactElement, useEffect, useState } from "react";
 import {
   WiAlien,
@@ -17,28 +17,32 @@ type ForecastBarProps = {
 export default function ForecastBar(props: ForecastBarProps) {
   const { forecast } = props;
 
-  const [weatherIcon, setWeatherIcon] = useState<ReactElement>(<></>);
-
-  useEffect(() => {
-    setWeatherIcon(getForecastType(forecast));
-  }, [forecast]);
-
   if (!forecast) {
     return null;
   }
 
   return (
     <>
-      <div className="flex justify-evenly items-center">
-        <div>{`${forecast.tempHigh}°/${forecast.tempLow}°`}</div>
-        {weatherIcon}
+      <div className="flex">
+        <ForecastSection
+          icon={getForecastType(forecast?.day)}
+          forecast={forecast?.day}
+          theme="day"
+        />
+        <ForecastSection
+          icon={getForecastType(forecast?.night)}
+          forecast={forecast?.night}
+          theme="night"
+        />
       </div>
     </>
   );
 }
 
-const getForecastType = (forecast: DailyForecast | undefined): ReactElement => {
-  const joinedShortForecast = forecast?.shortForecast[0];
+const getForecastType = (
+  forecast: PartialForecast | undefined
+): ReactElement => {
+  const joinedShortForecast = forecast?.shortForecast;
 
   const iconSize = 28;
 
@@ -62,4 +66,26 @@ const getForecastType = (forecast: DailyForecast | undefined): ReactElement => {
   }
 
   return <WiAlien size={iconSize} />;
+};
+
+const sectionContainerStyle = {
+  day: "bg-white text-black",
+  night: "bg-gray-800 text-white",
+};
+
+type ForecastSectionProps = {
+  icon: ReactElement;
+  forecast: PartialForecast | undefined;
+  theme: keyof typeof sectionContainerStyle;
+};
+
+const ForecastSection = (props: ForecastSectionProps) => {
+  const { icon, forecast, theme } = props;
+  return (
+    <div
+      className={`flex flex-1 justify-center ${sectionContainerStyle[theme]}`}
+    >
+      {forecast?.temp}°{icon}
+    </div>
+  );
 };

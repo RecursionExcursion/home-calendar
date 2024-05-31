@@ -1,3 +1,4 @@
+import { Mode } from "fs";
 import { Task } from "../../_types/models/task";
 
 type ChangeType = "day" | "week" | "month" | "year";
@@ -95,3 +96,25 @@ export const sortTasks = (tasks: Task[]) => {
         </>
       )} */
 }
+
+export const getFirstOfMonth = (date: Date): Date => {
+  return changeDate(date, -date.getDate() + 1, "day");
+};
+
+export const getFirstOfWeek = (date: Date): Date => {
+  return changeDate(date, -date.getDay(), "day");
+};
+
+export const getFirstOnCalender = (date: Date): Date => {
+  return changeDate(
+    getFirstOfMonth(date),
+    -getFirstOfMonth(date).getDay(),
+    "day"
+  );
+};
+
+export const getFullMonthName = (date: Date): string => {
+  return date.toLocaleString("default", { month: "long" });
+};
+
+

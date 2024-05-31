@@ -3,12 +3,17 @@ export type Coords = {
   lng: number | null;
 };
 
+export type PartialForecast = {
+  date: string;
+  temp: number;
+  shortForecast: string;
+  windSpeed: string;
+};
+
 export type DailyForecast = {
   date: string;
-  tempHigh: number;
-  tempLow: number;
-  shortForecast: string[];
-  windSpeed: string[];
+  day?: PartialForecast;
+  night?: PartialForecast;
 };
 
 export enum ForecastType {

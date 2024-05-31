@@ -16,6 +16,12 @@ export const stripTimeFromDate = (date: Date): Date => {
   return newDate;
 };
 
+export const stripDateFromTime = (date: Date): Date => {
+  const newDate = new Date(date);
+  newDate.setFullYear(0, 0, 0);
+  return newDate;
+};
+
 export const createSha256Hash = (input: string): string => {
   return createHash("sha256").update(input).digest("hex");
 };

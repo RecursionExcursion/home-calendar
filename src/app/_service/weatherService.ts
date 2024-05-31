@@ -1,7 +1,11 @@
 "use server";
 
 import { stripTimeFromDate } from "../_lib/util";
-import { Coords, DailyForecast } from "../_types/display/weather";
+import {
+  Coords,
+  DailyForecast,
+  PartialForecast,
+} from "../_types/display/weather";
 
 const baseUrl = "https://api.weather.gov";
 const locationUrl = `${baseUrl}/points`;
@@ -16,8 +20,15 @@ export const getProjectedForecastJson = async (
   const forecastMap = new Map<string, DailyForecast>();
 
   forecast.properties.periods.forEach((period: any) => {
-    const date = stripTimeFromDate(new Date(period.startTime));
-    const dateString = date.toISOString();
+    const rawDate = new Date(period.startTime);
+    const dateString = stripTimeFromDate(rawDate).toISOString();
+
+    const partialForcast: PartialForecast = {
+      date: rawDate.toISOString(),
+      temp: period.temperature,
+      shortForecast: period.shortForecast,
+      windSpeed: period.windSpeed,
+    };
 
     if (forecastMap.has(dateString)) {
       const existingForecast = forecastMap.get(dateString);
@@ -26,25 +37,11 @@ export const getProjectedForecastJson = async (
         return [];
       }
 
-      existingForecast.tempHigh = Math.max(
-        existingForecast.tempHigh,
-        period.temperature
-      );
-
-      existingForecast.tempLow = Math.min(
-        existingForecast.tempLow,
-        period.temperature
-      );
-
-      existingForecast.windSpeed.push(period.windSpeed);
-      existingForecast.shortForecast.push(period.shortForecast);
+      existingForecast.night = partialForcast;
     } else {
       forecastMap.set(dateString, {
-        date: date.toISOString(),
-        tempHigh: period.temperature,
-        tempLow: period.temperature,
-        shortForecast: [period.shortForecast],
-        windSpeed: [period.windSpeed],
+        date: dateString,
+        day: partialForcast,
       });
     }
   });
@@ -60,17 +57,11 @@ const getWeatherForcast = async (coords: Coords) => {
   const weatherApiRespObj = await fetchApi(weatherUrl);
   const forecast = await fetchApi(weatherApiRespObj.properties.forecast);
 
-
-  console.log({ forecastpath: weatherApiRespObj.properties.forecast});
-  console.log({ forecast: forecast});
-  
-
   return forecast;
 };
 
 const fetchApi = async (url: string) => {
-  const { signal } = new AbortController()
-  return fetch(url, { cache: 'no-store' })
+  return fetch(url, { cache: "no-store" })
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);

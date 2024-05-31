@@ -1,13 +1,12 @@
-import { DailyForecast } from "../../_types/display/weather";
-import { Task } from "../../_types/models/task";
+"use client";
+
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
 import { isSameDate, sortTasks } from "./util";
+import { useDisplayContext } from "../../_contexts/DisplayContext";
 
 type DaySquareProps = {
   date: Date;
-  tasks: Task[];
-  forecast: DailyForecast | undefined;
 };
 
 const baseStyle = `h-40 w-full border border-white flex flex-col `;
@@ -19,19 +18,46 @@ const styles = {
 };
 
 export default function DaySquare(props: DaySquareProps) {
-  const { date, tasks, forecast } = props;
+  const { forecast, tasks } = useDisplayContext();
+  const { date } = props;
+
+  const forecastForDate = forecast
+    .filter((forecast) => {
+      const forecastDate = new Date(forecast.date);
+      const adjustedForecastDate = new Date(
+        forecastDate.getUTCFullYear(),
+        forecastDate.getUTCMonth(),
+        forecastDate.getUTCDate()
+      );
+      const currentDate = new Date(date.toUTCString());
+
+      return isSameDate(adjustedForecastDate, currentDate);
+    })
+    .find((forecast) => forecast);
+
+  const tasksForDate = tasks.filter((task) => {
+    const taskDate = new Date(task.date);
+    const adjustedTaskDate = new Date(
+      taskDate.getUTCFullYear(),
+      taskDate.getUTCMonth(),
+      taskDate.getUTCDate()
+    );
+    const currentDate = new Date(date.toUTCString());
+
+    return isSameDate(adjustedTaskDate, currentDate);
+  });
 
   const currentDate = new Date();
 
+  const day = date.getDate();
+
+  const sortedTasks = sortTasks(tasksForDate);
+
   const wrapperStyle: string = (() => {
-    let style = tasks.length > 0 ? styles.green : styles.black;
+    let style = sortedTasks.length > 0 ? styles.green : styles.black;
     style = !isSameDate(date, currentDate) ? style : styles.blue;
     return style;
   })();
-
-  const day = date.getDate();
-
-  const sortedTasks = sortTasks(tasks);
 
   return (
     <div className={wrapperStyle}>
@@ -39,11 +65,11 @@ export default function DaySquare(props: DaySquareProps) {
         <div className="flex-2 px-2 border border-white border-t-0 border-l-0">
           {day}
         </div>
-        <div className="flex-1 px-2 border-b border-white">
-          <ForecastBar forecast={forecast} />
+        <div className="flex-1 border-b border-white">
+          <ForecastBar forecast={forecastForDate} />
         </div>
       </div>
-      {tasks.length > 0 && <TaskList tasks={sortedTasks} />}
+      {sortedTasks.length > 0 && <TaskList tasks={sortedTasks} />}
     </div>
   );
 }
