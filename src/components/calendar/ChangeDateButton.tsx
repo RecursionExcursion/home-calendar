@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "../ui/Button";
+import Button from "../base/Button";
 
 export type ChangeDirection = "Next" | "Previous";
 

@@ -8,9 +8,7 @@ let dbConnection: Promise<Db> | null = null;
 
 export async function getMongoConnection(): Promise<Db> {
   if (!dbConnection) {
-    console.log("Creating new connection");
     dbConnection = connectToDatabase();
-    console.log("Connection created");
   }
   return await dbConnection;
 }

@@ -5,5 +5,5 @@ import DashboardBudgetUI from "../../../components/dashboard/DashboardBudgetUI";
 
 export default async function BudgetPage() {
   const dbBudget = await getBudget();
-  return <DashboardBudgetUI budget={dbBudget} />;
+  return <DashboardBudgetUI budgetJSON={dbBudget} />;
 }

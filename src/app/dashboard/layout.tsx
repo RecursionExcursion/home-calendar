@@ -1,7 +1,6 @@
 "use client";
 
 import DashboardSideBar from "../../components/dashboard/DashboardSideBar";
-import { DashboardProvider } from "../../contexts/DashboardContext";
 import { UserProvider } from "../../contexts/UserContext";
 
 type DashboardLayoutProps = {

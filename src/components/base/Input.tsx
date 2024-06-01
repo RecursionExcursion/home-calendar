@@ -1,5 +1,4 @@
-
-
+"use client";
 
 const inputStyles = {
   primary: "px-2 rounded-md border-blue-400 border-2 text-black",

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../ui/Button";
-import Input from "../ui/Input";
+import Button from "../base/Button";
+import Input from "../base/Input";
 import { useRouter } from "next/navigation";
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";

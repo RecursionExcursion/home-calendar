@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "../ui/Button";
+import Button from "../base/Button";
 import { createNewTask } from "../../api/service/taskService";
 
 import { NewTask } from "../../types/task";

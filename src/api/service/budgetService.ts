@@ -42,12 +42,14 @@ export const getBudget = async () => {
 };
 
 export const saveBudget = async (budget: Budget) => {
-  console.log("Saveing Budget");
+  console.log("Saving Budget");
 
   //Ensure that the budget has valid ID
   const regenBudget = await budgetFromJSON(JSON.stringify(budget));
 
-  return JSON.stringify(await updateBudget(regenBudget));
+  const res = await updateBudget(regenBudget);
+
+  return JSON.stringify(res);
 };
 
 export const budgetFromJSON = async (json: string): Promise<Budget> => {
@@ -62,10 +64,5 @@ export const budgetFromJSON = async (json: string): Promise<Budget> => {
 };
 
 export const budgetToJSON = async (budget: Budget): Promise<string> => {
-  return JSON.stringify({
-    _id: budget._id ? budget._id.toHexString() : undefined,
-    weeklyBudget: budget.weeklyBudget,
-    weeklyActual: budget.weeklyActual,
-    historicalBudgets: budget.historicalBudgets,
-  });
+  return JSON.stringify(budget);
 };
