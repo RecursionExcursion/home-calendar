@@ -10,6 +10,7 @@ export default function DashboardSideBar() {
         <DashboardLink href="/">Home</DashboardLink>
         <DashboardLink href={dashboardRoutes.tasks}>Add Task</DashboardLink>
         <DashboardLink href={calendarRoutes.month}>Display</DashboardLink>
+        <DashboardLink href={dashboardRoutes.budget}>Budget</DashboardLink>
       </div>
     </div>
   );

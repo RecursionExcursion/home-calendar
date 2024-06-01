@@ -35,10 +35,15 @@ export const getProjectedForecastJson = async (
 
       existingForecast.night = partialForcast;
     } else {
-      forecastMap.set(dateString, {
-        date: dateString,
-        day: partialForcast,
-      });
+      period.isDaytime
+        ? forecastMap.set(dateString, {
+            date: dateString,
+            day: partialForcast,
+          })
+        : forecastMap.set(dateString, {
+            date: dateString,
+            night: partialForcast,
+          });
     }
   });
 

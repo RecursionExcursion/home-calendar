@@ -6,11 +6,10 @@ import { createNewTask } from "../../api/service/taskService";
 import { NewTask } from "../../types/task";
 import React from "react";
 import { dateAndTimeToDate, getDateAndTime } from "./util";
-import { useDashboardContext } from "../../contexts/DashboardContext";
+import { useAppContext } from "../../contexts/AppContext";
 
 export default function NewTaskInterface() {
-  const { showToast } = useDashboardContext();
-
+  const { showToast } = useAppContext();
 
   const [newTaskForm, setNewTaskForm] = React.useState<NewTaskForm>(
     getBaseTaskForm()

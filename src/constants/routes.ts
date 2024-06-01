@@ -11,6 +11,7 @@ const dashboardBase = "/dashboard";
 
 const dashboardRoutes = {
   tasks: `${dashboardBase}/tasks`,
+  budget: `${dashboardBase}/budget`,
 };
 
 export { calendarRoutes, dashboardRoutes };

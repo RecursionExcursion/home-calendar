@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { ShowToastProps, useToast } from "../../hooks/useToast";
+import { ShowToastProps, useToast } from "../hooks/useToast";
 
 type AppContextState = {
   showToast: (props: ShowToastProps) => void;

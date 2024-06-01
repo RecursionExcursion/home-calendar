@@ -84,7 +84,11 @@ const ForecastSection = (props: ForecastSectionProps) => {
     <div
       className={`flex flex-1 justify-center ${sectionContainerStyle[theme]}`}
     >
-      {forecast?.temp}°{icon}
+      {forecast ? (
+        <div className="flex gap-1 align-middle">
+          {forecast?.temp}°{icon}
+        </div>
+      ) : null}
     </div>
   );
 };
