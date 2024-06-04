@@ -3,7 +3,6 @@ import { ObjectId } from "mongodb";
 export type Budget = {
   _id?: ObjectId;
   weeklyBudget: number;
-  weeklyActual: number;
   weeklyCharges: Charge[];
   historicalBudgets: PastBudget[];
 };
@@ -18,4 +17,10 @@ export type Charge = {
   date: string;
   amount: number;
   description: string;
+};
+
+export type DisplayBudget = {
+  date: Date;
+  budget: number;
+  actual: number;
 };

@@ -1,8 +1,10 @@
 "use server";
 
+import { getBudget } from "../../api/service/budgetService";
 import { getAllTasks } from "../../api/service/taskService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
+import { computeBudget } from "../../service/budgetService";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords } from "../../types";
 
@@ -24,14 +26,25 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
     lng: parseFloat(coordArr[1]),
   };
 
-  const forecastJSON = await getProjectedForecastJson(
-    coords ?? { lat: 0, lng: 0 }
-  );
-  const tasksJSON = await getAllTasks();
+  let tasksJSON: string | undefined;
+  let forecastJSON: string | undefined;
+  let budgetJSON: string | undefined;
+
+  try {
+    forecastJSON = await getProjectedForecastJson(coords ?? { lat: 0, lng: 0 });
+    tasksJSON = await getAllTasks();
+    budgetJSON = await getBudget();
+  } catch (e) {}
+
+  await computeBudget(budgetJSON);
 
   return (
     <UserProvider>
-      <DisplayProvider weatherJson={forecastJSON} tasksJson={tasksJSON}>
+      <DisplayProvider
+        weatherJson={forecastJSON}
+        tasksJson={tasksJSON}
+        budgetJson={budgetJSON}
+      >
         {children}
       </DisplayProvider>
     </UserProvider>

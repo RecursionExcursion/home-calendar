@@ -23,6 +23,10 @@ export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
     setBudget(parsed);
   }, []);
 
+  /*TODO Add toast to confirm update was successful, and to show errors
+   * Clear inputs after submission
+   */
+
   return (
     <div className="flex flex-col items-center p-2 gap-5">
       <H2>Budget</H2>
