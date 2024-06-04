@@ -15,12 +15,8 @@ export const login = async (username: string, password: string) => {
     };
   }
 
-  console.log({ user });
-
   await addUserSession(user);
   user = await retrieveUser(username);
-
-  console.log({ user });
 
   await createSessionCookie(user);
 

@@ -13,7 +13,6 @@ export const useCalendarRouter = () => {
   useEffect(() => {
     getNextRoute(pathname).then((nextRoute) => {
       setTimeout(() => {
-        console.log("Redirecting to", nextRoute);
         router.push(nextRoute!!);
       }, msTimestamps.oneMinute * 10);
     });

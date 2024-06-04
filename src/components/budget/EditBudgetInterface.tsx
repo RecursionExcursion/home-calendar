@@ -23,8 +23,6 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   }, []);
 
   useEffect(() => {
-    console.log({ initalBudget, budget });
-
     if (initalBudget?.weeklyBudget !== budget?.weeklyBudget) {
       setStateHasChanged(true);
       return;
@@ -40,7 +38,6 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
       return;
     }
     const res = await saveBudget(budget);
-    console.log({ res });
     setStateHasChanged(false);
     // setEditMode(false);
   };

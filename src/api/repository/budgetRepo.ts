@@ -1,9 +1,8 @@
 "use server";
 
 import { Budget } from "../../types";
-import { getMongoConnection } from "./mongoConnection";
-
-const collectionName = "budget";
+import { getMongoConnection } from "../../db/mongoConnection";
+import { budgetCollectionName as collectionName } from "../../db/collectionConstants";
 
 export const createBudget = async (budget: Budget) => {
   const db = await getMongoConnection();
@@ -21,7 +20,6 @@ export const readAllBudgets = async () => {
 
 export const updateBudget = async (budget: Budget) => {
   const db = await getMongoConnection();
-  console.log("Updating Budget");
   const updateResult = await db
     .collection(collectionName)
     .updateOne({ _id: budget._id }, { $set: budget });

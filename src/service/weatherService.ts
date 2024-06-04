@@ -62,7 +62,7 @@ const getWeatherForcast = async (coords: Coords) => {
 };
 
 const fetchApi = async (url: string) => {
-  return fetch(url, { cache: "no-store" })
+  return fetch(url, { next: { revalidate: 0 } })
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);

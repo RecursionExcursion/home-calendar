@@ -21,7 +21,6 @@ export const newBudget = async (): Promise<boolean> => {
 
   const newBudget: Budget = {
     weeklyBudget: 0,
-    weeklyActual: 0,
     weeklyCharges: [],
     historicalBudgets: [],
   };
@@ -42,8 +41,6 @@ export const getBudget = async () => {
 };
 
 export const saveBudget = async (budget: Budget) => {
-  console.log("Saving Budget");
-
   //Ensure that the budget has valid ID
   const regenBudget = await budgetFromJSON(JSON.stringify(budget));
 
@@ -57,7 +54,6 @@ export const budgetFromJSON = async (json: string): Promise<Budget> => {
   return {
     _id: parsed._id ? ObjectId.createFromHexString(parsed._id) : undefined,
     weeklyBudget: parsed.weeklyBudget,
-    weeklyActual: parsed.weeklyActual,
     weeklyCharges: parsed.weeklyCharges,
     historicalBudgets: parsed.historicalBudgets,
   };

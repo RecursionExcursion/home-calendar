@@ -1,10 +1,9 @@
 "use server";
 
 import { ObjectId } from "mongodb";
-import { getMongoConnection } from "./mongoConnection";
+import { getMongoConnection } from "../../db/mongoConnection";
 import { User } from "../../types";
-
-const collectionName = "users";
+import { userCollectionName as collectionName } from "../../db/collectionConstants";
 
 export const createUser = async (user: User) => {
   const db = await getMongoConnection();

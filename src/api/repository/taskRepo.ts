@@ -1,10 +1,9 @@
 "use server";
 
 import { ObjectId } from "mongodb";
-import { getMongoConnection } from "./mongoConnection";
+import { getMongoConnection } from "../../db/mongoConnection";
 import { Task } from "../../types";
-
-const collectionName = "tasks";
+import { taskCollectionName as collectionName } from "../../db/collectionConstants";
 
 export const saveTask = async (task: Task) => {
   const db = await getMongoConnection();

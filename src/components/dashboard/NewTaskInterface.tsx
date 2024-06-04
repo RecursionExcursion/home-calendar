@@ -25,8 +25,6 @@ export default function NewTaskInterface() {
       time: newTaskForm.time,
     });
 
-    console.log({ allDay: form.allDay.checked });
-
     const taskToSubmit: NewTask = {
       task: newTaskForm.task,
       date: newDate.toUTCString(),
