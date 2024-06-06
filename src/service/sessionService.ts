@@ -1,10 +1,11 @@
 "use server";
 
 import { getUser, saveUser } from "../api/service/userService";
-import { createUserCookie } from "../lib/cookieManager";
+import { createUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { decryptData, encryptData } from "../lib/crypto";
+import { msTimestamps } from "../lib/util";
 
 /*TODO This function is doing too much, consider splitting it up */
 export const checkUserSession = async (user: User) => {
@@ -33,11 +34,10 @@ export const createSessionCookie = async (user: User) => {
 };
 
 const createSession = (user: User): Session => {
-  const oneWeekInMs = 1000 * 60 * 60 * 24 * 7;
   return {
     _id: uuidv4(),
     userId: user._id.toString(),
-    exp: new Date().getTime() + oneWeekInMs,
+    exp: new Date().getTime() + msTimestamps.oneWeek,
   };
 };
 
@@ -101,4 +101,20 @@ export const validateClientSessionCookie = async (
   console.log({ clientSessionId: clientSession._id, dbSesssionId: dbUserSession._id });
 
   return user;
+};
+
+export const renewSession = async () => {
+  const userCookie = await getUserCookie();
+  if (!userCookie) {
+    return;
+  }
+  const clientSession = await decryptSession(userCookie.value);
+  const user = await getUser(clientSession.userId, "id").then((user) => {
+    return JSON.parse(user) as User;
+  });
+  const oldSession = deserializeSession(user.session!!);
+  oldSession.exp = new Date().getTime() + msTimestamps.oneWeek;
+  user.session = serializeSession(oldSession);
+  await saveUser(JSON.stringify(user));
+  await createSessionCookie(user);
 };

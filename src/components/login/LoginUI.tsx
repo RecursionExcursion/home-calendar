@@ -53,7 +53,7 @@ export default function LoginUI() {
         />
       );
     } else {
-      router.push("/dashboard");
+      // router.push("/dashboard");
     }
 
     // const timeInfoString = `Login Successful, session expires at ${exirationTime.toLocaleDateString()} at ${exirationTime.toLocaleTimeString()}.`;

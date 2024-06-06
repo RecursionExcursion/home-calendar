@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAppContext } from "../contexts/AppContext";
 
 export const useModal = () => {
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
 
   const showModal = (content: JSX.Element) => {
     setModalContent(content);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
   };
 
   const Modal = () => {
@@ -68,5 +73,5 @@ export const useModal = () => {
     );
   };
 
-  return { Modal, showModal };
+  return { Modal, showModal, closeModal };
 };

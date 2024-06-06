@@ -7,6 +7,7 @@ import { useModal } from "../hooks/useModal";
 type AppContextState = {
   showToast: (props: ShowToastProps) => void;
   showModal: (content: JSX.Element) => void;
+  closeModal: () => void;
 };
 
 export const AppContext = createContext<AppContextState>({} as AppContextState);
@@ -17,12 +18,13 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { Toast, showToast } = useToast();
-  const { showModal, Modal } = useModal();
+  const { showModal, Modal, closeModal } = useModal();
 
   return (
     <AppContext.Provider
       value={{
         showModal: (content) => showModal(content),
+        closeModal: () => closeModal(),
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
