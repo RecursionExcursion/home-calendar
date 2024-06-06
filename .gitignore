@@ -6,6 +6,9 @@
 .pnp.js
 .yarn/install-state.gz
 
+# Visual Studio Code
+.vscode
+
 # testing
 /coverage
 

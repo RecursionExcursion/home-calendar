@@ -2,10 +2,13 @@
 
 import { getUser } from "../api/service/userService";
 import { createSha256Hash } from "../lib/util";
-import { User } from "../types";
-import { createSessionCookie, addUserSession } from "./sessionService";
+import { Session, User } from "../types";
+import { createSessionCookie, checkUserSession } from "./sessionService";
 
-export const login = async (username: string, password: string) => {
+export const login = async (
+  username: string,
+  password: string
+): Promise<LoginReponse> => {
   let user = await retrieveUser(username);
 
   if (user.password !== createSha256Hash(password)) {
@@ -15,14 +18,24 @@ export const login = async (username: string, password: string) => {
     };
   }
 
-  await addUserSession(user);
+  /*TODO Consider resuing old sessions tp prevent needing to login again
+   * on new devices after logging in on one device
+   */
+  await checkUserSession(user);
+
+  /*TODO Retrieving the user twice in the same fn, may need to be reworked */
   user = await retrieveUser(username);
 
   await createSessionCookie(user);
 
+  const sessionExp = (JSON.parse(user.session!!) as Session).exp; //Will never be null as we just added a session
+
+  console.log({ sessionExp });
+
   return {
     success: true,
     message: "User logged in",
+    sessionExp: sessionExp,
   };
 };
 
@@ -34,4 +47,5 @@ const retrieveUser = async (username: string): Promise<User> => {
 type LoginReponse = {
   success: boolean;
   message: string;
+  sessionExp?: number;
 };

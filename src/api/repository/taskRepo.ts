@@ -3,7 +3,8 @@
 import { ObjectId } from "mongodb";
 import { getMongoConnection } from "../../db/mongoConnection";
 import { Task } from "../../types";
-import { taskCollectionName as collectionName } from "../../db/collectionConstants";
+
+const collectionName = "tasks";
 
 export const saveTask = async (task: Task) => {
   const db = await getMongoConnection();

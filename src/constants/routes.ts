@@ -14,4 +14,9 @@ const dashboardRoutes = {
   budget: `${dashboardBase}/budget`,
 };
 
-export { calendarRoutes, dashboardRoutes };
+const miscRoutes = {
+  login: "/login",
+  register: "/register",
+};
+
+export { calendarRoutes, dashboardRoutes, miscRoutes };

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { validateUserCookie } from "../service/sessionService";
+import { validateClientSessionCookie } from "../service/sessionService";
 import { User } from "../types";
 import { getUserCookie } from "../lib/cookieManager";
 
@@ -30,7 +30,7 @@ export const UserProvider = (props: UserProviderProps) => {
         router.push("/login");
         return;
       }
-      validateUserCookie(cookie.value).then((user) => {
+      validateClientSessionCookie(cookie.value).then((user) => {
         if (!user) {
           router.push("/login");
           return;
