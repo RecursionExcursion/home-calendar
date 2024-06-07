@@ -28,7 +28,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <div className="relative">
+      <div
+        style={{
+          position: "relative",
+          height: "100%",
+          width: "100%",
+        }}
+      >
         {children}
         <Toast />
         <Modal />

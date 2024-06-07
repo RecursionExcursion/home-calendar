@@ -43,8 +43,21 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   };
 
   return !loaded ? null : (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex flex-col gap-2">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: ".5rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: ".5rem",
+        }}
+      >
         <BudgetInputGroup
           labelAttrs={{
             children: "Edit Budget",

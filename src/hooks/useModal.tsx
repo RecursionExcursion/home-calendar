@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useAppContext } from "../contexts/AppContext";
 
 export const useModal = () => {
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
@@ -54,6 +53,12 @@ export const useModal = () => {
             }}
           >
             <button
+              style={{
+                border: "none",
+                backgroundColor: "transparent",
+                color: "black",
+                cursor: "pointer",
+              }}
               onClick={() => {
                 setModalContent(null);
               }}

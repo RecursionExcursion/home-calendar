@@ -11,9 +11,24 @@ export default function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
     <UserProvider>
-      <div className="w-full h-full flex">
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+        }}
+      >
         <DashboardSideBar />
-        <div className="w-full h-full flex items-center justify-center relative">
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
           {children}
         </div>
       </div>

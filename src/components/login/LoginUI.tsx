@@ -10,6 +10,7 @@ import Link from "next/link";
 import { miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
+import { colors } from "../../styles/colors";
 
 export default function LoginUI() {
   const router = useRouter();
@@ -82,28 +83,48 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="flex flex-col gap-2 items-center text-black">
-        <Input
-          theme="primary"
-          placeholder="UserName"
-          value={loginCredentials.username}
-          onChange={handleInputChange}
-          name="username"
-        />
-        <Input
-          theme="primary"
-          placeholder="Password"
-          value={loginCredentials.password}
-          onChange={handleInputChange}
-          name="password"
-        />
-        <Button text={"Log In"} onClick={handleLogin} />
-        {showRegistration && (
-          <Link className="text-blue-700 underline" href={miscRoutes.register}>
-            Create an account
-          </Link>
-        )}
+    <div
+      style={{
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div style={{ minWidth: "10rem", maxWidth: "20rem", width: "50%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: ".5rem",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            theme="primary"
+            placeholder="UserName"
+            value={loginCredentials.username}
+            onChange={handleInputChange}
+            name="username"
+          />
+          <Input
+            theme="primary"
+            placeholder="Password"
+            value={loginCredentials.password}
+            onChange={handleInputChange}
+            name="password"
+          />
+          <Button text={"Log In"} onClick={handleLogin} />
+          {showRegistration && (
+            <Link
+              style={{ color: colors.blueLink, textDecoration: "underline" }}
+              href={miscRoutes.register}
+            >
+              Create an account
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
