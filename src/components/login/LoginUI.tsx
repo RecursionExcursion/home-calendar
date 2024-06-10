@@ -42,7 +42,7 @@ export default function LoginUI() {
     const currentTime = new Date();
     const exirationTime = new Date(resp.sessionExp!!);
 
-    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 7);
+    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 5);
 
     if (sessionCloseToExp) {
       showModal(
@@ -55,25 +55,6 @@ export default function LoginUI() {
     } else {
       router.push("/dashboard");
     }
-
-    // const timeInfoString = `Login Successful, session expires at ${exirationTime.toLocaleDateString()} at ${exirationTime.toLocaleTimeString()}.`;
-    // const actionInfoString =
-    //   "Would you like to extend the exipiration for all current session to 7 days from the current time?`";
-
-    // //TODO Implement modal logic as confirm is not robust enough
-    // const modalResp = confirm(`${timeInfoString}\n${actionInfoString}`);
-
-    // console.log({ modalResp });
-
-    // if (!resp.success) {
-    //   showToast({
-    //     title: "Login Failed",
-    //     message: resp.message,
-    //     type: "error",
-    //   });
-    // } else {
-    //   router.push("/dashboard");
-    // }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,6 +94,7 @@ export default function LoginUI() {
             value={loginCredentials.password}
             onChange={handleInputChange}
             name="password"
+            type="password"
           />
           <Button text={"Log In"} onClick={handleLogin} />
           {showRegistration && (
