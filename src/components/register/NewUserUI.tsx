@@ -94,6 +94,7 @@ export default function NewUserUI() {
           value={newAccountCredentials.password}
           onChange={handleInputChange}
           name="password"
+          type="password"
         />
         <Input
           theme="primary"
@@ -101,6 +102,7 @@ export default function NewUserUI() {
           value={newAccountCredentials.confirmPassword}
           onChange={handleInputChange}
           name="confirmPassword"
+          type="password"
         />
         <Button text="Create Account" onClick={handleCreateAccount} />
       </div>
