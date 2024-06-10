@@ -96,7 +96,7 @@ export default function LoginUI() {
             name="password"
             type="password"
           />
-          <Button text={"Log In"} onClick={handleLogin} />
+          <Button child={"Log In"} onClick={handleLogin} />
           {showRegistration && (
             <Link
               style={{ color: colors.blueLink, textDecoration: "underline" }}

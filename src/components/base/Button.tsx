@@ -1,7 +1,9 @@
-import { CSSProperties, ComponentPropsWithoutRef } from "react";
+import { CSSProperties, ComponentPropsWithoutRef, ReactElement } from "react";
 import { colors } from "../../styles/colors";
 
-const buttonStyles: Record<string, CSSProperties> = {
+type buttonStyle = "primary" | "none";
+
+const buttonStyles: Record<buttonStyle, CSSProperties> = {
   primary: {
     backgroundColor: colors.black,
     border: `1px solid ${colors.white}`,
@@ -14,18 +16,21 @@ const buttonStyles: Record<string, CSSProperties> = {
     padding: "0.25rem .5rem",
     textWrap: "nowrap",
   },
+  none: {
+    cursor: "pointer",
+  },
 };
 
 type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
-  text: string;
-  theme?: keyof typeof buttonStyles;
+  child: JSX.Element | string;
+  theme?: buttonStyle;
 };
 
 export default function Button(props: CustomButtonProps) {
-  const { text, theme = "primary", ...attr } = props;
+  const { child, theme = "primary", ...attr } = props;
   return (
     <button {...attr} style={buttonStyles[theme]}>
-      {props.text}
+      {child}
     </button>
   );
 }

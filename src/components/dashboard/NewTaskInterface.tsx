@@ -196,7 +196,7 @@ export default function NewTaskInterface() {
               />
             </div>
           </div>
-          <Button type="submit" text={"Submit"} />
+          <Button type="submit" child={"Submit"} />
         </div>
       </form>
     </div>

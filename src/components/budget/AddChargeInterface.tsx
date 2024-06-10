@@ -82,7 +82,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
           },
         }}
       />
-      <Button text="Add Charge" onClick={handleAddCharge} />
+      <Button child="Add Charge" onClick={handleAddCharge} />
     </div>
   );
 };

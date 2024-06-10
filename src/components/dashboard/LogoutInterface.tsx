@@ -56,7 +56,7 @@ export default function LogOutInterface() {
           onChange={() => setLogoutOfAllSessions(!logoutOfAllSessions)}
         />
       </div>
-      <Button theme="primary" text="Logout" onClick={handleLogout} />
+      <Button theme="primary" child="Logout" onClick={handleLogout} />
     </div>
   );
 }

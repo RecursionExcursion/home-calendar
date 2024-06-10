@@ -95,7 +95,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
         }}
       />
       {stateHasChanged && editMode && (
-        <Button text="Save" onClick={handleSaveBudgetClick} />
+        <Button child="Save" onClick={handleSaveBudgetClick} />
       )}
     </div>
   );

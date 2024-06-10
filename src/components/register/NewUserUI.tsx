@@ -102,7 +102,7 @@ export default function NewUserUI() {
           name="confirmPassword"
           type="password"
         />
-        <Button text="Create Account" onClick={handleCreateAccount} />
+        <Button child="Create Account" onClick={handleCreateAccount} />
       </div>
     </div>
   );
