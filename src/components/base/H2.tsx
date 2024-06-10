@@ -1,6 +1,8 @@
 import { CSSProperties } from "react";
 
-const h2Stlyes: Record<string, CSSProperties> = {
+type h2Style = "budget" | "task" | "dashboard";
+
+const h2Stlyes: Record<h2Style, CSSProperties> = {
   budget: {
     fontSize: "1.25rem",
     lineHeight: "1.75rem",
@@ -17,10 +19,10 @@ const h2Stlyes: Record<string, CSSProperties> = {
 };
 
 type H2Props = React.ComponentPropsWithoutRef<"h2"> & {
-  theme?: keyof typeof h2Stlyes;
+  theme?: h2Style;
 };
 
-export const H2 = (props: H2Props) => {
+export default function H2(props: H2Props) {
   const { theme = "budget", ...rest } = props;
   return <h2 style={h2Stlyes[theme]} {...rest} />;
-};
+}

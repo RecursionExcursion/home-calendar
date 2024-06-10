@@ -12,9 +12,10 @@ const calendarRoutes = {
 const dashboardBase = "/dashboard";
 
 const dashboardRoutes = {
-  tasks: `${dashboardBase}/tasks`,
   budget: `${dashboardBase}/budget`,
+  display: `${dashboardBase}/display`,
   logout: `${dashboardBase}/logout`,
+  tasks: `${dashboardBase}/tasks`,
 };
 
 const miscRoutes = {

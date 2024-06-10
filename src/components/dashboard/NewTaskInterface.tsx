@@ -1,14 +1,12 @@
 "use client";
 
-import Button from "../base/Button";
+import React from "react";
 import { createNewTask } from "../../api/service/taskService";
 
 import { NewTask } from "../../types/task";
-import React from "react";
 import { dateAndTimeToDate, getDateAndTime } from "./util";
 import { useAppContext } from "../../contexts/AppContext";
-import { H2 } from "../base/H2";
-import Input from "../base/Input";
+import { Button, H2, Input } from "../base";
 
 export default function NewTaskInterface() {
   const { showToast } = useAppContext();

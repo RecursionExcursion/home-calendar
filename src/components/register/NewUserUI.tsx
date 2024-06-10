@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../base/Button";
-import Input from "../base/Input";
-
 import { useRouter } from "next/navigation";
+
 import { createNewUser } from "../../api/service/userService";
-import { useAppContext } from "../../contexts/AppContext";
-import { H2 } from "../base/H2";
+import { useAppContext } from "../../contexts";
+import { H2, Input, Button } from "../base";
 
 export default function NewUserUI() {
   const { showToast } = useAppContext();

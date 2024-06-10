@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../base/Button";
-import { H2 } from "../base/H2";
-import Input from "../base/Input";
-import { useUserContext } from "../../contexts/UserContext";
+import { useRouter } from "next/navigation";
+
 import { removeSession } from "../../service/sessionService";
 import { deleteUserCookie } from "../../lib/cookieManager";
-import { useRouter } from "next/navigation";
-import { useAppContext } from "../../contexts/AppContext";
+import { Button, H2, Input } from "../base";
+import { useAppContext, useUserContext } from "../../contexts";
 
 export default function LogOutInterface() {
   const { user } = useUserContext();

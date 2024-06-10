@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { BudgetInputGroup } from "./BudgetInputGroup";
 import { Budget } from "../../types";
 import { saveBudget } from "../../api/service/budgetService";
-import Button from "../base/Button";
 import { BudgetState } from "../dashboard/DashboardBudgetUI";
+import { Button } from "../base";
 
 type EditBudgetIntefaceProps = {
   budgetState: BudgetState;

@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { Charge } from "../../types";
-import Button from "../base/Button";
 import { BudgetInputGroup } from "./BudgetInputGroup";
-import { H2 } from "../base/H2";
+import { H2, Button } from "../base";
 import { saveBudget } from "../../api/service/budgetService";
 import { BudgetState } from "../dashboard/DashboardBudgetUI";
 
@@ -26,13 +25,15 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3"
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "0.75rem",
-    }}>
+    <div
+      className="flex flex-col items-center gap-3"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "0.75rem",
+      }}
+    >
       <H2>Add a Charge</H2>
       {/* TODO: Flesh out date logic, currenlty it just uses Date.now() */}
       <BudgetInputGroup

@@ -1,5 +1,3 @@
-"use client";
-
 import DashboardSideBar from "../../components/dashboard/DashboardSideBar";
 import { UserProvider } from "../../contexts/UserContext";
 
@@ -7,7 +5,7 @@ type DashboardLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function DashboardLayout(props: DashboardLayoutProps) {
+export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
     <UserProvider>
