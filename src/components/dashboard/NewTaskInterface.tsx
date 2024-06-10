@@ -176,15 +176,27 @@ export default function NewTaskInterface() {
               //TODO Disabled for now
               disabled
             />
-            {/* TODO: Will need to be a select that pulls down the priority */}
-            <Input
-              theme="dashboard"
-              type="number"
-              id="priortiy"
-              name="priortiy"
-              value={newTaskForm.priortiy}
-              onChange={handleFormChange}
-            />
+            <div
+              style={{
+                display: "flex",
+                gap: "0.5rem",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {/* TODO: Will need to be a select that pulls down the priority */}
+              <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
+                Priority
+              </label>
+              <Input
+                theme="dashboard"
+                type="number"
+                id="priortiy"
+                name="priortiy"
+                value={newTaskForm.priortiy}
+                onChange={handleFormChange}
+              />
+            </div>
           </div>
           <Button type="submit" text={"Submit"} />
         </div>

@@ -9,8 +9,12 @@ export const getUserCookie = async (): Promise<RequestCookie | undefined> => {
 };
 
 export const createUserCookie = async (sessionId: string) => {
-  cookies().set("user", sessionId,{
+  cookies().set("user", sessionId, {
     httpOnly: true,
     maxAge: msTimestamps.oneWeek,
   });
+};
+
+export const deleteUserCookie = async () => {
+  cookies().delete("user");
 };

@@ -1,12 +1,7 @@
-import { ComponentPropsWithoutRef } from "react";
+import { CSSProperties, ComponentPropsWithoutRef } from "react";
 import { colors } from "../../styles/colors";
 
-type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
-  text: string;
-  theme?: keyof typeof buttonStyles;
-};
-
-const buttonStyles: Record<string, React.CSSProperties> = {
+const buttonStyles: Record<string, CSSProperties> = {
   primary: {
     backgroundColor: colors.black,
     border: `1px solid ${colors.white}`,
@@ -19,6 +14,11 @@ const buttonStyles: Record<string, React.CSSProperties> = {
     padding: "0.25rem .5rem",
     textWrap: "nowrap",
   },
+};
+
+type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
+  text: string;
+  theme?: keyof typeof buttonStyles;
 };
 
 export default function Button(props: CustomButtonProps) {

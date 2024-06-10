@@ -41,7 +41,7 @@ const createSession = (user: User): Session => {
   };
 };
 
-const removeSession = async (user: User) => {
+export const removeSession = async (user: User) => {
   user.session = null;
   await saveUser(JSON.stringify(user));
 };
@@ -97,8 +97,6 @@ export const validateClientSessionCookie = async (
   if (clientSession.exp !== dbUserSession.exp) {
     await createSessionCookie(user);
   }
-
-  console.log({ clientSessionId: clientSession._id, dbSesssionId: dbUserSession._id });
 
   return user;
 };

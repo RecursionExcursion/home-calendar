@@ -1,3 +1,5 @@
+import { log } from "console";
+
 const displayBase = "/display";
 const calendarBase = "/calendar";
 
@@ -12,6 +14,7 @@ const dashboardBase = "/dashboard";
 const dashboardRoutes = {
   tasks: `${dashboardBase}/tasks`,
   budget: `${dashboardBase}/budget`,
+  logout: `${dashboardBase}/logout`,
 };
 
 const miscRoutes = {
