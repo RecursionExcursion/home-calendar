@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { colors } from "../styles/colors";
 
 type ToastType = "success" | "error" | "info" | "warning";
 
@@ -34,30 +35,33 @@ export function useToast() {
 
   const Toast = () => {
     const toastStyles = {
-      success: "bg-green-500",
-      error: "bg-red-500",
-      info: "bg-blue-500",
-      warning: "bg-yellow-500",
+      success: colors.prioirtyColors.good,
+      error: colors.prioirtyColors.danger,
+      info: colors.aqua,
+      warning: colors.prioirtyColors.warning,
     };
 
     return !show ? null : (
       <div
-        className={`rounded-md ${toastStyles[type ?? "info"]} `}
         style={{
-          position: "absolute",
-          width: "200px",
+          alignItems: "center",
+          backgroundColor: toastStyles[type ?? "info"],
+          borderRadius: "0.375rem",
           bottom: "10px",
-          left: "50%",
-          transform: "translateX(-50%)",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          left: "50%",
           padding: "10px",
+          position: "absolute",
           textAlign: "center",
+          transform: "translateX(-50%)",
+          width: "200px",
         }}
       >
-        <div className="text-lg font-semibold">{title}</div>
-        <div className="text-wrap">{message}</div>
+        <div style={{ fontSize: "1.125rem", fontWeight: "600", lineHeight: "1.75rem" }}>
+          {title}
+        </div>
+        <div style={{ textWrap: "wrap" }}>{message}</div>
       </div>
     );
   };

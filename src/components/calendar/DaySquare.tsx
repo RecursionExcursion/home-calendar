@@ -1,21 +1,14 @@
 "use client";
 
+import { CSSProperties } from "react";
 import { useDisplayContext } from "../../contexts/DisplayContext";
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
 import { isSameDate, sortTasks } from "./util";
-
+import { colors } from "../../styles/colors";
 
 type DaySquareProps = {
   date: Date;
-};
-
-const baseStyle = `h-40 w-full border border-white flex flex-col `;
-
-const styles = {
-  blue: baseStyle + "bg-blue-500",
-  black: baseStyle + "bg-black",
-  green: baseStyle + "bg-green-500",
 };
 
 export default function DaySquare(props: DaySquareProps) {
@@ -54,23 +47,53 @@ export default function DaySquare(props: DaySquareProps) {
 
   const sortedTasks = sortTasks(tasksForDate);
 
-  const wrapperStyle: string = (() => {
-    let style = sortedTasks.length > 0 ? styles.green : styles.black;
-    style = !isSameDate(date, currentDate) ? style : styles.blue;
-    return style;
+  const baseStyle: CSSProperties = {
+    height: "10rem",
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid white",
+    borderCollapse: "collapse",
+  };
+  const styleColors = {
+    blue: { backgroundColor: colors.daySquare.blue },
+    black: { backgroundColor: colors.black },
+    green: { backgroundColor: colors.daySquare.green },
+  };
+
+  const wrapperStyle: CSSProperties = (() => {
+    let style = sortedTasks.length > 0 ? styleColors.green : styleColors.black;
+    style = !isSameDate(date, currentDate) ? style : styleColors.blue;
+    return { ...baseStyle, ...style };
   })();
 
   return (
-    <div className={wrapperStyle}>
-      <div className="flex h-7">
-        <div className="flex-2 px-2 border border-white border-t-0 border-l-0">
+    <div style={wrapperStyle}>
+      <div
+        style={{
+          display: "flex",
+          height: "20%",
+          outline: "1px solid white",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0 0.5rem",
+            outline: "1px solid white",
+            width: "1rem",
+            height: "100%",
+            borderCollapse: "collapse",
+          }}
+        >
           {day}
         </div>
-        <div className="flex-1 border-b border-white">
-          <ForecastBar forecast={forecastForDate} />
-        </div>
+        <ForecastBar forecast={forecastForDate} />
       </div>
-      {sortedTasks.length > 0 && <TaskList tasks={sortedTasks} />}
+      <div style={{ height: "80%" }}>
+        {sortedTasks.length > 0 && <TaskList tasks={sortedTasks} />}
+      </div>
     </div>
   );
 }

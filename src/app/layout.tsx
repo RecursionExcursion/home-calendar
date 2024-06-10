@@ -18,9 +18,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppProvider>
-          <main className="h-screen w-screen">{children}</main>
-        </AppProvider>
+        <main
+          style={{
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <AppProvider>{children}</AppProvider>
+        </main>
       </body>
     </html>
   );

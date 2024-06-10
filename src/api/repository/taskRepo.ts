@@ -1,7 +1,7 @@
 "use server";
 
 import { ObjectId } from "mongodb";
-import { getMongoConnection } from "./mongoConnection";
+import { getMongoConnection } from "../../db/mongoConnection";
 import { Task } from "../../types";
 
 const collectionName = "tasks";

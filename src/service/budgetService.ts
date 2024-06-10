@@ -17,8 +17,6 @@ export const computeBudget = async (budgetJSON: string | undefined) => {
   let firstOfWeek = getFirstOfWeek(today);
   firstOfWeek = stripTimeFromDate(firstOfWeek);
 
-  console.log({ parsedBudget, today, firstOfWeek });
-
   const weeklyCharges: Charge[] = [];
   const nonWeeklyCharges: Charge[] = [];
 
@@ -72,8 +70,6 @@ const organizeOldCharges = (pastCharges: Charge[]): PastBudget[] => {
     const chargeDate = new Date(charge.date);
     let firstOfChargeWeek = getFirstOfWeek(chargeDate);
     firstOfChargeWeek = stripTimeFromDate(firstOfChargeWeek);
-
-    console.log({ firstOfChargeWeek, chargeDate });
 
     const budgetIndex = pastBudgets.findIndex((budget) => {
       const budgetDate = new Date(budget.date);

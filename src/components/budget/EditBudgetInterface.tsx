@@ -23,8 +23,6 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   }, []);
 
   useEffect(() => {
-    console.log({ initalBudget, budget });
-
     if (initalBudget?.weeklyBudget !== budget?.weeklyBudget) {
       setStateHasChanged(true);
       return;
@@ -40,14 +38,26 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
       return;
     }
     const res = await saveBudget(budget);
-    console.log({ res });
     setStateHasChanged(false);
     // setEditMode(false);
   };
 
   return !loaded ? null : (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex flex-col gap-2">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: ".5rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: ".5rem",
+        }}
+      >
         <BudgetInputGroup
           labelAttrs={{
             children: "Edit Budget",

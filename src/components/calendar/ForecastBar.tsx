@@ -1,5 +1,5 @@
 import { DailyForecast, PartialForecast } from "../../types/weather";
-import { ReactElement } from "react";
+import { CSSProperties, ReactElement } from "react";
 import {
   WiAlien,
   WiCloudy,
@@ -8,6 +8,7 @@ import {
   WiSnow,
   WiThunderstorm,
 } from "react-icons/wi";
+import { colors } from "../../styles/colors";
 
 type ForecastBarProps = {
   forecast: DailyForecast | undefined;
@@ -21,8 +22,8 @@ export default function ForecastBar(props: ForecastBarProps) {
   }
 
   return (
-    <>
-      <div className="flex">
+    <div style={{ width: "100%" }}>
+      <div style={{ display: "flex", height: "100%" }}>
         <ForecastSection
           icon={getForecastType(forecast?.day)}
           forecast={forecast?.day}
@@ -34,16 +35,14 @@ export default function ForecastBar(props: ForecastBarProps) {
           theme="night"
         />
       </div>
-    </>
+    </div>
   );
 }
 
-const getForecastType = (
-  forecast: PartialForecast | undefined
-): ReactElement => {
+const getForecastType = (forecast: PartialForecast | undefined): ReactElement => {
   const joinedShortForecast = forecast?.shortForecast;
 
-  const iconSize = 28;
+  const iconSize = 27;
 
   if (!forecast) return <WiAlien size={iconSize} />;
 
@@ -67,28 +66,32 @@ const getForecastType = (
   return <WiAlien size={iconSize} />;
 };
 
-const sectionContainerStyle = {
-  day: "bg-white text-black",
-  night: "bg-gray-800 text-white",
+const styles: Record<string, CSSProperties> = {
+  base: {
+    width: "50%",
+    height: "100%",
+    justifyContent: "center",
+    display: "flex",
+    gap: "0.25rem",
+    alignItems: "center",
+  },
+  day: { backgroundColor: colors.white, color: colors.black },
+  night: { backgroundColor: colors.darkGray, color: colors.white },
 };
 
 type ForecastSectionProps = {
   icon: ReactElement;
   forecast: PartialForecast | undefined;
-  theme: keyof typeof sectionContainerStyle;
+  theme: keyof typeof styles;
 };
 
 const ForecastSection = (props: ForecastSectionProps) => {
   const { icon, forecast, theme } = props;
-  return (
-    <div
-      className={`flex flex-1 justify-center ${sectionContainerStyle[theme]}`}
-    >
-      {forecast ? (
-        <div className="flex gap-1 align-middle">
-          {forecast?.temp}°{icon}
-        </div>
-      ) : null}
+  return forecast ? (
+    <div style={{ ...styles.base, ...styles[theme] }}>
+      {forecast.temp}°{icon}
     </div>
+  ) : (
+    <div style={{ ...styles.base, ...styles[theme] }}>{null}</div>
   );
 };

@@ -28,7 +28,15 @@ export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
    */
 
   return (
-    <div className="flex flex-col items-center p-2 gap-5">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "0.5rem",
+        gap: "1.25rem",
+      }}
+    >
       <H2>Budget</H2>
       <EditBudgetInteface
         budgetState={{

@@ -3,9 +3,7 @@ type DaysOfWeekCalenderHeaderProps = {
   mode: "month" | "week" | "day";
 };
 
-export default function DaysOfWeekCalenderHeader(
-  props: DaysOfWeekCalenderHeaderProps
-) {
+export default function DaysOfWeekCalenderHeader(props: DaysOfWeekCalenderHeaderProps) {
   let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const { dayOfWeek, mode } = props;
@@ -17,7 +15,16 @@ export default function DaysOfWeekCalenderHeader(
   return (
     <>
       {daysOfWeek.map((day) => (
-        <div key={day} className="border border-white flex justify-center py-4">
+        <div
+          key={day}
+          style={{
+            border: "1px solid white",
+            borderCollapse: "collapse",
+            display: "flex",
+            justifyContent: "center",
+            padding: "1rem 0",
+          }}
+        >
           {day}
         </div>
       ))}
