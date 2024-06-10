@@ -8,27 +8,27 @@ type InputProps = React.ComponentPropsWithoutRef<"input"> & {
 
 const inputStyles: Record<string, React.CSSProperties> = {
   primary: {
-    padding: "0.25rem 0.5rem",
+    backgroundColor: colors.white,
     border: `1px solid ${colors.aqua}`,
     borderRadius: "0.25rem",
     color: colors.black,
-    backgroundColor: colors.white,
+    padding: "0.25rem 0.5rem",
     width: "100%",
   },
 
   dashboard: {
-    border: `1px solid ${colors.aqua}`,
-    padding: "0.125rem 0.5rem",
-    borderRadius: " 0.375rem",
-    color: colors.black,
     backgroundColor: colors.white,
+    borderRadius: " 0.375rem",
+    border: `1px solid ${colors.aqua}`,
+    color: colors.black,
+    padding: "0.125rem 0.5rem",
   },
 
   disabled: {
     backgroundColor: colors.lightGray,
+    border: `1px solid ${colors.slate300}`,
     color: colors.darkGray,
     cursor: "not-allowed",
-    border: `1px solid ${colors.slate300}`,
   },
 
   checkbox:{

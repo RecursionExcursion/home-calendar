@@ -8,16 +8,16 @@ type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
 
 const buttonStyles: Record<string, React.CSSProperties> = {
   primary: {
-    display: "flex",
-    justifyContent: "center",
     backgroundColor: colors.black,
-    color: colors.white,
-    minWidth: "6rem",
     border: `1px solid ${colors.white}`,
     borderRadius: "0.25rem",
+    color: colors.white,
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "center",
+    minWidth: "6rem",
     padding: "0.25rem .5rem",
     textWrap: "nowrap",
-    cursor: "pointer",
   },
 };
 

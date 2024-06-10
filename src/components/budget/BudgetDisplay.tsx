@@ -14,12 +14,7 @@ export default function BudgetDiplay() {
 
   const barPercentage = (total / limit) * 100;
 
+  if (budget.weeklyBudget === 0) return null;
 
-  return (
-    <BudgetGraph
-      limit={limit}
-      total={total}
-      barPercentage={barPercentage}
-    />
-  );
+  return <BudgetGraph limit={limit} total={total} barPercentage={barPercentage} />;
 }

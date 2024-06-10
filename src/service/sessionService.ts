@@ -75,7 +75,7 @@ export const validateClientSessionCookie = async (
     return JSON.parse(user) as User;
   });
 
-  if (!user.session) {
+  if (!user || !user.session) {
     return null;
   }
 

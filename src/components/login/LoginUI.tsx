@@ -44,17 +44,16 @@ export default function LoginUI() {
 
     const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 7);
 
-    console.log({ currentTime, exirationTime, sessionCloseToExp });
-
     if (sessionCloseToExp) {
       showModal(
         <RenewSessionModal
           sessionExp={exirationTime.getTime()}
           currentTime={currentTime.getTime()}
+          toDashboardAction={() => router.push("/dashboard")}
         />
       );
     } else {
-      // router.push("/dashboard");
+      router.push("/dashboard");
     }
 
     // const timeInfoString = `Login Successful, session expires at ${exirationTime.toLocaleDateString()} at ${exirationTime.toLocaleTimeString()}.`;

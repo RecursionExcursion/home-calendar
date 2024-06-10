@@ -11,10 +11,10 @@ export const login = async (
 ): Promise<LoginReponse> => {
   let user = await retrieveUser(username);
 
-  if (user.password !== createSha256Hash(password)) {
+  if (!user || user.password !== createSha256Hash(password)) {
     return {
       success: false,
-      message: "Invalid password",
+      message: "Invalid username or password",
     };
   }
 

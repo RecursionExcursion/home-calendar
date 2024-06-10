@@ -7,22 +7,25 @@ import Button from "../base/Button";
 type RenewSessionModalProps = {
   sessionExp: number;
   currentTime: number;
+  toDashboardAction: () => void;
 };
 
 export default function RenewSessionModal(props: RenewSessionModalProps) {
   const { closeModal } = useAppContext();
 
-  const { sessionExp, currentTime } = props;
+  const { sessionExp, currentTime, toDashboardAction } = props;
 
   const timeDifference = getTimeDifference(sessionExp, currentTime);
 
   const handleYesClick = async () => {
     await renewSession();
     closeModal();
+    toDashboardAction();
   };
 
   const handleNoClick = () => {
     closeModal();
+    toDashboardAction();
   };
 
   return (

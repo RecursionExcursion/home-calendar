@@ -73,11 +73,11 @@ export default function NewUserUI() {
     <div style={{ height: "100%", display: "flex", justifyContent: "center" }}>
       <div
         style={{
+          alignItems: "center",
           display: "flex",
           flexDirection: "column",
           gap: "1rem",
           justifyContent: "center",
-          alignItems: "center",
         }}
       >
         <H2 theme="dashboard">Create an account!</H2>
