@@ -7,7 +7,7 @@ import { useCalendarRouter } from "../../../../hooks/useCalendarRouter";
 export default function CalendarWeekView() {
   useCalendarRouter();
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Calendar mode={"week"} />
       <BudgetDiplay />
     </div>

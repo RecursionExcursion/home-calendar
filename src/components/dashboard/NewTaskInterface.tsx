@@ -7,13 +7,13 @@ import { NewTask } from "../../types/task";
 import React from "react";
 import { dateAndTimeToDate, getDateAndTime } from "./util";
 import { useAppContext } from "../../contexts/AppContext";
+import { H2 } from "../base/H2";
+import Input from "../base/Input";
 
 export default function NewTaskInterface() {
   const { showToast } = useAppContext();
 
-  const [newTaskForm, setNewTaskForm] = React.useState<NewTaskForm>(
-    getBaseTaskForm()
-  );
+  const [newTaskForm, setNewTaskForm] = React.useState<NewTaskForm>(getBaseTaskForm());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,47 +81,30 @@ export default function NewTaskInterface() {
     });
   };
 
-  /* TODO: For Testing */
-  const addNumTasks = async (num: number) => {
-    const insert20Prom = Array.from({ length: num }).map(async (_, i) => {
-      const dateString = dateAndTimeToDate({
-        date: newTaskForm.date,
-        time: newTaskForm.time,
-      }).toUTCString();
-
-      const taskToSubmit: NewTask = {
-        task: `Task ${i}`,
-        date: dateString,
-        allDay: false,
-        createdById: "ADMIN",
-        assignedToId: "ALL",
-        expiration: null,
-        priortiy: 0,
-      };
-
-      return createNewTask(JSON.stringify(taskToSubmit));
-    });
-
-    Promise.all(insert20Prom).then((res) => {
-      const success = res.filter((r) => r.acknowledged).length;
-      const failed = res.length - success;
-
-      showToast({
-        title: "Tasks Created",
-        message: `${success} tasks created, ${failed} failed.`,
-        type: failed > 0 ? "warning" : "success",
-      });
-    });
-  };
-
   return (
-    <div className="p-2 flex flex-col gap-2 items-center">
-      <h2 className="font-bold">Create a Task</h2>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        alignItems: "center",
+        padding: "0.5rem",
+      }}
+    >
+      <H2 theme="task">Create a Task</H2>
 
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-4 items-center">
-          <div className="flex flex-col gap-2">
-            <DashboardInput
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <Input
+              theme="dashboard"
               type="text"
               id="task"
               name="task"
@@ -130,7 +113,8 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <DashboardInput
+            <Input
+              theme="dashboard"
               type="date"
               id="date"
               name="date"
@@ -138,8 +122,15 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <div className="flex justify-evenly items-center">
-              <DashboardInput
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Input
+                theme="dashboard"
                 type="time"
                 id="time"
                 name="time"
@@ -147,12 +138,13 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div className="flex flex-col gap-1">
+              <div style={{ display: "flex", gap: "0.5rem" }}>
                 <label htmlFor="allDay">All Day</label>
-                <DashboardInput type="checkbox" id="allDay" name="allDay" />
+                <Input theme="checkbox" type="checkbox" id="allDay" name="allDay" />
               </div>
             </div>
-            <DashboardInput
+            <Input
+              theme="dashboard"
               type="text"
               id="createdBy"
               name="createdBy"
@@ -162,7 +154,8 @@ export default function NewTaskInterface() {
               //TODO Disabled for now
               disabled
             />
-            <DashboardInput
+            <Input
+              theme="dashboard"
               type="text"
               id="assignedTo"
               name="assignedTo"
@@ -172,7 +165,8 @@ export default function NewTaskInterface() {
               //TODO Disabled for now
               disabled
             />
-            <DashboardInput
+            <Input
+              theme="dashboard"
               type="date"
               id="expiration"
               name="expiration"
@@ -183,7 +177,8 @@ export default function NewTaskInterface() {
               disabled
             />
             {/* TODO: Will need to be a select that pulls down the priority */}
-            <DashboardInput
+            <Input
+              theme="dashboard"
               type="number"
               id="priortiy"
               name="priortiy"
@@ -194,8 +189,6 @@ export default function NewTaskInterface() {
           <Button type="submit" text={"Submit"} />
         </div>
       </form>
-      {/* TODO: For testing */}
-      <Button text="Add 20" onClick={() => addNumTasks(20)} />
     </div>
   );
 }
@@ -219,16 +212,4 @@ const getBaseTaskForm = () => {
   };
 
   return { ...baseTaskForm };
-};
-
-type DashboardInputProps = React.ComponentPropsWithoutRef<"input">;
-
-const DashboardInput = (props: DashboardInputProps) => {
-  const { ...attr } = props;
-  return (
-    <input
-      className="border border-blue-300 px-2 py-0.5 rounded-md text-zinc-900"
-      {...attr}
-    />
-  );
 };

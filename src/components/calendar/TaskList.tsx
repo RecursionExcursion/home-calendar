@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import { Task } from "../../types/task";
 import { getDateAndTime } from "../dashboard/util";
+import { colors } from "../../styles/colors";
 
 type TaskListProps = {
   tasks: Task[];
@@ -27,8 +28,7 @@ export const TaskList = (props: TaskListProps) => {
 
     if (divHeight >= scrollHeight) return; //Kicks out if the div is not overflowing
 
-    const scrollTill =
-      divAreaRef.current.scrollHeight - divHeight + bottomhangTime;
+    const scrollTill = divAreaRef.current.scrollHeight - divHeight + bottomhangTime;
 
     timeoutRef.current = setTimeout(() => {
       divAreaRef.current?.scrollTo({
@@ -50,14 +50,43 @@ export const TaskList = (props: TaskListProps) => {
   }, []);
 
   return (
-    <div className="  text-black flex flex-col items-center rounded-lg w-full h-full overflow-hidden p-2">
-      <h3 className="flex justify-center font-semibold text-lg bg-slate-300 w-full rounded-md rounded-b-none">
+    <div
+      style={{
+        height: "85%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        borderRadius: "0.5rem",
+        padding: "0.5rem",
+        overflow: "hidden",
+        color: colors.black,
+      }}
+    >
+      <h3
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          fontWeight: 600,
+          fontSize: "1.125rem",
+          lineHeight: "1.75rem",
+          backgroundColor: colors.slate300,
+          borderRadius: "0.5rem 0.5rem 0 0",
+        }}
+      >
         Tasks
       </h3>
       <div
         ref={divAreaRef}
-        className="w-full h-full resize-none overflow-hidden rounded-md rounded-t-none bg-white"
-        style={{ scrollBehavior: "smooth" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          resize: "none",
+          overflow: "hidden",
+          borderRadius: "0 0 0.5rem 0.5rem",
+          backgroundColor: colors.white,
+          scrollBehavior: "smooth",
+        }}
       >
         {tasks.map((t) => (
           <TaskDiv key={t._id.toString()} task={t} />
@@ -72,10 +101,10 @@ type TaskDivProps = {
 };
 
 const priorityColorsMap = new Map<number, string>([
-  [0, "bg-white"],
-  [1, "bg-green-500"],
-  [2, "bg-yellow-500"],
-  [3, "bg-red-500"],
+  [0, colors.white],
+  [1, colors.prioirtyColors.good],
+  [2, colors.prioirtyColors.warning],
+  [3, colors.prioirtyColors.danger],
 ]);
 
 const TaskDiv = (props: TaskDivProps) => {
@@ -83,16 +112,26 @@ const TaskDiv = (props: TaskDivProps) => {
 
   const { time } = getDateAndTime(new Date(task.date));
 
-  const color = priorityColorsMap.get(task.priority);
-
-  const wrapperStyle = `flex text-nowrap ${color}`;
-
   const timeString = task.allDay ? "All Day" : time;
 
+  const divStyle: CSSProperties = {
+    width: "50%",
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+  };
+
   return (
-    <div className={wrapperStyle}>
-      <div className="flex flex-1 justify-center">{task.task}</div>
-      <div className="flex flex-1 justify-center">{timeString}</div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        textWrap: "nowrap",
+        backgroundColor: priorityColorsMap.get(task.priority),
+      }}
+    >
+      <div style={divStyle}>{task.task}</div>
+      <div style={divStyle}>{timeString}</div>
     </div>
   );
 };

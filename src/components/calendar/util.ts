@@ -3,11 +3,7 @@ import { Task } from "../../types/task";
 
 type ChangeType = "day" | "week" | "month" | "year";
 
-export const changeDate = (
-  date: Date,
-  amount: number,
-  change: ChangeType
-): Date => {
+export const changeDate = (date: Date, amount: number, change: ChangeType): Date => {
   const newDate = new Date(date);
 
   const map = new Map<ChangeType, (date: Date, amount: number) => void>([
@@ -42,61 +38,6 @@ export const sortTasks = (tasks: Task[]) => {
   return [...allDayTasks, ...nonAllDayTasks];
 };
 
-{
-  /* {!initialMode && (
-        <>
-          <CustomButton onClick={() => setDate(new Date())} text="Today" />
-          <div className="flex gap-8">
-            <CustomButton onClick={() => setMode(Mode.Month)} text="Month" />
-            <CustomButton onClick={() => setMode(Mode.Week)} text="Week" />
-            <CustomButton onClick={() => setMode(Mode.Day)} text="Day" />
-          </div>
-        </>
-      )} */
-}
-
-// const alterDate = (direction: ChangeDirection) => {
-//   const isNext = direction === "Next";
-
-//   const modeMap = new Map<Mode, () => void>([
-//     [Mode.Month, isNext ? goToNextMonth : goToLastMonth],
-//     [Mode.Week, isNext ? goToNextWeek : goToLastWeek],
-//     [Mode.Day, isNext ? goToTommorow : goToYesterday],
-//   ]);
-
-//   modeMap.get(mode)?.();
-// };
-
-// const goToNextWeek = () => setDate(changeDate(date, 1, "week"));
-// const goToLastWeek = () => setDate(changeDate(date, -1, "week"));
-
-// const goToTommorow = () => setDate(changeDate(date, 1, "day"));
-// const goToYesterday = () => setDate(changeDate(date, -1, "day"));
-
-// const goToNextMonth = () => setDate(changeDate(date, 1, "month"));
-// const goToLastMonth = () => setDate(changeDate(date, -1, "month"));
-
-{
-  /* {!initialMode && (
-        <>
-          <div className="flex justify-between w-full px-10">
-            <ChangeDateButton
-              direction="Previous"
-              handleClickCallBack={() => {
-                alterDate("Previous");
-              }}
-            />
-            <ChangeDateButton
-              direction="Next"
-              handleClickCallBack={() => {
-                alterDate("Next");
-              }}
-            />
-          </div>
-        </>
-      )} */
-}
-
 export const getFirstOfMonth = (date: Date): Date => {
   return changeDate(date, -date.getDate() + 1, "day");
 };
@@ -106,15 +47,9 @@ export const getFirstOfWeek = (date: Date): Date => {
 };
 
 export const getFirstOnCalender = (date: Date): Date => {
-  return changeDate(
-    getFirstOfMonth(date),
-    -getFirstOfMonth(date).getDay(),
-    "day"
-  );
+  return changeDate(getFirstOfMonth(date), -getFirstOfMonth(date).getDay(), "day");
 };
 
 export const getFullMonthName = (date: Date): string => {
   return date.toLocaleString("default", { month: "long" });
 };
-
-

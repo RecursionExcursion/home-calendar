@@ -26,7 +26,13 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3"
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "0.75rem",
+    }}>
       <H2>Add a Charge</H2>
       {/* TODO: Flesh out date logic, currenlty it just uses Date.now() */}
       <BudgetInputGroup

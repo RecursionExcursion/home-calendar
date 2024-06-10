@@ -5,5 +5,15 @@ import { useCalendarRouter } from "../../../../hooks/useCalendarRouter";
 
 export default function CalendarDayView() {
   useCalendarRouter();
-  return <Calendar mode={"day"} />;
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Calendar mode={"day"} />
+    </div>
+  );
 }
