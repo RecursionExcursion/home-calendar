@@ -1,11 +1,9 @@
-"use client";
+"use server";
 
 import BudgetDiplay from "../../../../components/budget/BudgetDisplay";
 import Calendar from "../../../../components/calendar/Calendar";
-import { useCalendarRouter } from "../../../../hooks/useCalendarRouter";
 
-export default function CalendarWeekView() {
-  useCalendarRouter();
+export default async function CalendarWeekView() {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Calendar mode={"week"} />

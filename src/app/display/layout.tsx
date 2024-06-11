@@ -27,8 +27,6 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
     lng: user.settings.userCoords?.lon ?? null,
   };
 
-  console.log({ coords });
-
   let tasksJSON: string | undefined;
   let forecastJSON: string | undefined;
   let budgetJSON: string | undefined;

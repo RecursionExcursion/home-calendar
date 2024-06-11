@@ -1,9 +1,7 @@
-"use client";
+"use server";
 
 import Calendar from "../../../../components/calendar/Calendar";
-import { useCalendarRouter } from "../../../../hooks/useCalendarRouter";
 
-export default function CalendarMonthView() {
-  useCalendarRouter();
+export default async function CalendarMonthView() {
   return <Calendar mode={"month"} />;
 }

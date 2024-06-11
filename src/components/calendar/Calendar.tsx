@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useCalendarRouter } from "../../hooks/useCalendarRouter";
 import { Grid1, Grid7 } from "./CalenderGrids";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
@@ -12,6 +14,8 @@ export type CalendarProps = {
 };
 
 export default function Calendar(props: CalendarProps) {
+  useCalendarRouter();
+
   const { mode = "month" } = props;
 
   const date = new Date();

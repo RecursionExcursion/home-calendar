@@ -1,10 +1,8 @@
-"use client";
+"use server";
 
 import Calendar from "../../../../components/calendar/Calendar";
-import { useCalendarRouter } from "../../../../hooks/useCalendarRouter";
 
-export default function CalendarDayView() {
-  useCalendarRouter();
+export default async function CalendarDayView() {
   return (
     <div
       style={{
