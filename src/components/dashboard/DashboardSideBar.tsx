@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { calendarRoutes, dashboardRoutes } from "../../constants/routes";
+import { dashboardRoutes } from "../../constants/routes";
 import { colors } from "../../styles/colors";
+import StyledLink from "../base/Link";
 
 export default function DashboardSideBar() {
   return (
@@ -26,8 +26,9 @@ export default function DashboardSideBar() {
       >
         <DashboardLink href="/">Home</DashboardLink>
         <DashboardLink href={dashboardRoutes.tasks}>Add Task</DashboardLink>
-        <DashboardLink href={calendarRoutes.month}>Display</DashboardLink>
         <DashboardLink href={dashboardRoutes.budget}>Budget</DashboardLink>
+        <DashboardLink href={dashboardRoutes.display}>Display</DashboardLink>
+        <DashboardLink href={dashboardRoutes.logout}>Log out</DashboardLink>
       </div>
     </div>
   );
@@ -40,10 +41,9 @@ type DashBoardLinkProps = React.ComponentPropsWithoutRef<"a"> & {
 const DashboardLink = (props: DashBoardLinkProps) => {
   const { children, href = "/", ...rest } = props;
   return (
-    <Link
+    <StyledLink
       style={{
         textWrap: "nowrap",
-        // transform: "rotate(-90deg)",
         color: `${colors.blueLink}`,
         textDecoration: "underline",
       }}
@@ -51,6 +51,6 @@ const DashboardLink = (props: DashBoardLinkProps) => {
       {...rest}
     >
       {children}
-    </Link>
+    </StyledLink>
   );
 };

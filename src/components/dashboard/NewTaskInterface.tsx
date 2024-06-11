@@ -1,14 +1,12 @@
 "use client";
 
-import Button from "../base/Button";
+import React from "react";
 import { createNewTask } from "../../api/service/taskService";
 
 import { NewTask } from "../../types/task";
-import React from "react";
 import { dateAndTimeToDate, getDateAndTime } from "./util";
 import { useAppContext } from "../../contexts/AppContext";
-import { H2 } from "../base/H2";
-import Input from "../base/Input";
+import { Button, H2, Input } from "../base";
 
 export default function NewTaskInterface() {
   const { showToast } = useAppContext();
@@ -96,10 +94,10 @@ export default function NewTaskInterface() {
       <form onSubmit={handleSubmit}>
         <div
           style={{
+            alignItems: "center",
             display: "flex",
             flexDirection: "column",
             gap: "1rem",
-            alignItems: "center",
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -176,17 +174,29 @@ export default function NewTaskInterface() {
               //TODO Disabled for now
               disabled
             />
-            {/* TODO: Will need to be a select that pulls down the priority */}
-            <Input
-              theme="dashboard"
-              type="number"
-              id="priortiy"
-              name="priortiy"
-              value={newTaskForm.priortiy}
-              onChange={handleFormChange}
-            />
+            <div
+              style={{
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              {/* TODO: Will need to be a select that pulls down the priority */}
+              <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
+                Priority
+              </label>
+              <Input
+                theme="dashboard"
+                type="number"
+                id="priortiy"
+                name="priortiy"
+                value={newTaskForm.priortiy}
+                onChange={handleFormChange}
+              />
+            </div>
           </div>
-          <Button type="submit" text={"Submit"} />
+          <Button type="submit" child={"Submit"} />
         </div>
       </form>
     </div>

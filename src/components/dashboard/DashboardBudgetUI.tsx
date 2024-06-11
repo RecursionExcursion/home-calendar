@@ -2,9 +2,9 @@
 
 import { AddChargeInterface } from "../budget/AddChargeInterface";
 import EditBudgetInteface from "../budget/EditBudgetInterface";
-import { H2 } from "../base/H2";
 import { Budget } from "../../types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { H2 } from "../base";
 
 type DashboardBudgetUIProps = {
   budgetJSON: string;

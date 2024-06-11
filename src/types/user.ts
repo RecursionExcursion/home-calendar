@@ -1,9 +1,11 @@
 import { ObjectId } from "mongodb";
+import { Settings } from "./settings";
 
 type BaseUser = {
   username: string;
   password: string;
   created: string;
+  settings: Settings;
   friends: User[];
   message_ids: string[];
   task_ids: string[];
@@ -25,6 +27,9 @@ export const createEmptyUser = (newUser: NewUser): User => {
     username: newUser.username,
     password: newUser.password,
     created: new Date().toISOString(),
+    settings: {
+      userCoords: null,
+    },
     friends: [],
     message_ids: [],
     task_ids: [],

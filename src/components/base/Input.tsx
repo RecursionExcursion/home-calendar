@@ -2,11 +2,13 @@
 
 import { colors } from "../../styles/colors";
 
+type inputStyle = "primary" | "dashboard" | "disabled" | "checkbox";
+
 type InputProps = React.ComponentPropsWithoutRef<"input"> & {
-  theme?: keyof typeof inputStyles;
+  theme?: inputStyle;
 };
 
-const inputStyles: Record<string, React.CSSProperties> = {
+const inputStyles: Record<inputStyle, React.CSSProperties> = {
   primary: {
     backgroundColor: colors.white,
     border: `1px solid ${colors.aqua}`,
@@ -31,12 +33,10 @@ const inputStyles: Record<string, React.CSSProperties> = {
     cursor: "not-allowed",
   },
 
-  checkbox:{
-    
-  }
+  checkbox: {},
 };
 
-const Input = (props: InputProps) => {
+export default function Input(props: InputProps) {
   const { theme = "primary", ...attrs } = props;
 
   let style: React.CSSProperties = inputStyles[theme];
@@ -44,6 +44,4 @@ const Input = (props: InputProps) => {
   if (attrs.disabled) style = { ...style, ...inputStyles.disabled };
 
   return <input style={style} {...attrs} />;
-};
-
-export default Input;
+}

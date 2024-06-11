@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Button from "../base/Button";
-import Input from "../base/Input";
 import { useRouter } from "next/navigation";
+
+import { Button, Input, Link } from "../base";
+
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
-import Link from "next/link";
 import { miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
@@ -96,7 +96,7 @@ export default function LoginUI() {
             name="password"
             type="password"
           />
-          <Button text={"Log In"} onClick={handleLogin} />
+          <Button child={"Log In"} onClick={handleLogin} />
           {showRegistration && (
             <Link
               style={{ color: colors.blueLink, textDecoration: "underline" }}
@@ -117,8 +117,6 @@ const areDatesLessThanXDaysApart = (date1: Date, date2: Date, daysApart: number)
 
   // Convert the time difference from milliseconds to days
   const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-  console.log({ daysDifference });
 
   // Check if the difference is more than 6 days
   return daysDifference < daysApart;

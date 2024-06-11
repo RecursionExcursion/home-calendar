@@ -2,11 +2,13 @@
 
 import { getBudget } from "../../api/service/budgetService";
 import { getAllTasks } from "../../api/service/taskService";
+import { getUser } from "../../api/service/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
+import { getUserIdFromCookie } from "../../lib/cookieManager";
 import { computeBudget } from "../../service/budgetService";
 import { getProjectedForecastJson } from "../../service/weatherService";
-import { Coords } from "../../types";
+import { Coords, User } from "../../types";
 
 type CalendarLayoutProps = {
   children: React.ReactNode;
@@ -15,23 +17,24 @@ type CalendarLayoutProps = {
 export default async function CalendarLayout(props: CalendarLayoutProps) {
   const { children } = props;
 
-  const coordArr = process.env.COORDS?.split(",");
-
-  if (!coordArr) {
-    throw new Error("No coordinates found");
-  }
+  //TODO: Possible decrypt the slug on the client side to obscure the slug
+  const userId = await getUserIdFromCookie();
+  const userJSON = await getUser(userId!!, "id");
+  const user = JSON.parse(userJSON) as User;
 
   const coords: Coords = {
-    lat: parseFloat(coordArr[0]),
-    lng: parseFloat(coordArr[1]),
+    lat: user.settings.userCoords?.lat ?? null,
+    lng: user.settings.userCoords?.lon ?? null,
   };
+
+  console.log({ coords });
 
   let tasksJSON: string | undefined;
   let forecastJSON: string | undefined;
   let budgetJSON: string | undefined;
 
   try {
-    forecastJSON = await getProjectedForecastJson(coords ?? { lat: 0, lng: 0 });
+    forecastJSON = await getProjectedForecastJson(coords);
     tasksJSON = await getAllTasks();
     budgetJSON = await getBudget();
   } catch (e) {}

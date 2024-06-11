@@ -8,9 +8,11 @@ const locationUrl = `${baseUrl}/points`;
 
 //https://api.weather.gov/points/43.06307,-86.22839
 
-export const getProjectedForecastJson = async (
-  coords: Coords
-): Promise<string> => {
+export const getProjectedForecastJson = async (coords: Coords): Promise<string> => {
+  if (!coords.lat || !coords.lng) {
+    return JSON.stringify([]);
+  }
+
   const forecast = await getWeatherForcast(coords);
 
   const forecastMap = new Map<string, DailyForecast>();
@@ -70,9 +72,6 @@ const fetchApi = async (url: string) => {
       return response.json();
     })
     .catch((error) => {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
+      console.error("There has been a problem with your fetch operation:", error);
     });
 };

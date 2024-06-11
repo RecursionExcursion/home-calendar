@@ -47,8 +47,8 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
           margin: "0.5rem 0 0 0",
         }}
       >
-        <Button text="Yes" onClick={handleYesClick} />
-        <Button text="No" onClick={handleNoClick} />
+        <Button child="Yes" onClick={handleYesClick} />
+        <Button child="No" onClick={handleNoClick} />
       </div>
     </div>
   );

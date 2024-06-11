@@ -2,12 +2,7 @@
 
 import { createSha256Hash } from "../../lib/util";
 import { User, buildUserFromJSON, createEmptyUser } from "../../types";
-import {
-  createUser,
-  deleteUser,
-  readUser,
-  updateUser,
-} from "../repository/userRepo";
+import { createUser, deleteUser, readUser, updateUser } from "../repository/userRepo";
 
 export const createNewUser = async (username: string, password: string) => {
   const newUser: User = createEmptyUser({
@@ -23,10 +18,7 @@ const searchMap = {
   id: async (search: string) => await readUser(search, "id"),
 };
 
-export const getUser = async (
-  searchString: string,
-  searchBy: keyof typeof searchMap
-) => {
+export const getUser = async (searchString: string, searchBy: keyof typeof searchMap) => {
   const user = await searchMap[searchBy](searchString);
   return JSON.stringify(user);
 };
