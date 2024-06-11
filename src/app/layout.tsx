@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "../contexts/AppContext";
 import { Analytics } from "@vercel/analytics/react";
-import { update } from "../../.vsscripts/dbUpdate";
 
 const inter = Inter({ subsets: ["latin"] });
 
