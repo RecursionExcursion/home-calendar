@@ -94,10 +94,10 @@ export default function NewTaskInterface() {
       <form onSubmit={handleSubmit}>
         <div
           style={{
+            alignItems: "center",
             display: "flex",
             flexDirection: "column",
             gap: "1rem",
-            alignItems: "center",
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -176,10 +176,10 @@ export default function NewTaskInterface() {
             />
             <div
               style={{
-                display: "flex",
-                gap: "0.5rem",
-                flexDirection: "column",
                 alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
               }}
             >
               {/* TODO: Will need to be a select that pulls down the priority */}

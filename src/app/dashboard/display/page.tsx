@@ -1,10 +1,19 @@
-"use server";
+"use client";
 
 import { calendarRoutes } from "../../../constants/routes";
 import { H2, Link } from "../../../components/base";
+import WeatherOptionsMenu from "../../../components/dashboard/display/WeatherOptionsMenu";
+import { useState } from "react";
+import Spinner from "../../../components/base/Spinner";
 
-export default async function DashboardDisplayPage() {
-  return (
+export const fetchCache = "force-no-store";
+
+export default function DashboardDisplayPage() {
+  const [loading, setLoading] = useState(false);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <div
       style={{
         alignItems: "center",
@@ -19,6 +28,7 @@ export default async function DashboardDisplayPage() {
         <Link href={calendarRoutes.week}>Week</Link>
         <Link href={calendarRoutes.day}>Day</Link>
       </div>
+      <WeatherOptionsMenu setLoadingState={setLoading} />
     </div>
   );
 }

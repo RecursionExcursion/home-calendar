@@ -1,3 +1,5 @@
+"use client";
+
 import { CSSProperties, ComponentPropsWithoutRef, ReactElement } from "react";
 import { colors } from "../../styles/colors";
 
