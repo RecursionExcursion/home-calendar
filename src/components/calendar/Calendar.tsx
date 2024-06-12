@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
 import { useCalendarRouter } from "../../hooks/useCalendarRouter";
+import { changeDate, getFirstOnCalender, getFullMonthName } from "../../util";
 import { Grid1, Grid7 } from "./CalenderGrids";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
-import { changeDate, getFirstOnCalender, getFullMonthName } from "./util";
 
 type Mode = "month" | "week" | "day";
 
@@ -22,42 +21,40 @@ export default function Calendar(props: CalendarProps) {
 
   const params = { mode, date };
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        width: "98%",
-      }}
-    >
-      <h1>{`${getFullMonthName(date)} ${date.getFullYear()}`}</h1>
-      {mode === "day" ? (
+  const monthName = `${getFullMonthName(date)} ${date.getFullYear()}`;
+
+  const generateCalendar = () => {
+    if (mode === "day") {
+      return (
         <Grid1
           headers={
             <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />
           }
           daySqauares={generateDaySquares(params)}
         />
-      ) : (
-        <Grid7
-          headers={
-            <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />
-          }
-          daySqauares={generateDaySquares(params)}
-        />
-      )}
+      );
+    }
+    return (
+      <Grid7
+        headers={
+          <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />
+        }
+        daySqauares={generateDaySquares(params)}
+      />
+    );
+  };
+
+  return (
+    <div className="colContainer" style={{ gap: "0rem", width: "98%" }}>
+      <h1 style={{ padding: "0.5rem 0" }}>{monthName}</h1>
+      {generateCalendar()}
     </div>
   );
 }
 
-const generateDaySquares = ({
-  mode,
-  date,
-}: {
-  mode: Mode;
-  date: Date;
-}): JSX.Element[] => {
+type params = { mode: Mode; date: Date };
+
+const generateDaySquares = ({ mode, date }: params): JSX.Element[] => {
   const calendarLength = calenderLengthMap.get(mode) ?? 0;
   const calenderStartDate = getCalendarStartDate(mode, date);
 

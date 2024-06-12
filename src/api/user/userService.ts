@@ -2,7 +2,7 @@
 
 import { createSha256Hash } from "../../lib/util";
 import { User, buildUserFromJSON, createEmptyUser } from "../../types";
-import { createUser, deleteUser, readUser, updateUser } from "../repository/userRepo";
+import { createUser, deleteUser, readUser, updateUser } from "./userRepo";
 
 export const createNewUser = async (username: string, password: string) => {
   const newUser: User = createEmptyUser({

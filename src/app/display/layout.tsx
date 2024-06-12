@@ -1,8 +1,9 @@
 "use server";
 
-import { getBudget } from "../../api/service/budgetService";
-import { getAllTasks } from "../../api/service/taskService";
-import { getUser } from "../../api/service/userService";
+import { redirect } from "next/navigation";
+import { getBudget } from "../../api/budget/budgetService";
+import { getAllTasks } from "../../api/task/taskService";
+import { getUser } from "../../api/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
@@ -19,6 +20,9 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
 
   //TODO: Possible decrypt the slug on the client side to obscure the slug
   const userId = await getUserIdFromCookie();
+  if (!userId) {
+    redirect("/login");
+  }
   const userJSON = await getUser(userId!!, "id");
   const user = JSON.parse(userJSON) as User;
 

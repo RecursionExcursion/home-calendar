@@ -35,9 +35,10 @@ export const useCalendarRouter = () => {
 };
 
 const routes = new Map<string, string>([
+  //TODO Implement day route or remove it
   // ["day", calendarRoutes.day],
-  ["week", calendarRoutes.week],
   ["month", calendarRoutes.month],
+  ["week", calendarRoutes.week],
 ]);
 
 const getNextRoute = (currentPath: string) => {

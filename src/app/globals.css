@@ -1,4 +1,8 @@
+@import url("../styles/reset.css");
 @import url("../styles/spinner.css");
+@import url("../styles/container.css");
+@import url("../styles/grid.css");
+@import url("../styles/border.css");
 
 body {
   color: white;
@@ -6,34 +10,4 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-}
-
-/* Resets */
-button,
-input,
-textarea {
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  width: auto;
-  height: auto;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
 }

@@ -1,17 +1,17 @@
 "use client";
 
-import React from "react";
-import { createNewTask } from "../../api/service/taskService";
+import React, { useState } from "react";
+import { createNewTask } from "../../api/task/taskService";
 
 import { NewTask } from "../../types/task";
-import { dateAndTimeToDate, getDateAndTime } from "./util";
 import { useAppContext } from "../../contexts/AppContext";
 import { Button, H2, Input } from "../base";
+import { dateAndTimeToDate, getDateAndTime } from "../../util";
 
 export default function NewTaskInterface() {
   const { showToast } = useAppContext();
 
-  const [newTaskForm, setNewTaskForm] = React.useState<NewTaskForm>(getBaseTaskForm());
+  const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,27 +80,12 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        alignItems: "center",
-        padding: "0.5rem",
-      }}
-    >
+    <div className="colContainer" style={{ gap: "0.5rem", padding: "0.5rem" }}>
       <H2 theme="task">Create a Task</H2>
 
       <form onSubmit={handleSubmit}>
-        <div
-          style={{
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="colContainer" style={{ gap: "1rem" }}>
+          <div className="colContainer" style={{ gap: "0.5rem", alignItems: "normal" }}>
             <Input
               theme="dashboard"
               type="text"
@@ -121,11 +106,8 @@ export default function NewTaskInterface() {
               required
             />
             <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
+              className="rowContainer"
+              style={{ justifyContent: "space-evenly", alignItems: "center" }}
             >
               <Input
                 theme="dashboard"
@@ -136,7 +118,7 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div style={{ display: "flex", gap: "0.5rem" }}>
+              <div className="rowContainer">
                 <label htmlFor="allDay">All Day</label>
                 <Input theme="checkbox" type="checkbox" id="allDay" name="allDay" />
               </div>
@@ -174,14 +156,7 @@ export default function NewTaskInterface() {
               //TODO Disabled for now
               disabled
             />
-            <div
-              style={{
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
+            <div className="colContainer" style={{ gap: "0.5rem" }}>
               {/* TODO: Will need to be a select that pulls down the priority */}
               <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
                 Priority

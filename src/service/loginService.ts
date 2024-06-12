@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser } from "../api/service/userService";
+import { getUser } from "../api/user/userService";
 import { createSha256Hash } from "../lib/util";
 import { Session, User } from "../types";
 import { createSessionCookie, checkUserSession } from "./sessionService";
@@ -29,8 +29,6 @@ export const login = async (
   await createSessionCookie(user);
 
   const sessionExp = (JSON.parse(user.session!!) as Session).exp; //Will never be null as we just added a session
-
-  console.log({ sessionExp });
 
   return {
     success: true,

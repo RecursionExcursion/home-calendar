@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { BudgetInputGroup } from "./BudgetInputGroup";
 import { Budget } from "../../types";
-import { saveBudget } from "../../api/service/budgetService";
+import { saveBudget } from "../../api/budget/budgetService";
 import { BudgetState } from "../dashboard/DashboardBudgetUI";
 import { Button } from "../base";
 
@@ -43,32 +43,17 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   };
 
   return !loaded ? null : (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: ".5rem",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: ".5rem",
+    <div className="colContainer">
+      <BudgetInputGroup
+        labelAttrs={{
+          children: "Edit Budget",
         }}
-      >
-        <BudgetInputGroup
-          labelAttrs={{
-            children: "Edit Budget",
-          }}
-          inputAttrs={{
-            type: "checkbox",
-            checked: editMode,
-            onChange: () => setEditMode((prev) => !prev),
-          }}
-        />
-      </div>
+        inputAttrs={{
+          type: "checkbox",
+          checked: editMode,
+          onChange: () => setEditMode((prev) => !prev),
+        }}
+      />
 
       <BudgetInputGroup
         labelAttrs={{

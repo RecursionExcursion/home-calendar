@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser, saveUser } from "../api/service/userService";
+import { getUser, saveUser } from "../api/user/userService";
 import { createUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";
@@ -14,10 +14,8 @@ export const checkUserSession = async (user: User) => {
     if (currentSession.exp > new Date().getTime()) {
       return;
     }
-    console.log("Session expired, removing session");
     await removeSession(user);
   }
-  console.log("Creating new session");
   await createClientSession(user);
 };
 

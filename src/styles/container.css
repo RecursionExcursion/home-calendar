@@ -1,0 +1,20 @@
+.greedyContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.colContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.rowContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+}

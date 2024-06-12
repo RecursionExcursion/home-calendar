@@ -28,6 +28,7 @@ export default function DashboardSideBar() {
         <DashboardLink href={dashboardRoutes.tasks}>Add Task</DashboardLink>
         <DashboardLink href={dashboardRoutes.budget}>Budget</DashboardLink>
         <DashboardLink href={dashboardRoutes.display}>Display</DashboardLink>
+        <DashboardLink href={dashboardRoutes.settings}>Settings</DashboardLink>
         <DashboardLink href={dashboardRoutes.logout}>Log out</DashboardLink>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { Button, H2 } from "../base";
 import { Task } from "../../types";
 import { colors } from "../../styles/colors";
 import { CSSProperties, useState } from "react";
-import { deleteTask, getAllTasks } from "../../api/service/taskService";
+import { deleteTask, getAllTasks } from "../../api/task/taskService";
 import { useAppContext } from "../../contexts";
 
 type HomeTaskTableProps = {
@@ -44,21 +44,12 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div
-      style={{
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        gap: "1rem",
-      }}
-    >
+    <div className="greedyContainer colContainer">
       <H2>HomeTaskTable</H2>
 
       <div
+        className="rowContainer"
         style={{
-          display: "flex",
           justifyContent: "space-around",
           textDecoration: "underline",
           width: "80%",
@@ -75,13 +66,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
       </div>
 
       <div style={{ height: "60%", overflowY: "auto", width: "80%" }}>
-        <table
-          style={{
-            border: `1px solid ${colors.white}`,
-            borderCollapse: "collapse",
-            width: "100%",
-          }}
-        >
+        <table className="basicBorder" style={{ width: "100%" }}>
           <tbody>
             {tasks.map((task, i) => {
               const key = i + task?._id?.toString();
@@ -98,13 +83,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
               const tdStyle: CSSProperties = { textAlign: "center" };
 
               return (
-                <tr
-                  key={key}
-                  style={{
-                    border: `1px solid ${colors.white}`,
-                    borderCollapse: "collapse",
-                  }}
-                >
+                <tr className="basicBorder" key={key}>
                   <td style={tdStyle}>{task.task}</td>
                   <td style={{ ...dateStyle, ...tdStyle }}>{displayDate}</td>
                   <td style={tdStyle}>
