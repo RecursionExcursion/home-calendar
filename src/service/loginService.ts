@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser } from "../api/service/userService";
+import { getUser } from "../api/user/userService";
 import { createSha256Hash } from "../lib/util";
 import { Session, User } from "../types";
 import { createSessionCookie, checkUserSession } from "./sessionService";

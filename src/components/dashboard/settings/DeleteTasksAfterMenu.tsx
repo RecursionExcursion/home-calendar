@@ -4,7 +4,7 @@ import { Button, Input } from "../../base";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
-import { saveUser } from "../../../api/service/userService";
+import { saveUser } from "../../../api/user/userService";
 import { User } from "../../../types";
 
 export default function DeleteTasksAfterMenu() {

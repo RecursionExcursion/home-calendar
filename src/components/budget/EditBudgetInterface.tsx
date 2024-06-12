@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { BudgetInputGroup } from "./BudgetInputGroup";
 import { Budget } from "../../types";
-import { saveBudget } from "../../api/service/budgetService";
+import { saveBudget } from "../../api/budget/budgetService";
 import { BudgetState } from "../dashboard/DashboardBudgetUI";
 import { Button } from "../base";
 

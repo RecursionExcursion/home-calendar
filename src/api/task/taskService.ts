@@ -7,7 +7,7 @@ import {
   findTaskById,
   saveTask,
   updateTask,
-} from "../repository/taskRepo";
+} from "./taskRepo";
 
 export const createNewTask = async (newTaskJson: string) => {
   const newTaskObj = JSON.parse(newTaskJson);

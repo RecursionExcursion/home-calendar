@@ -1,9 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getBudget } from "../../api/service/budgetService";
-import { getAllTasks } from "../../api/service/taskService";
-import { getUser } from "../../api/service/userService";
+import { getBudget } from "../../api/budget/budgetService";
+import { getAllTasks } from "../../api/task/taskService";
+import { getUser } from "../../api/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";

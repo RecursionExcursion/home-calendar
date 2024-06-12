@@ -5,7 +5,7 @@ import { Button, H2 } from "../base";
 import { Task } from "../../types";
 import { colors } from "../../styles/colors";
 import { CSSProperties, useState } from "react";
-import { deleteTask, getAllTasks } from "../../api/service/taskService";
+import { deleteTask, getAllTasks } from "../../api/task/taskService";
 import { useAppContext } from "../../contexts";
 
 type HomeTaskTableProps = {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { createNewTask } from "../../api/service/taskService";
+import { createNewTask } from "../../api/task/taskService";
 
 import { NewTask } from "../../types/task";
 import { useAppContext } from "../../contexts/AppContext";

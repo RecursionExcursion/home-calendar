@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "../../base";
 import { useUserContext } from "../../../contexts";
-import { saveUser } from "../../../api/service/userService";
+import { saveUser } from "../../../api/user/userService";
 import { User } from "../../../types";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 

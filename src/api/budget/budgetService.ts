@@ -6,7 +6,7 @@ import {
   createBudget,
   readAllBudgets,
   updateBudget,
-} from "../repository/budgetRepo";
+} from "./budgetRepo";
 
 const getAllBudgets = async (): Promise<Budget[]> => {
   return (await readAllBudgets()) as Budget[];

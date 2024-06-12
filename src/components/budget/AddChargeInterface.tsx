@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Charge } from "../../types";
 import { BudgetInputGroup } from "./BudgetInputGroup";
 import { H2, Button } from "../base";
-import { saveBudget } from "../../api/service/budgetService";
+import { saveBudget } from "../../api/budget/budgetService";
 import { BudgetState } from "../dashboard/DashboardBudgetUI";
 
 type AddChargeInterfaceProps = {

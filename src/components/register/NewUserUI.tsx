@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createNewUser } from "../../api/service/userService";
+import { createNewUser } from "../../api/user/userService";
 import { useAppContext } from "../../contexts";
 import { H2, Input, Button } from "../base";
 

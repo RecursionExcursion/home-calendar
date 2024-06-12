@@ -1,6 +1,6 @@
 "use server";
 
-import { getAllTasks } from "../../api/service/taskService";
+import { getAllTasks } from "../../api/task/taskService";
 import HomeTaskTable from "../../components/dashboard/HomeTaskTable";
 import { Task } from "../../types";
 
