@@ -3,17 +3,14 @@
 import { calendarRoutes } from "../../../constants/routes";
 import { H2, Link } from "../../../components/base";
 import WeatherOptionsMenu from "../../../components/dashboard/display/WeatherOptionsMenu";
-import { useState } from "react";
-import Spinner from "../../../components/base/Spinner";
+import { useLoadingContext } from "../../../contexts/LoadingContext";
 
 export const fetchCache = "force-no-store";
 
 export default function DashboardDisplayPage() {
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useLoadingContext();
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return (
     <div
       style={{
         alignItems: "center",

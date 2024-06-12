@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { useCalendarRouter } from "../../hooks/useCalendarRouter";
 import { Grid1, Grid7 } from "./CalenderGrids";
 import DaySquare from "./DaySquare";
