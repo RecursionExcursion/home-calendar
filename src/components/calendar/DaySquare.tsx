@@ -4,8 +4,8 @@ import { CSSProperties } from "react";
 import { useDisplayContext } from "../../contexts/DisplayContext";
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
-import { isSameDate, sortTasks } from "./util";
 import { colors } from "../../styles/colors";
+import { isSameDate, sortTasks } from "../../util";
 
 type DaySquareProps = {
   date: Date;
@@ -47,6 +47,7 @@ export default function DaySquare(props: DaySquareProps) {
 
   const sortedTasks = sortTasks(tasksForDate);
 
+  //TODO clean up styles
   const baseStyle: CSSProperties = {
     height: "10rem",
     display: "flex",
@@ -76,10 +77,8 @@ export default function DaySquare(props: DaySquareProps) {
         }}
       >
         <div
+          className="rowContainer"
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             padding: "0 0.5rem",
             outline: "1px solid white",
             width: "1rem",

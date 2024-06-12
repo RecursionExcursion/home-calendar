@@ -8,14 +8,7 @@ type BudgetInputGroupProps = {
 export const BudgetInputGroup = (props: BudgetInputGroupProps) => {
   const { labelAttrs, inputAttrs } = props;
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: ".25rem",
-      }}
-    >
+    <div className="colContainer" style={{ gap: ".25rem" }}>
       <label style={{ textWrap: "nowrap" }} {...labelAttrs}>
         {labelAttrs.children}
       </label>

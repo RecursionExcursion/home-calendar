@@ -31,22 +31,9 @@ export default function LogOutInterface() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "2rem",
-        alignItems: "center",
-      }}
-    >
+    <div className="colContainer" style={{ gap: "2rem" }}>
       <H2>Logout</H2>
-      <div
-        style={{
-          display: "flex",
-          textWrap: "nowrap",
-          gap: "0.5rem",
-        }}
-      >
+      <div className="rowContainer" style={{ textWrap: "nowrap", gap: "0.5rem" }}>
         <label htmlFor="logoutAllSessions">Logout of all sessions?</label>
         <Input
           type="checkbox"

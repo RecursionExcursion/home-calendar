@@ -30,8 +30,6 @@ export const login = async (
 
   const sessionExp = (JSON.parse(user.session!!) as Session).exp; //Will never be null as we just added a session
 
-  console.log({ sessionExp });
-
   return {
     success: true,
     message: "User logged in",

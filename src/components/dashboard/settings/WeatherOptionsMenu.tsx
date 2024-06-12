@@ -1,24 +1,21 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "../../base";
 import { useUserContext } from "../../../contexts";
 import { saveUser } from "../../../api/service/userService";
 import { User } from "../../../types";
+import { useLoadingContext } from "../../../contexts/LoadingContext";
 
-type WeatherOptionsMenuProps = {
-  setLoadingState: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function WeatherOptionsMenu(props: WeatherOptionsMenuProps) {
-  const { setLoadingState } = props;
+export default function WeatherOptionsMenu() {
+  const { setLoading } = useLoadingContext();
 
   const { user } = useUserContext();
 
   const [enableWeather, setEnableWeather] = useState(userHasCoords(user));
 
   const handleEnableWeatherClick = async () => {
-    setLoadingState(true);
+    setLoading(true);
     if (!enableWeather) {
       await enableWeatherService();
     } else {
@@ -42,7 +39,7 @@ export default function WeatherOptionsMenu(props: WeatherOptionsMenuProps) {
 
         //Prevent the loading state from flashing
         setTimeout(() => {
-          setLoadingState(false);
+          setLoading(false);
         }, 250);
       };
 
@@ -64,19 +61,15 @@ export default function WeatherOptionsMenu(props: WeatherOptionsMenuProps) {
 
     //Prevent the loading state from flashing
     setTimeout(() => {
-      setLoadingState(false);
+      setLoading(false);
     }, 500);
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "1rem",
-      }}
-    >
-      <label>Enable forecast</label>
+    <div className="rowContainer">
+      <label htmlFor="enableWeatherCheckbox">Enable forecast</label>
       <Input
+        name="enableWeatherCheckbox"
         theme="checkbox"
         type="checkbox"
         checked={enableWeather}

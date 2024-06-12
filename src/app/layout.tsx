@@ -19,12 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main
-          style={{
-            height: "100%",
-            width: "100%",
-          }}
-        >
+        <main className="greedyContainer">
           <AppProvider>{children}</AppProvider>
         </main>
         <Analytics />

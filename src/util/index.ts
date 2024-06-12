@@ -1,5 +1,49 @@
-import { Mode } from "fs";
-import { Task } from "../../types/task";
+import { Task } from "../types";
+
+export const areDatesLessThanXDaysApart = (
+  date1: Date,
+  date2: Date,
+  daysApart: number
+) => {
+  // Get the time difference in milliseconds
+  const timeDifference = Math.abs(date1.getTime() - date2.getTime());
+
+  // Convert the time difference from milliseconds to days
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+  // Check if the difference is more than 6 days
+  return daysDifference < daysApart;
+};
+
+export type DateAndTime = {
+  date: string;
+  time: string;
+};
+
+export const getDateAndTime = (dateInput: Date): DateAndTime => {
+  const year = dateInput.getFullYear();
+  const month = (dateInput.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateInput.getDate().toString().padStart(2, "0");
+
+  const date = `${year}-${month}-${day}`;
+  const time = `${dateInput.getHours()}:${dateInput
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
+
+  return {
+    date: date,
+    time: time,
+  };
+};
+
+export const dateAndTimeToDate = (dateAndTime: DateAndTime) => {
+  const { date, time } = dateAndTime;
+
+  const newDate = new Date(`${date}T${time}:00`);
+
+  return newDate;
+};
 
 type ChangeType = "day" | "week" | "month" | "year";
 

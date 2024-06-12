@@ -14,10 +14,8 @@ export const checkUserSession = async (user: User) => {
     if (currentSession.exp > new Date().getTime()) {
       return;
     }
-    console.log("Session expired, removing session");
     await removeSession(user);
   }
-  console.log("Creating new session");
   await createClientSession(user);
 };
 

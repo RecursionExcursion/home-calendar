@@ -69,15 +69,7 @@ export default function NewUserUI() {
 
   return (
     <div style={{ height: "100%", display: "flex", justifyContent: "center" }}>
-      <div
-        style={{
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          justifyContent: "center",
-        }}
-      >
+      <div className="colContainer">
         <H2 theme="dashboard">Create an account!</H2>
         <Input
           theme="primary"

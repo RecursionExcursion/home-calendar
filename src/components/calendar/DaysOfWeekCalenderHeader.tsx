@@ -8,8 +8,17 @@ export default function DaysOfWeekCalenderHeader(props: DaysOfWeekCalenderHeader
 
   const { dayOfWeek, mode } = props;
 
-  if (mode === "day") {
-    daysOfWeek = [daysOfWeek[dayOfWeek]];
+  switch (mode) {
+    case "month":
+      break;
+
+    case "day":
+      daysOfWeek = [daysOfWeek[dayOfWeek]];
+      break;
+
+    case "week":
+      daysOfWeek = daysOfWeek.concat(daysOfWeek.splice(0, dayOfWeek));
+      break;
   }
 
   return (
@@ -17,11 +26,10 @@ export default function DaysOfWeekCalenderHeader(props: DaysOfWeekCalenderHeader
       {daysOfWeek.map((day) => (
         <div
           key={day}
+          className="rowContainer"
           style={{
             border: "1px solid white",
             borderCollapse: "collapse",
-            display: "flex",
-            justifyContent: "center",
             padding: "1rem 0",
           }}
         >

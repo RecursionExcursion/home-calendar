@@ -3,7 +3,26 @@
 import { CSSProperties, ComponentPropsWithoutRef, ReactElement } from "react";
 import { colors } from "../../styles/colors";
 
-type buttonStyle = "primary" | "none";
+type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
+  child: JSX.Element | string;
+  theme?: buttonStyle;
+};
+
+export default function Button(props: CustomButtonProps) {
+  const { child, theme = "primary", ...attr } = props;
+
+  let style = buttonStyles[theme];
+
+  if (attr.disabled) style = { ...style, ...buttonStyles.disabled };
+
+  return (
+    <button {...attr} style={style}>
+      {child}
+    </button>
+  );
+}
+
+type buttonStyle = "primary" | "none" | "disabled";
 
 const buttonStyles: Record<buttonStyle, CSSProperties> = {
   primary: {
@@ -18,21 +37,13 @@ const buttonStyles: Record<buttonStyle, CSSProperties> = {
     padding: "0.25rem .5rem",
     textWrap: "nowrap",
   },
+  disabled: {
+    backgroundColor: colors.lightGray,
+    border: `1px solid ${colors.slate300}`,
+    color: colors.darkGray,
+    cursor: "not-allowed",
+  },
   none: {
     cursor: "pointer",
   },
 };
-
-type CustomButtonProps = ComponentPropsWithoutRef<"button"> & {
-  child: JSX.Element | string;
-  theme?: buttonStyle;
-};
-
-export default function Button(props: CustomButtonProps) {
-  const { child, theme = "primary", ...attr } = props;
-  return (
-    <button {...attr} style={buttonStyles[theme]}>
-      {child}
-    </button>
-  );
-}

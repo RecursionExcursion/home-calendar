@@ -2,8 +2,8 @@
 
 import { CSSProperties, useEffect, useRef } from "react";
 import { Task } from "../../types/task";
-import { getDateAndTime } from "../dashboard/util";
 import { colors } from "../../styles/colors";
+import { getDateAndTime } from "../../util";
 
 type TaskListProps = {
   tasks: Task[];
@@ -51,27 +51,26 @@ export const TaskList = (props: TaskListProps) => {
 
   return (
     <div
+      className="colContainer"
       style={{
-        height: "85%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
         borderRadius: "0.5rem",
-        padding: "0.5rem",
-        overflow: "hidden",
         color: colors.black,
+        gap: "0rem",
+        height: "85%",
+        overflow: "hidden",
+        padding: "0.5rem",
       }}
     >
       <h3
         style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          fontWeight: 600,
-          fontSize: "1.125rem",
-          lineHeight: "1.75rem",
           backgroundColor: colors.slate300,
           borderRadius: "0.5rem 0.5rem 0 0",
+          display: "flex",
+          fontSize: "1.125rem",
+          fontWeight: 600,
+          justifyContent: "center",
+          lineHeight: "1.75rem",
+          width: "100%",
         }}
       >
         Tasks
@@ -79,13 +78,13 @@ export const TaskList = (props: TaskListProps) => {
       <div
         ref={divAreaRef}
         style={{
-          width: "100%",
-          height: "100%",
-          resize: "none",
-          overflow: "hidden",
-          borderRadius: "0 0 0.5rem 0.5rem",
           backgroundColor: colors.white,
+          borderRadius: "0 0 0.5rem 0.5rem",
+          overflow: "hidden",
+          resize: "none",
           scrollBehavior: "smooth",
+          height: "100%",
+          width: "100%",
         }}
       >
         {tasks.map((t) => (

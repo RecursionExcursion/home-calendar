@@ -67,14 +67,7 @@ const getForecastType = (forecast: PartialForecast | undefined): ReactElement =>
 };
 
 const styles: Record<string, CSSProperties> = {
-  base: {
-    width: "50%",
-    height: "100%",
-    justifyContent: "center",
-    display: "flex",
-    gap: "0.25rem",
-    alignItems: "center",
-  },
+  base: { gap: "0.25rem", height: "100%", width: "50%" },
   day: { backgroundColor: colors.white, color: colors.black },
   night: { backgroundColor: colors.darkGray, color: colors.white },
 };
@@ -88,10 +81,12 @@ type ForecastSectionProps = {
 const ForecastSection = (props: ForecastSectionProps) => {
   const { icon, forecast, theme } = props;
   return forecast ? (
-    <div style={{ ...styles.base, ...styles[theme] }}>
+    <div className="rowContainer" style={{ ...styles.base, ...styles[theme] }}>
       {forecast.temp}°{icon}
     </div>
   ) : (
-    <div style={{ ...styles.base, ...styles[theme] }}>{null}</div>
+    <div className="rowContainer" style={{ ...styles.base, ...styles[theme] }}>
+      {null}
+    </div>
   );
 };

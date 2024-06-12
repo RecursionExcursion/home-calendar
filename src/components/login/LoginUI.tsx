@@ -11,6 +11,7 @@ import { miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { colors } from "../../styles/colors";
+import { areDatesLessThanXDaysApart } from "../../util";
 
 export default function LoginUI() {
   const router = useRouter();
@@ -63,24 +64,9 @@ export default function LoginUI() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100%",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div className="greedyContainer rowContainer">
       <div style={{ minWidth: "10rem", maxWidth: "20rem", width: "50%" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: ".5rem",
-            alignItems: "center",
-          }}
-        >
+        <div className="colContainer" style={{ gap: ".5rem" }}>
           <Input
             theme="primary"
             placeholder="UserName"
@@ -110,14 +96,3 @@ export default function LoginUI() {
     </div>
   );
 }
-
-const areDatesLessThanXDaysApart = (date1: Date, date2: Date, daysApart: number) => {
-  // Get the time difference in milliseconds
-  const timeDifference = Math.abs(date1.getTime() - date2.getTime());
-
-  // Convert the time difference from milliseconds to days
-  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-  // Check if the difference is more than 6 days
-  return daysDifference < daysApart;
-};

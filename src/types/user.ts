@@ -29,6 +29,7 @@ export const createEmptyUser = (newUser: NewUser): User => {
     created: new Date().toISOString(),
     settings: {
       userCoords: null,
+      deleteTasksAfterNDays: -1,
     },
     friends: [],
     message_ids: [],
