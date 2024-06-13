@@ -50,7 +50,19 @@ export const DisplayProvider = (props: DisplayProviderProps) => {
     budget,
   };
 
-  return <DisplayContext.Provider value={state}>{children}</DisplayContext.Provider>;
+  return (
+    <DisplayContext.Provider value={state}>
+      <div
+        style={{
+          position: "relative",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        {children}
+      </div>
+    </DisplayContext.Provider>
+  );
 };
 
 export const useDisplayContext = () => useContext(DisplayContext);

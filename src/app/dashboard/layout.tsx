@@ -1,4 +1,5 @@
 import DashboardSideBar from "../../components/dashboard/DashboardSideBar";
+import { DashboardProvider } from "../../contexts";
 import { LoadingProvider } from "../../contexts/LoadingContext";
 import { UserProvider } from "../../contexts/UserContext";
 
@@ -28,7 +29,9 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
             position: "relative",
           }}
         >
-          <LoadingProvider>{children}</LoadingProvider>
+          <DashboardProvider>
+            <LoadingProvider>{children}</LoadingProvider>
+          </DashboardProvider>
         </div>
       </div>
     </UserProvider>

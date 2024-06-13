@@ -21,14 +21,13 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   return (
     <DashboardContext.Provider
       value={{
-        showToast: ({ title, message, type }) =>
-          showToast({ title, message, type }),
+        showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <>
+      <div className="greedyContainer rowContainer" style={{ position: "relative" }}>
         {children}
         <Toast />
-      </>
+      </div>
     </DashboardContext.Provider>
   );
 };

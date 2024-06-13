@@ -6,7 +6,7 @@ import { BudgetInputGroup } from "./BudgetInputGroup";
 import { H2, Button } from "../../base";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
-import { useAppContext } from "../../../contexts";
+import { useDashboardContext } from "../../../contexts";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -15,7 +15,7 @@ type AddChargeInterfaceProps = {
 export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const { budget, setBudget } = props.budgetState;
 
-  const { showToast } = useAppContext();
+  const { showToast } = useDashboardContext();
 
   const [newCharge, setNewCharge] = useState(getEmptyCharge());
 

@@ -6,7 +6,7 @@ import { Task } from "../../../types";
 import { colors } from "../../../styles/colors";
 import { CSSProperties, useState } from "react";
 import { deleteTask, getAllTasks } from "../../../api/task/taskService";
-import { useAppContext } from "../../../contexts";
+import { useDashboardContext } from "../../../contexts";
 
 type HomeTaskTableProps = {
   tasks: Task[];
@@ -14,7 +14,7 @@ type HomeTaskTableProps = {
 
 export default function HomeTaskTable(props: HomeTaskTableProps) {
   const { tasks: propTasks } = props;
-  const { showToast } = useAppContext();
+  const { showToast } = useDashboardContext();
 
   const [tasks, setTasks] = useState<Task[]>(propTasks);
 
