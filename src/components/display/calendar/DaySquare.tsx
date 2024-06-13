@@ -1,11 +1,13 @@
 "use client";
 
 import { CSSProperties } from "react";
-import { useDisplayContext } from "../../contexts/DisplayContext";
+
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
-import { colors } from "../../styles/colors";
-import { isSameDate, sortTasks } from "../../util";
+import { useDisplayContext } from "../../../contexts";
+import { isSameDate, sortTasks } from "../../../util";
+import { colors } from "../../../styles/colors";
+
 
 type DaySquareProps = {
   date: Date;

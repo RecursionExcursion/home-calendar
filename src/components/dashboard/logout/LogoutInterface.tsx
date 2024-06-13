@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { removeSession } from "../../service/sessionService";
-import { deleteUserCookie } from "../../lib/cookieManager";
-import { Button, H2, Input } from "../base";
-import { useAppContext, useUserContext } from "../../contexts";
+import { removeSession } from "../../../service/sessionService";
+import { deleteUserCookie } from "../../../lib/cookieManager";
+import { Button, H2, Input } from "../../base";
+import { useAppContext, useUserContext } from "../../../contexts";
 
 export default function LogOutInterface() {
   const { user } = useUserContext();

@@ -1,6 +1,7 @@
 "use server";
 
 import { saveBudget } from "../api/budget/budgetService";
+import { BudgetGraphProps } from "../components/display/budget/BudgetGraph";
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge, DisplayBudget, PastBudget } from "../types";
 import { getFirstOfWeek } from "../util";
@@ -88,4 +89,15 @@ const organizeOldCharges = (pastCharges: Charge[]): PastBudget[] => {
   }
 
   return pastBudgets;
+};
+
+export const getBudgetGraphParams = async (budget: Budget): Promise<BudgetGraphProps> => {
+  const charges = budget.weeklyCharges?.map((charge) => charge as Charge);
+
+  const limit = budget.weeklyBudget;
+  const total = charges?.reduce((acc, charge) => acc + charge.amount, 0);
+
+  const barPercentage = (total / limit) * 100;
+
+  return { limit, total, barPercentage };
 };

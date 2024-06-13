@@ -1,4 +1,3 @@
-import { DailyForecast, PartialForecast } from "../../types/weather";
 import { CSSProperties, ReactElement } from "react";
 import {
   WiAlien,
@@ -8,7 +7,8 @@ import {
   WiSnow,
   WiThunderstorm,
 } from "react-icons/wi";
-import { colors } from "../../styles/colors";
+import { DailyForecast, PartialForecast } from "../../../types";
+import { colors } from "../../../styles/colors";
 
 type ForecastBarProps = {
   forecast: DailyForecast | undefined;

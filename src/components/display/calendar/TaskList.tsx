@@ -1,9 +1,10 @@
 "use client";
 
 import { CSSProperties, useEffect, useRef } from "react";
-import { Task } from "../../types/task";
-import { colors } from "../../styles/colors";
-import { getDateAndTime } from "../../util";
+import { Task } from "../../../types";
+import { colors } from "../../../styles/colors";
+import { getDateAndTime } from "../../../util";
+
 
 type TaskListProps = {
   tasks: Task[];

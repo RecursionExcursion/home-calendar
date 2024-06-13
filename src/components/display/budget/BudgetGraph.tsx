@@ -1,8 +1,8 @@
 "use client";
 
-import { colors } from "../../styles/colors";
+import { colors } from "../../../styles/colors";
 
-type BudgetGraphProps = {
+export type BudgetGraphProps = {
   limit: number;
   total: number;
   barPercentage: number;
@@ -18,15 +18,8 @@ export default function BudgetGraph(props: BudgetGraphProps) {
 
   return (
     <div
-      style={{
-        width: "80%",
-        display: "flex",
-        flexDirection: "column",
-        justifyItems: "center",
-        alignItems: "center",
-        padding: "0.5rem",
-        gap: "1.25rem",
-      }}
+      className="colContainer"
+      style={{ width: "80%", padding: "0.5rem", gap: "1.25rem" }}
     >
       <div
         style={{
@@ -39,19 +32,17 @@ export default function BudgetGraph(props: BudgetGraphProps) {
         Budget
       </div>
       <div
+        className="basicBorder"
         style={{
           width: "100%",
           height: "5rem",
-          border: "1px solid white",
           position: "relative",
         }}
       >
         <div
+          className="rowContainer"
           style={{
             height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             width: `${barPercentage}%`,
             backgroundColor: colors.prioirtyColors[barColor],
           }}

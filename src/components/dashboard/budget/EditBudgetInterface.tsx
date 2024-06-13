@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { BudgetInputGroup } from "./BudgetInputGroup";
-import { Budget } from "../../types";
-import { saveBudget } from "../../api/budget/budgetService";
-import { BudgetState } from "../dashboard/DashboardBudgetUI";
-import { Button } from "../base";
+import { Budget } from "../../../types";
+import { saveBudget } from "../../../api/budget/budgetService";
+import { BudgetState } from "./DashboardBudgetUI";
+import { Button } from "../../base";
 
 type EditBudgetIntefaceProps = {
   budgetState: BudgetState;
@@ -13,9 +13,13 @@ type EditBudgetIntefaceProps = {
 
 export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   const { budget, setBudget } = props.budgetState;
+
   const [stateHasChanged, setStateHasChanged] = useState(false);
+
   const [initalBudget, setInitialBudget] = useState<Budget>({ ...budget });
+
   const [editMode, setEditMode] = useState(false);
+
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

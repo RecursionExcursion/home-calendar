@@ -3,33 +3,45 @@
 import { dashboardRoutes } from "../../constants/routes";
 import { colors } from "../../styles/colors";
 import StyledLink from "../base/Link";
+import {
+  FaHouse,
+  FaListCheck,
+  FaDollarSign,
+  FaTv,
+  FaGear,
+  FaRightFromBracket,
+} from "react-icons/fa6";
 
+const iconSize = 30;
 export default function DashboardSideBar() {
   return (
     <div
       style={{
-        width: "4rem",
+        width: "3rem",
         height: "100%",
-        backgroundColor: "#1a202c",
+        backgroundColor: colors.blueGray,
         padding: "0 1rem",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "5rem",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
-        <DashboardLink href="/">Home</DashboardLink>
-        <DashboardLink href={dashboardRoutes.tasks}>Add Task</DashboardLink>
-        <DashboardLink href={dashboardRoutes.budget}>Budget</DashboardLink>
-        <DashboardLink href={dashboardRoutes.display}>Display</DashboardLink>
-        <DashboardLink href={dashboardRoutes.settings}>Settings</DashboardLink>
-        <DashboardLink href={dashboardRoutes.logout}>Log out</DashboardLink>
+      <div className="colContainer" style={{ gap: "5rem", height: "100%" }}>
+        <DashboardLink href="/">
+          <FaHouse size={iconSize} />
+        </DashboardLink>
+        <DashboardLink href={dashboardRoutes.tasks}>
+          <FaListCheck size={iconSize} />
+        </DashboardLink>
+        <DashboardLink href={dashboardRoutes.budget}>
+          <FaDollarSign size={iconSize} />
+        </DashboardLink>
+        <DashboardLink href={dashboardRoutes.display}>
+          <FaTv size={iconSize} />
+        </DashboardLink>
+        <DashboardLink href={dashboardRoutes.settings}>
+          <FaGear size={iconSize} />
+        </DashboardLink>
+        <DashboardLink href={dashboardRoutes.logout}>
+          <FaRightFromBracket size={iconSize} />
+        </DashboardLink>
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Charge } from "../../types";
+import { Charge } from "../../../types";
 import { BudgetInputGroup } from "./BudgetInputGroup";
-import { H2, Button } from "../base";
-import { saveBudget } from "../../api/budget/budgetService";
-import { BudgetState } from "../dashboard/DashboardBudgetUI";
+import { H2, Button } from "../../base";
+import { saveBudget } from "../../../api/budget/budgetService";
+import { BudgetState } from "./DashboardBudgetUI";
+import { useAppContext } from "../../../contexts";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -13,6 +14,8 @@ type AddChargeInterfaceProps = {
 
 export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const { budget, setBudget } = props.budgetState;
+
+  const { showToast } = useAppContext();
 
   const [newCharge, setNewCharge] = useState(getEmptyCharge());
 
@@ -22,6 +25,12 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     budgetCopy.weeklyCharges.push(newCharge);
     await saveBudget(budgetCopy);
     setBudget(budgetCopy);
+    setNewCharge(getEmptyCharge());
+    showToast({
+      title: "Success",
+      message: "Charge added successfully",
+      type: "success",
+    });
   };
 
   return (
@@ -51,6 +60,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
           },
         }}
       />
+
       {/* TODO: Change to text input and use regex instead of number */}
       <BudgetInputGroup
         labelAttrs={{
