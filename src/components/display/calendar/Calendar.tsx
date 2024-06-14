@@ -2,7 +2,6 @@
 
 import { useCalendarRouter } from "../../../hooks/useCalendarRouter";
 import { changeDate, getFirstOnCalender, getFullMonthName } from "../../../util";
-import { Grid1, Grid7 } from "./CalenderGrids";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
 
@@ -24,23 +23,14 @@ export default function Calendar(props: CalendarProps) {
   const monthName = `${getFullMonthName(date)} ${date.getFullYear()}`;
 
   const generateCalendar = () => {
-    if (mode === "day") {
-      return (
-        <Grid1
-          headers={
-            <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />
-          }
-          daySqauares={generateDaySquares(params)}
-        />
-      );
-    }
+    const headerClass = mode === "day" ? "dayGrid" : "headerGrid";
+    const calendarClass = mode === "day" ? "dayGrid" : "calendarGrid";
+
     return (
-      <Grid7
-        headers={
-          <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />
-        }
-        daySqauares={generateDaySquares(params)}
-      />
+      <>
+        <div className={headerClass}>{generateHeaders(params)}</div>
+        <div className={calendarClass}>{generateDaySquares(params)}</div>
+      </>
     );
   };
 
@@ -53,6 +43,10 @@ export default function Calendar(props: CalendarProps) {
 }
 
 type params = { mode: Mode; date: Date };
+
+const generateHeaders = ({ mode, date }: params): JSX.Element => {
+  return <DaysOfWeekCalenderHeader mode={mode ?? "month"} dayOfWeek={date.getDay()} />;
+};
 
 const generateDaySquares = ({ mode, date }: params): JSX.Element[] => {
   const calendarLength = calenderLengthMap.get(mode) ?? 0;

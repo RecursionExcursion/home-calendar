@@ -22,3 +22,15 @@
 .growContainer {
   flex-grow: 1;
 }
+
+.homeContainer {
+  display: flex;
+
+  flex-direction: row;
+  // @media screen and (min-width: $desktop) {
+  // }
+
+  @media screen and (min-width: $desktop) {
+    flex-direction: column;
+  }
+}
