@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { createNewTask } from "../../api/task/taskService";
-
-import { NewTask } from "../../types/task";
-import { useAppContext } from "../../contexts/AppContext";
-import { Button, H2, Input } from "../base";
-import { dateAndTimeToDate, getDateAndTime } from "../../util";
+import { createNewTask } from "../../../api/task/taskService";
+import { NewTask } from "../../../types/task";
+import { Button, H2, Input } from "../../base";
+import { dateAndTimeToDate, getDateAndTime } from "../../../util";
+import { useDashboardContext} from "../../../contexts";
 
 export default function NewTaskInterface() {
-  const { showToast } = useAppContext();
+  const { showToast } = useDashboardContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
 

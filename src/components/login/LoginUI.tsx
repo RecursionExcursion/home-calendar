@@ -12,10 +12,12 @@ import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { colors } from "../../styles/colors";
 import { areDatesLessThanXDaysApart } from "../../util";
+import { useDashboardContext } from "../../contexts";
 
 export default function LoginUI() {
   const router = useRouter();
-  const { showToast, showModal } = useAppContext();
+  const { showModal } = useAppContext();
+  const { showToast } = useDashboardContext();
 
   const [showRegistration, setShowRegistration] = useState(false);
 

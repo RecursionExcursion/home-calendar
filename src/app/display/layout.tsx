@@ -41,6 +41,8 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
     budgetJSON = await getBudget();
   } catch (e) {}
 
+
+  //TODO is this the best place to do this? Should this be done in the DisplayProvider or Service?
   await computeBudget(budgetJSON);
 
   return (

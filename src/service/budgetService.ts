@@ -1,6 +1,7 @@
 "use server";
 
 import { saveBudget } from "../api/budget/budgetService";
+import { BudgetGraphProps } from "../components/display/budget/BudgetWeekGraph";
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge, DisplayBudget, PastBudget } from "../types";
 import { getFirstOfWeek } from "../util";
@@ -76,6 +77,8 @@ const organizeOldCharges = (pastCharges: Charge[]): PastBudget[] => {
       return budgetDate.getTime() === firstOfChargeWeek.getTime();
     });
 
+    //TODO Add ability to track historically set budgets instead of using 0
+    //TODO Add ability to track historically set budgets instead of using 0
     if (budgetIndex === -1) {
       pastBudgets.push({
         date: firstOfChargeWeek.toISOString(),
@@ -88,4 +91,31 @@ const organizeOldCharges = (pastCharges: Charge[]): PastBudget[] => {
   }
 
   return pastBudgets;
+};
+
+export const getBudgetWeekGraphParams = async (
+  budget: Budget
+): Promise<BudgetGraphProps> => {
+  const charges = budget.weeklyCharges?.map((charge) => charge as Charge);
+
+  const limit = budget.weeklyBudget;
+  const total = charges?.reduce((acc, charge) => acc + charge.amount, 0);
+
+  const barPercentage = (total / limit) * 100;
+
+  return { limit, total, barPercentage };
+};
+
+export const getBudgetEntriesAsPastBudgets = async (
+  budget: Budget
+): Promise<PastBudget[]> => {
+  const currentHistorical: PastBudget = {
+    date: getFirstOfWeek(new Date()).toISOString(),
+    budget: budget.weeklyBudget,
+    actual: budget.weeklyCharges.reduce((acc, charge) => acc + charge.amount, 0),
+  };
+
+  const allChargeWeeks = [...budget.historicalBudgets, currentHistorical];
+
+  return allChargeWeeks;
 };

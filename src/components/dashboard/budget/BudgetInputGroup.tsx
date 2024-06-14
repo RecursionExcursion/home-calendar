@@ -1,4 +1,4 @@
-import Input from "../base/Input";
+import Input from "../../base/Input";
 
 type BudgetInputGroupProps = {
   labelAttrs: React.ComponentPropsWithoutRef<"label">;

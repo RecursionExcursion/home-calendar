@@ -33,3 +33,14 @@ export const msTimestamps = {
   oneMinute: 1000 * 60,
   oneSecond: 1000,
 };
+
+export const roundToNextMultipleOf100 = (num: number) => {
+  let remainder = num % 100;
+
+  if (remainder === 0) {
+    return num;
+  }
+  let difference = 100 - remainder;
+  let roundedNumber = num + difference;
+  return roundedNumber;
+};

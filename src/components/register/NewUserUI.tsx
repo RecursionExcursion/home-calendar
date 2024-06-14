@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { createNewUser } from "../../api/user/userService";
-import { useAppContext } from "../../contexts";
+import { useDashboardContext } from "../../contexts";
 import { H2, Input, Button } from "../base";
 
 export default function NewUserUI() {
-  const { showToast } = useAppContext();
+  const { showToast } = useDashboardContext();
   const router = useRouter();
 
   const [newAccountCredentials, setNewAccountCredentials] = useState({

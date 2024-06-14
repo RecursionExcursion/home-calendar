@@ -66,7 +66,9 @@ export default function WeatherOptionsMenu() {
   };
 
   return (
-    <div className="rowContainer">
+    <div className="rowContainer" style={{
+      gap: "1rem",
+    }}>
       <label htmlFor="enableWeatherCheckbox">Enable forecast</label>
       <Input
         name="enableWeatherCheckbox"

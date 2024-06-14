@@ -1,14 +1,14 @@
 "use client";
 
-import { colors } from "../../styles/colors";
+import { colors } from "../../../styles/colors";
 
-type BudgetGraphProps = {
+export type BudgetGraphProps = {
   limit: number;
   total: number;
   barPercentage: number;
 };
 
-export default function BudgetGraph(props: BudgetGraphProps) {
+export default function BudgetWeekGraph(props: BudgetGraphProps) {
   const { limit, total, barPercentage } = props;
 
   let barColor: keyof typeof colors.prioirtyColors =
@@ -18,15 +18,8 @@ export default function BudgetGraph(props: BudgetGraphProps) {
 
   return (
     <div
-      style={{
-        width: "80%",
-        display: "flex",
-        flexDirection: "column",
-        justifyItems: "center",
-        alignItems: "center",
-        padding: "0.5rem",
-        gap: "1.25rem",
-      }}
+      className="colContainer"
+      style={{ width: "80%", padding: "0.5rem", gap: "1.25rem" }}
     >
       <div
         style={{
@@ -39,33 +32,21 @@ export default function BudgetGraph(props: BudgetGraphProps) {
         Budget
       </div>
       <div
+        className="basicBorder relative"
         style={{
           width: "100%",
           height: "5rem",
-          border: "1px solid white",
-          position: "relative",
         }}
       >
         <div
+          className="rowContainer"
           style={{
             height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: `${barPercentage}%`,
+            width: `${Math.min(barPercentage, 100)}%`,
             backgroundColor: colors.prioirtyColors[barColor],
           }}
         ></div>
-        <span
-          style={{
-            position: "absolute",
-            transform: "translate(-50%, -50%)",
-            left: `50%`,
-            top: `50%`,
-            color: colors.white,
-            fontWeight: 700,
-          }}
-        >
+        <span className="absoluteCenter" style={{ color: colors.white, fontWeight: 700 }}>
           {spanText}
         </span>
       </div>

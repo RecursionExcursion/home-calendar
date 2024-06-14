@@ -1,12 +1,12 @@
 "use client";
 
 import { FaTrash } from "react-icons/fa";
-import { Button, H2 } from "../base";
-import { Task } from "../../types";
-import { colors } from "../../styles/colors";
+import { Button, H2 } from "../../base";
+import { Task } from "../../../types";
+import { colors } from "../../../styles/colors";
 import { CSSProperties, useState } from "react";
-import { deleteTask, getAllTasks } from "../../api/task/taskService";
-import { useAppContext } from "../../contexts";
+import { deleteTask, getAllTasks } from "../../../api/task/taskService";
+import { useDashboardContext } from "../../../contexts";
 
 type HomeTaskTableProps = {
   tasks: Task[];
@@ -14,7 +14,7 @@ type HomeTaskTableProps = {
 
 export default function HomeTaskTable(props: HomeTaskTableProps) {
   const { tasks: propTasks } = props;
-  const { showToast } = useAppContext();
+  const { showToast } = useDashboardContext();
 
   const [tasks, setTasks] = useState<Task[]>(propTasks);
 
@@ -44,7 +44,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div className="greedyContainer colContainer">
+    <div className="greedyContainer colContainer" >
       <H2>HomeTaskTable</H2>
 
       <div

@@ -45,7 +45,7 @@ export default function DeleteTasksAfterMenu() {
   };
 
   return (
-    <div className="rowContainer">
+    <div className="rowContainer" style={{ gap: "1rem" }}>
       <label>Delete tasks after</label>
       <Input
         theme="number"

@@ -6,9 +6,12 @@ import WeatherOptionsMenu from "../../../components/dashboard/settings/WeatherOp
 
 export default async function SettingsPage() {
   return (
-    <div className="colContainer">
+    <div className="colContainer" style={{ gap: "1rem" }}>
       <H2>Settings</H2>
-      <div className="colContainer" style={{ alignItems: "start" }}>
+      <div
+        className="colContainer"
+        style={{ alignItems: "start", width: "80%", gap: "1rem" }}
+      >
         <WeatherOptionsMenu />
         <DeleteTasksAfterMenu />
       </div>
