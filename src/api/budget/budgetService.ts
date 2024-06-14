@@ -2,11 +2,8 @@
 
 import { ObjectId } from "mongodb";
 import { Budget } from "../../types";
-import {
-  createBudget,
-  readAllBudgets,
-  updateBudget,
-} from "./budgetRepo";
+import { createBudget, readAllBudgets, updateBudget } from "./budgetRepo";
+import { computeBudget } from "../../service/budgetService";
 
 const getAllBudgets = async (): Promise<Budget[]> => {
   return (await readAllBudgets()) as Budget[];

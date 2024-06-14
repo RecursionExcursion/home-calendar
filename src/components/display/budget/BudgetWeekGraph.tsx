@@ -8,7 +8,7 @@ export type BudgetGraphProps = {
   barPercentage: number;
 };
 
-export default function BudgetGraph(props: BudgetGraphProps) {
+export default function BudgetWeekGraph(props: BudgetGraphProps) {
   const { limit, total, barPercentage } = props;
 
   let barColor: keyof typeof colors.prioirtyColors =
@@ -32,31 +32,21 @@ export default function BudgetGraph(props: BudgetGraphProps) {
         Budget
       </div>
       <div
-        className="basicBorder"
+        className="basicBorder relative"
         style={{
           width: "100%",
           height: "5rem",
-          position: "relative",
         }}
       >
         <div
           className="rowContainer"
           style={{
             height: "100%",
-            width: `${barPercentage}%`,
+            width: `${Math.min(barPercentage, 100)}%`,
             backgroundColor: colors.prioirtyColors[barColor],
           }}
         ></div>
-        <span
-          style={{
-            position: "absolute",
-            transform: "translate(-50%, -50%)",
-            left: `50%`,
-            top: `50%`,
-            color: colors.white,
-            fontWeight: 700,
-          }}
-        >
+        <span className="absoluteCenter" style={{ color: colors.white, fontWeight: 700 }}>
           {spanText}
         </span>
       </div>

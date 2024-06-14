@@ -2,10 +2,10 @@
 
 import { getBudget } from "../../api/budget/budgetService";
 import { getAllTasks } from "../../api/task/taskService";
+import BudgetOverview from "../../components/dashboard/budget/BudgetOverview";
 import HomeTaskTable from "../../components/dashboard/home/HomeTaskTable";
-import BudgetGraph from "../../components/display/budget/BudgetGraph";
-import { getBudgetGraphParams } from "../../service/budgetService";
-import { Budget, Task } from "../../types";
+import { computeBudget } from "../../service/budgetService";
+import { Task } from "../../types";
 
 export default async function DashboardPage() {
   const allTasksJson = await getAllTasks();
@@ -14,8 +14,8 @@ export default async function DashboardPage() {
   });
 
   const budgetJSON = await getBudget();
-  const parsedBudget = JSON.parse(budgetJSON) as Budget;
-  const graphProps = await getBudgetGraphParams(parsedBudget);
+  const computedBudget = await computeBudget(budgetJSON);
+  const parsedBudget = JSON.stringify(computedBudget?.parsedBudget);
 
   return (
     <div className="greedyContainer">
@@ -23,7 +23,7 @@ export default async function DashboardPage() {
         <HomeTaskTable tasks={allTasks} />
       </div>
       <div className="rowContainer" style={{ height: "50%" }}>
-        <BudgetGraph {...graphProps} />
+        <BudgetOverview budgetJson={parsedBudget} />
       </div>
     </div>
   );
