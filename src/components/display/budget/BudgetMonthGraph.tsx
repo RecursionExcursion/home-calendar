@@ -16,7 +16,7 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
   const last4Budgets = allBudgets.slice(-4);
 
   const budgetMax = roundToNextMultipleOf100(
-    allBudgets.reduce((acc, budget) => {
+    last4Budgets.reduce((acc, budget) => {
       return Math.max(acc, budget.actual);
     }, 0)
   );
