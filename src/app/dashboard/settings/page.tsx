@@ -8,7 +8,7 @@ export default async function SettingsPage() {
   return (
     <div className="colContainer">
       <H2>Settings</H2>
-      <div className="colContainer" style={{ alignItems: "start" }}>
+      <div className="colContainer" style={{ alignItems: "start", width:"80%" }}>
         <WeatherOptionsMenu />
         <DeleteTasksAfterMenu />
       </div>
