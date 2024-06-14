@@ -23,7 +23,9 @@ export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
    */
 
   return (
-    <div className="colContainer">
+    <div className="colContainer" style={{
+      gap: "1rem",
+    }}>
       <H2>Budget</H2>
       <EditBudgetInteface budgetState={{ budget, setBudget }} />
       <AddChargeInterface budgetState={{ budget, setBudget }} />

@@ -47,7 +47,12 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   };
 
   return !loaded ? null : (
-    <div className="colContainer">
+    <div
+      className="colContainer"
+      style={{
+        gap: "1rem",
+      }}
+    >
       <BudgetInputGroup
         labelAttrs={{
           children: "Edit Budget",
