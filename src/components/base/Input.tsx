@@ -24,7 +24,6 @@ const baseStyle: React.CSSProperties = {
   borderRadius: "0.25rem",
   color: colors.black,
   padding: "0.25rem 0.5rem",
-  width: "100%",
 };
 
 const inputStyles: Record<inputStyle, React.CSSProperties> = {
@@ -33,7 +32,9 @@ const inputStyles: Record<inputStyle, React.CSSProperties> = {
   dashboard: {
     ...baseStyle,
     padding: "0.125rem 0.5rem",
-    width: "auto",
+    height: "3rem",
+    fontSize: "1.125rem",
+    lineHeight: "1.75rem",
   },
 
   disabled: {
@@ -43,7 +44,7 @@ const inputStyles: Record<inputStyle, React.CSSProperties> = {
     cursor: "not-allowed",
   },
 
-  checkbox: {},
+  checkbox: {...baseStyle,},
 
   number: { ...baseStyle, width: "3rem" },
 };

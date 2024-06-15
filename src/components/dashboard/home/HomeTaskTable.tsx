@@ -44,7 +44,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div className="greedyContainer colContainer" >
+    <div className="greedyContainer colContainer">
       <H2>HomeTaskTable</H2>
 
       <div
@@ -65,8 +65,8 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         </div>
       </div>
 
-      <div style={{ height: "60%", overflowY: "auto", width: "80%" }}>
-        <table className="basicBorder" style={{ width: "100%" }}>
+      <div className="greedyContainer" style={{ overflowY: "auto", width: "95%" }}>
+        <table className="basicBorder greedyContainer" style={{ width: "100%" }}>
           <tbody>
             {tasks.map((task, i) => {
               const key = i + task?._id?.toString();
@@ -82,11 +82,25 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
 
               const tdStyle: CSSProperties = { textAlign: "center" };
 
+              const tdWidth: Record<string, CSSProperties> = {
+                description: { width: "40%" },
+                date: { width: "30%" },
+                delete: { width: "20%" },
+              };
+
               return (
-                <tr className="basicBorder" key={key}>
-                  <td style={tdStyle}>{task.task}</td>
-                  <td style={{ ...dateStyle, ...tdStyle }}>{displayDate}</td>
-                  <td style={tdStyle}>
+                <tr
+                  className="basicBorder"
+                  key={key}
+                  style={{
+                    height: "5rem",
+                  }}
+                >
+                  <td style={{ ...tdStyle,  ...tdWidth.description }}>{task.task} </td>
+                  <td style={{ ...dateStyle, ...tdStyle, ...tdWidth.date }}>
+                    {displayDate}
+                  </td>
+                  <td style={{ ...tdStyle, ...tdWidth.delete }}>
                     <Button
                       child={<FaTrash />}
                       theme="none"

@@ -100,7 +100,7 @@ const BudgetOverviewRadioButton = (props: BudgetOverviewRadioButtonProps) => {
 
   return (
     <div
-      className="basicBorder growContainer"
+      className="basicBorder flexGrow"
       style={{
         padding: "0.5rem",
         backgroundColor: `${selectedView === value ? colors.darkGray : "transparent"}`,

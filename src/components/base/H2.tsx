@@ -24,5 +24,6 @@ type H2Props = React.ComponentPropsWithoutRef<"h2"> & {
 
 export default function H2(props: H2Props) {
   const { theme = "budget", ...rest } = props;
+
   return <h2 style={h2Stlyes[theme]} {...rest} />;
 }

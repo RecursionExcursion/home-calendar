@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { Charge } from "../../../types";
-import { BudgetInputGroup } from "./BudgetInputGroup";
-import { H2, Button } from "../../base";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
@@ -20,6 +18,8 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const [newCharge, setNewCharge] = useState(getEmptyCharge());
 
   const handleAddCharge = async () => {
+    console.log(validateCharge());
+
     const budgetCopy = { ...budget };
 
     budgetCopy.weeklyCharges.push(newCharge);
@@ -33,66 +33,94 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     });
   };
 
-  return (
-    <div
-      className="flex flex-col items-center gap-3"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "0.75rem",
-      }}
-    >
-      <H2>Add a Charge</H2>
-      {/* TODO: Flesh out date logic, currenlty it just uses Date.now() */}
-      <BudgetInputGroup
-        labelAttrs={{
-          children: "Date",
-        }}
-        inputAttrs={{
-          type: "date",
-          value: newCharge.date,
-          onChange: (e) => {
-            setNewCharge((prev) => ({
-              ...prev,
-              date: e.target.value,
-            }));
-          },
-        }}
-      />
+  const handleChargeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    let { value } = e.target;
 
-      {/* TODO: Change to text input and use regex instead of number */}
-      <BudgetInputGroup
-        labelAttrs={{
-          children: "Amount",
-        }}
-        inputAttrs={{
-          type: "number",
-          value: newCharge.amount,
-          onChange: (e) => {
-            setNewCharge((prev) => ({
-              ...prev,
-              amount: parseInt(e.target.value),
-            }));
-          },
-        }}
-      />
-      <BudgetInputGroup
-        labelAttrs={{
-          children: "Description",
-        }}
-        inputAttrs={{
-          type: "text",
-          value: newCharge.description,
-          onChange: (e) => {
-            setNewCharge((prev) => ({
-              ...prev,
-              description: e.target.value,
-            }));
-          },
-        }}
-      />
-      <Button child="Add Charge" onClick={handleAddCharge} />
+    console.log({ name, value });
+
+    switch (name) {
+      case "date":
+        break;
+      case "amount":
+        if (value === "") break;
+
+        const anyInvalid = value
+          .split("")
+          .find((char) => isNaN(parseInt(char)) && char !== ".");
+        if (anyInvalid) return;
+
+        const fixed2Regex = /^\d+(\.\d{0,2})?$/;
+        if (!fixed2Regex.test(value)) return;
+        break;
+      case "description":
+        break;
+    }
+
+    setNewCharge((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const validateCharge = (): boolean => {
+    const amountRegex = /^\$?[\d,]+(\.\d*)?$/;
+
+    if (!amountRegex.test(newCharge.amount.toString())) {
+      return false;
+    }
+
+    newCharge.amount = parseFloat(newCharge.amount.toString());
+
+    return true;
+  };
+
+  return (
+    <div className="colContainer gap-1">
+      <h2 className="text-2xl">Add a Charge</h2>
+
+      <div className="colContainer gap-1">
+        <label className="text-xl" htmlFor="date">
+          Date
+        </label>
+        <input
+          className="db-input"
+          type="date"
+          name="date"
+          value={newCharge.date}
+          onChange={handleChargeChange}
+        />
+      </div>
+
+      <div className="colContainer gap-1">
+        <label className="text-xl" htmlFor="date">
+          Amount
+        </label>
+        <input
+          className="db-input"
+          type="text"
+          name="amount"
+          value={newCharge.amount}
+          onChange={handleChargeChange}
+        />
+      </div>
+
+      <div className="colContainer gap-1">
+        <label className="text-xl" htmlFor="date">
+          Description
+        </label>
+        <input
+          className="db-input"
+          type="text"
+          name="description"
+          value={newCharge.description}
+          onChange={handleChargeChange}
+        />
+      </div>
+
+      <button className="db-button" onClick={handleAddCharge}>
+        Add Charge
+      </button>
     </div>
   );
 };
@@ -100,7 +128,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
 const getEmptyCharge = (): Charge => {
   return {
     date: new Date().toISOString(),
-    amount: 0,
+    amount: 0.0,
     description: "",
   };
 };

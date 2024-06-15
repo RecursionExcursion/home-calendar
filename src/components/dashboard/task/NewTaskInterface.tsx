@@ -5,7 +5,7 @@ import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
 import { Button, H2, Input } from "../../base";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
-import { useDashboardContext} from "../../../contexts";
+import { useDashboardContext } from "../../../contexts";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
@@ -79,14 +79,17 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div className="colContainer" style={{ gap: "0.5rem", padding: "0.5rem" }}>
-      <H2 theme="task">Create a Task</H2>
+    <div className="greedyContainer colContainer" style={{ gap: "0.5rem" }}>
+      <h2 className="db-h2">Create a Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <div className="colContainer" style={{ gap: "1rem" }}>
-          <div className="colContainer" style={{ gap: "0.5rem", alignItems: "normal" }}>
-            <Input
-              theme="dashboard"
+        <div className="greedyContainer" style={{ gap: "1rem" }}>
+          <div
+            className="greedyContainer colContainer"
+            style={{ gap: "0.5rem", alignItems: "normal" }}
+          >
+            <input
+              className="db-input"
               type="text"
               id="task"
               name="task"
@@ -95,8 +98,8 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <Input
-              theme="dashboard"
+            <input
+              className="db-input"
               type="date"
               id="date"
               name="date"
@@ -108,8 +111,8 @@ export default function NewTaskInterface() {
               className="rowContainer"
               style={{ justifyContent: "space-evenly", alignItems: "center" }}
             >
-              <Input
-                theme="dashboard"
+              <input
+                className="db-input"
                 type="time"
                 id="time"
                 name="time"
@@ -117,51 +120,56 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div className="rowContainer">
+              <div className="rowContainer gap-0_5">
                 <label htmlFor="allDay">All Day</label>
-                <Input theme="checkbox" type="checkbox" id="allDay" name="allDay" />
+                <input
+                  className="db-checkbox"
+                  type="checkbox"
+                  id="allDay"
+                  name="allDay"
+                />
               </div>
             </div>
-            <Input
-              theme="dashboard"
+            <input
+              className="db-input"
               type="text"
               id="createdBy"
               name="createdBy"
               placeholder="Created By"
               value={newTaskForm.createdById}
               onChange={handleFormChange}
-              //TODO Disabled for now
               disabled
             />
-            <Input
-              theme="dashboard"
+
+            <input
+              className="db-input"
               type="text"
               id="assignedTo"
               name="assignedTo"
               placeholder="Assigned To"
               value={newTaskForm.assignedToId ?? undefined}
               onChange={handleFormChange}
-              //TODO Disabled for now
               disabled
             />
-            <Input
-              theme="dashboard"
+
+            <input
+              className="db-input"
               type="date"
               id="expiration"
               name="expiration"
               placeholder="Expiration"
               value={newTaskForm.expiration ?? undefined}
               onChange={handleFormChange}
-              //TODO Disabled for now
               disabled
             />
+
             <div className="colContainer" style={{ gap: "0.5rem" }}>
               {/* TODO: Will need to be a select that pulls down the priority */}
               <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
                 Priority
               </label>
-              <Input
-                theme="dashboard"
+              <input
+                className="db-input"
                 type="number"
                 id="priortiy"
                 name="priortiy"
@@ -170,7 +178,9 @@ export default function NewTaskInterface() {
               />
             </div>
           </div>
-          <Button type="submit" child={"Submit"} />
+          <button className="db-button" type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>

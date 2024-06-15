@@ -1,0 +1,31 @@
+@mixin gap-0_5 {
+  gap: 0.5rem;
+}
+
+@mixin gap-1 {
+  gap: 1rem;
+}
+
+@mixin gap-1_5 {
+  gap: 1.5rem;
+}
+
+@mixin gap-2 {
+  gap: 2rem;
+}
+
+.gap-0_5 {
+  @include gap-0_5;
+}
+
+.gap-1 {
+  @include gap-1;
+}
+
+.gap-1_5 {
+  @include gap-1-5;
+}
+
+.gap-2 {
+  @include gap-2;
+}

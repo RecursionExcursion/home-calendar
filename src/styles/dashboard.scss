@@ -1,0 +1,25 @@
+.db-input {
+  @include input-base;
+  @include text-base;
+  height: 3rem;
+  padding: 0.25rem 0.5rem;
+}
+
+$checkboxSize: 1.5rem;
+.db-checkbox {
+  @include input-base;
+  height: $checkboxSize;
+  width: $checkboxSize;
+}
+
+.db-h2 {
+  @include text-4xl;
+}
+
+.db-button {
+  @include button-base;
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+}
