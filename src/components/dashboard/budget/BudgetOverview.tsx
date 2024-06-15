@@ -31,7 +31,6 @@ export default function BudgetOverview(props: BudgetOverviewProps) {
         break;
       case "last4":
         getBudgetEntriesAsPastBudgets(parsedBudget).then((pastBudgets) => {
-          console.log({ pastBudgets });
           setRenderedView(<BudgetMonthGraph allBudgets={pastBudgets} />);
         });
         break;

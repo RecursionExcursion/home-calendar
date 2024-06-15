@@ -1,14 +1,14 @@
 import { CSSProperties, ReactElement } from "react";
-import {
-  WiAlien,
-  WiCloudy,
-  WiDaySunny,
-  WiRain,
-  WiSnow,
-  WiThunderstorm,
-} from "react-icons/wi";
+
 import { DailyForecast, PartialForecast } from "../../../types";
 import { colors } from "../../../styles/colors";
+import { getIconGroup } from "../../../lib/icons/icons";
+import { WiAlien } from "react-icons/wi";
+import {
+  ForecastIcons,
+  ForecastMappings,
+  IconGroupParams,
+} from "../../../lib/icons/types";
 
 type ForecastBarProps = {
   forecast: DailyForecast | undefined;
@@ -44,21 +44,28 @@ const getForecastType = (forecast: PartialForecast | undefined): ReactElement =>
 
   const iconSize = 27;
 
+  //TODO Replace with a default icon from icons.ts
   if (!forecast) return <WiAlien size={iconSize} />;
 
-  const iconMap = new Map([
-    ["Thunderstorm", <WiThunderstorm key={"Thunderstorm"} size={iconSize} />],
-    ["Rain", <WiRain key={"Rain"} size={iconSize} />],
-    ["Cloudy", <WiCloudy key={"Cloudy"} size={iconSize} />],
-    ["Snow", <WiSnow key={"Snow"} size={iconSize} />],
-    ["Sunny", <WiDaySunny key={"Sunny"} size={iconSize} />],
-    ["Clear", <WiDaySunny key={"Clear"} size={iconSize} />],
+  const iconGroupParams: IconGroupParams = {
+    iconGroup: "forecastBar",
+    iconPackage: "wi",
+  };
+  const icons = getIconGroup(iconGroupParams) as ForecastIcons;
+
+  const iconMap = new Map<ForecastMappings, ReactElement>([
+    ["thunderstorm", <icons.thunderstorm key={"Thunderstorm"} size={iconSize} />],
+    ["rain", <icons.rain key={"Rain"} size={iconSize} />],
+    ["cloudy", <icons.cloudy key={"Cloudy"} size={iconSize} />],
+    ["snow", <icons.snow key={"Snow"} size={iconSize} />],
+    ["sunny", <icons.sunny key={"Sunny"} size={iconSize} />],
+    ["clear", <icons.clear key={"Clear"} size={iconSize} />],
   ]);
 
   //Will iterate over the map in the order of insertion
   const iconArray = Array.from(iconMap);
   for (const [key, value] of iconArray) {
-    if (joinedShortForecast?.includes(key)) {
+    if (joinedShortForecast?.toLowerCase().includes(key)) {
       return value;
     }
   }

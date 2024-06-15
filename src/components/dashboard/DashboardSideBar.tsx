@@ -1,19 +1,19 @@
 "use client";
 
 import { dashboardRoutes } from "../../constants/routes";
+import { getIconGroup } from "../../lib/icons/icons";
+import { DashboardIcons, IconGroupParams } from "../../lib/icons/types";
 import { colors } from "../../styles/colors";
 import StyledLink from "../base/Link";
-import {
-  FaHouse,
-  FaListCheck,
-  FaDollarSign,
-  FaTv,
-  FaGear,
-  FaRightFromBracket,
-} from "react-icons/fa6";
 
 const iconSize = 30;
+
 export default function DashboardSideBar() {
+  const iconGroupParams: IconGroupParams = {
+    iconGroup: "dashboardSidebar",
+    iconPackage: "io",
+  };
+  const icons = getIconGroup(iconGroupParams) as DashboardIcons;
   return (
     <div
       style={{
@@ -25,23 +25,23 @@ export default function DashboardSideBar() {
     >
       <div className="colContainer" style={{ gap: "5rem", height: "100%" }}>
         <DashboardLink href="/">
-          <FaHouse size={iconSize} />
+          <icons.home size={iconSize} />
         </DashboardLink>
         <DashboardLink href={dashboardRoutes.tasks}>
-          <FaListCheck size={iconSize} />
+          <icons.tasks size={iconSize} />
         </DashboardLink>
         <DashboardLink href={dashboardRoutes.budget}>
-          <FaDollarSign size={iconSize} />
+          <icons.budget size={iconSize} />
         </DashboardLink>
         <DashboardLink href={dashboardRoutes.display}>
-          <FaTv size={iconSize} />
+          <icons.display size={iconSize} />
         </DashboardLink>
         <DashboardLink href={dashboardRoutes.settings}>
-          <FaGear size={iconSize} />
+          <icons.settings size={iconSize} />
         </DashboardLink>
         <DashboardLink href={dashboardRoutes.logout}>
-          <FaRightFromBracket size={iconSize} />
-        </DashboardLink>
+          <icons.logout size={iconSize} />
+        </DashboardLink>{" "}
       </div>
     </div>
   );
