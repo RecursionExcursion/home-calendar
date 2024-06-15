@@ -56,3 +56,7 @@ export const getTimeDifference = (epoch1: number, epoch2: number) => {
   // Return the formatted string
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 };
+
+export const normalizeString = (str: string) => {
+  return str.toLowerCase();
+};

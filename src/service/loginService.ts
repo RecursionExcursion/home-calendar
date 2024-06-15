@@ -1,7 +1,7 @@
 "use server";
 
 import { getUser } from "../api/user/userService";
-import { createSha256Hash } from "../lib/util";
+import { createSha256Hash, normalizeString } from "../lib/util";
 import { Session, User } from "../types";
 import { createSessionCookie, checkUserSession } from "./sessionService";
 
@@ -9,7 +9,9 @@ export const login = async (
   username: string,
   password: string
 ): Promise<LoginReponse> => {
-  let user = await retrieveUser(username);
+  const normalizeUN = normalizeString(username);
+
+  let user = await retrieveUser(normalizeUN);
 
   if (!user || user.password !== createSha256Hash(password)) {
     return {
@@ -24,7 +26,7 @@ export const login = async (
   await checkUserSession(user);
 
   /*TODO Retrieving the user twice in the same fn, may need to be reworked */
-  user = await retrieveUser(username);
+  user = await retrieveUser(normalizeUN);
 
   await createSessionCookie(user);
 

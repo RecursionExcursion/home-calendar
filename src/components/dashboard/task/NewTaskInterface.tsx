@@ -89,7 +89,6 @@ export default function NewTaskInterface() {
           >
             <input
               className="db-input"
-              style={{ width: "100%" }}
               type="text"
               id="task"
               name="task"
@@ -100,7 +99,6 @@ export default function NewTaskInterface() {
             />
             <input
               className="db-input"
-              style={{ width: "100%" }}
               type="date"
               id="date"
               name="date"
