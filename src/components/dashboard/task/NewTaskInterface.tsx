@@ -89,6 +89,7 @@ export default function NewTaskInterface() {
           >
             <input
               className="db-input"
+              style={{ width: "100%" }}
               type="text"
               id="task"
               name="task"
@@ -99,6 +100,7 @@ export default function NewTaskInterface() {
             />
             <input
               className="db-input"
+              style={{ width: "100%" }}
               type="date"
               id="date"
               name="date"
@@ -126,6 +128,8 @@ export default function NewTaskInterface() {
                 />
               </div>
             </div>
+
+            {/* Hidden ad disabled for now */}
             <input
               className="db-input"
               type="text"
@@ -135,6 +139,7 @@ export default function NewTaskInterface() {
               value={newTaskForm.createdById}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
             <input
@@ -146,6 +151,7 @@ export default function NewTaskInterface() {
               value={newTaskForm.assignedToId ?? undefined}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
             <input
@@ -157,11 +163,17 @@ export default function NewTaskInterface() {
               value={newTaskForm.expiration ?? undefined}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
             <div className="row-container gap-0_5">
               {/* TODO: Will need to be a select that pulls down the priority */}
-              <label className="text-lg" htmlFor="priortiy" style={{ fontWeight: "600" }}>
+              <label
+                className="text-lg"
+                htmlFor="priortiy"
+                style={{ fontWeight: "600" }}
+                hidden
+              >
                 Priority
               </label>
               <input
@@ -171,8 +183,11 @@ export default function NewTaskInterface() {
                 name="priortiy"
                 value={newTaskForm.priortiy}
                 onChange={handleFormChange}
+                disabled
+                hidden
               />
             </div>
+            {/* end hidden and disabled*/}
           </div>
           <button className="db-button" type="submit">
             Submit

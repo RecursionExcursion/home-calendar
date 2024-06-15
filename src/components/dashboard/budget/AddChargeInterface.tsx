@@ -5,6 +5,7 @@ import { Charge } from "../../../types";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
+import NumberInput from "../../base/NumberInput";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -96,12 +97,12 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         <label className="text-xl" htmlFor="date">
           Amount
         </label>
-        <input
+        <NumberInput
+          setter={setNewCharge}
           className="db-input"
           type="text"
           name="amount"
           value={newCharge.amount}
-          onChange={handleChargeChange}
         />
       </div>
 
