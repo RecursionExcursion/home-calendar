@@ -18,11 +18,11 @@ export default async function DashboardPage() {
   const parsedBudget = JSON.stringify(computedBudget?.parsedBudget);
 
   return (
-    <div className="greedyContainer">
+    <div className="greedy-container">
       <div style={{ height: "50%" }}>
         <HomeTaskTable tasks={allTasks} />
       </div>
-      <div className="rowContainer" style={{ height: "50%" }}>
+      <div className="row-container" style={{ height: "50%" }}>
         <BudgetOverview budgetJson={parsedBudget} />
       </div>
     </div>

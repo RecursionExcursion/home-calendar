@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { removeSession } from "../../../service/sessionService";
 import { deleteUserCookie } from "../../../lib/cookieManager";
-import { Button, H2, Input } from "../../base";
 import { useDashboardContext, useUserContext } from "../../../contexts";
 
 export default function LogOutInterface() {
@@ -31,11 +30,14 @@ export default function LogOutInterface() {
   };
 
   return (
-    <div className="colContainer" style={{ gap: "2rem" }}>
-      <H2>Logout</H2>
-      <div className="rowContainer" style={{ textWrap: "nowrap", gap: "0.5rem" }}>
-        <label htmlFor="logoutAllSessions">Logout of all sessions?</label>
-        <Input
+    <div className="col-container gap-2">
+      <h2 className="db-h2">Logout</h2>
+      <div className="row-container gap-0_5" style={{ textWrap: "nowrap" }}>
+        <label className="text-base" htmlFor="logoutAllSessions">
+          Logout of all sessions?
+        </label>
+        <input
+          className="db-checkbox"
           type="checkbox"
           id="logoutAllSessions"
           name="logoutAllSessions"
@@ -43,7 +45,9 @@ export default function LogOutInterface() {
           onChange={() => setLogoutOfAllSessions(!logoutOfAllSessions)}
         />
       </div>
-      <Button theme="primary" child="Logout" onClick={handleLogout} />
+      <button className="db-button" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 }

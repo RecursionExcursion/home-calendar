@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BudgetInputGroup } from "./BudgetInputGroup";
 import { Budget } from "../../../types";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
-import { Button } from "../../base";
+import { useDashboardContext } from "../../../contexts";
 
 type EditBudgetIntefaceProps = {
   budgetState: BudgetState;
@@ -13,6 +12,8 @@ type EditBudgetIntefaceProps = {
 
 export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   const { budget, setBudget } = props.budgetState;
+
+  const { showToast } = useDashboardContext();
 
   const [stateHasChanged, setStateHasChanged] = useState(false);
 
@@ -34,6 +35,21 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
     setStateHasChanged(false);
   }, [budget]);
 
+  const handleBudgetLimitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!budget) return;
+
+    const parsed = parseInt(e.target.value);
+    if (!Number.isNaN(parsed)) {
+      setBudget(
+        (prev) =>
+          ({
+            ...prev,
+            weeklyBudget: parsed,
+          } as Budget)
+      );
+    }
+  };
+
   /*TODO: Make it so the weekly budget resets to its inital valule when Save
    * is pressed. May need to have the inital state in the parent.
    */
@@ -41,55 +57,65 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
     if (!budget) {
       return;
     }
-    const res = await saveBudget(budget);
-    setStateHasChanged(false);
-    // setEditMode(false);
+
+    try {
+      const res = await saveBudget(budget);
+      setStateHasChanged(false);
+      setEditMode(false);
+      showToast({
+        title: "Success",
+        message: "Budget updated successfully",
+        type: "success",
+      });
+    } catch (e) {
+      showToast({
+        title: "Error",
+        message: "An error occurred while updating the budget",
+        type: "error",
+      });
+    }
   };
 
   return !loaded ? null : (
     <div
-      className="colContainer"
+      className="col-container"
       style={{
         gap: "1rem",
       }}
     >
-      <BudgetInputGroup
-        labelAttrs={{
-          children: "Edit Budget",
-        }}
-        inputAttrs={{
-          type: "checkbox",
-          checked: editMode,
-          onChange: () => setEditMode((prev) => !prev),
-        }}
-      />
+      <div className="row-container gap-0_5">
+        <label className="text-xl text-nowrap">Edit Budget</label>
+        <input
+          className="db-checkbox"
+          type="checkbox"
+          checked={editMode}
+          onChange={() => setEditMode((prev) => !prev)}
+        />
+      </div>
 
-      <BudgetInputGroup
-        labelAttrs={{
-          children: "Weekly Budget",
-        }}
-        inputAttrs={{
-          disabled: !editMode,
-          type: "number",
-          value: budget?.weeklyBudget,
-          onChange: (e) => {
-            if (!budget) return;
+      {editMode && (
+        <>
+          <div className="col--container">
+            <label>Weekly Budget</label>
+            <input
+              className="db-input"
+              disabled={!editMode}
+              type="number"
+              value={budget?.weeklyBudget}
+              onChange={handleBudgetLimitChange}
+            />
+          </div>
 
-            const parsed = parseInt(e.target.value);
-            if (!Number.isNaN(parsed)) {
-              setBudget(
-                (prev) =>
-                  ({
-                    ...prev,
-                    weeklyBudget: parsed,
-                  } as Budget)
-              );
-            }
-          },
-        }}
-      />
-      {stateHasChanged && editMode && (
-        <Button child="Save" onClick={handleSaveBudgetClick} />
+          {editMode && (
+            <button
+              className="db-button"
+              onClick={handleSaveBudgetClick}
+              disabled={!stateHasChanged}
+            >
+              Save
+            </button>
+          )}
+        </>
       )}
     </div>
   );

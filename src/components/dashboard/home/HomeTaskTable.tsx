@@ -1,7 +1,6 @@
 "use client";
 
 import { FaTrash } from "react-icons/fa";
-import { Button, H2 } from "../../base";
 import { Task } from "../../../types";
 import { colors } from "../../../styles/colors";
 import { CSSProperties, useState } from "react";
@@ -44,15 +43,18 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div className="greedyContainer colContainer" >
-      <H2>HomeTaskTable</H2>
+    <div className="greedy-container col-container" style={{
+      padding: "1rem 0",
+    }}>
+      <h2 className="db-h2">Tasks</h2>
 
       <div
-        className="rowContainer"
+        className="row-container"
         style={{
           justifyContent: "space-around",
           textDecoration: "underline",
           width: "80%",
+          margin: "1rem 0",
         }}
       >
         <div>
@@ -65,8 +67,8 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         </div>
       </div>
 
-      <div style={{ height: "60%", overflowY: "auto", width: "80%" }}>
-        <table className="basicBorder" style={{ width: "100%" }}>
+      <div className="greedy-container" style={{ overflowY: "auto", width: "95%" }}>
+        <table className="basic-border greedy-container">
           <tbody>
             {tasks.map((task, i) => {
               const key = i + task?._id?.toString();
@@ -82,16 +84,22 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
 
               const tdStyle: CSSProperties = { textAlign: "center" };
 
+              const tdWidth: Record<string, CSSProperties> = {
+                description: { width: "40%" },
+                date: { width: "30%" },
+                delete: { width: "20%" },
+              };
+
               return (
-                <tr className="basicBorder" key={key}>
-                  <td style={tdStyle}>{task.task}</td>
-                  <td style={{ ...dateStyle, ...tdStyle }}>{displayDate}</td>
-                  <td style={tdStyle}>
-                    <Button
-                      child={<FaTrash />}
-                      theme="none"
-                      onClick={() => handleDeleteTaskClick(task._id.toString())}
-                    />
+                <tr className="basic-border" key={key} style={{ height: "5rem" }}>
+                  <td style={{ ...tdStyle, ...tdWidth.description }}>{task.task} </td>
+                  <td style={{ ...dateStyle, ...tdStyle, ...tdWidth.date }}>
+                    {displayDate}
+                  </td>
+                  <td style={{ ...tdStyle, ...tdWidth.delete }}>
+                    <button onClick={() => handleDeleteTaskClick(task._id.toString())}>
+                      <FaTrash />
+                    </button>
                   </td>
                 </tr>
               );

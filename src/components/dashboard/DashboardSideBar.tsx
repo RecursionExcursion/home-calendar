@@ -1,19 +1,19 @@
 "use client";
 
+import Link from "next/link";
 import { dashboardRoutes } from "../../constants/routes";
+import { getIconGroup } from "../../lib/icons/icons";
+import { DashboardIcons, IconGroupParams } from "../../lib/icons/types";
 import { colors } from "../../styles/colors";
-import StyledLink from "../base/Link";
-import {
-  FaHouse,
-  FaListCheck,
-  FaDollarSign,
-  FaTv,
-  FaGear,
-  FaRightFromBracket,
-} from "react-icons/fa6";
 
 const iconSize = 30;
+
 export default function DashboardSideBar() {
+  const iconGroupParams: IconGroupParams = {
+    iconGroup: "dashboardSidebar",
+    iconPackage: "io",
+  };
+  const icons = getIconGroup(iconGroupParams) as DashboardIcons;
   return (
     <div
       style={{
@@ -23,25 +23,25 @@ export default function DashboardSideBar() {
         padding: "0 1rem",
       }}
     >
-      <div className="colContainer" style={{ gap: "5rem", height: "100%" }}>
-        <DashboardLink href="/">
-          <FaHouse size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.tasks}>
-          <FaListCheck size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.budget}>
-          <FaDollarSign size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.display}>
-          <FaTv size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.settings}>
-          <FaGear size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.logout}>
-          <FaRightFromBracket size={iconSize} />
-        </DashboardLink>
+      <div className="col-container gap-5" style={{ height: "100%" }}>
+        <SidebarLink href="/">
+          <icons.home size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.tasks}>
+          <icons.tasks size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.budget}>
+          <icons.budget size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.display}>
+          <icons.display size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.settings}>
+          <icons.settings size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.logout}>
+          <icons.logout size={iconSize} />
+        </SidebarLink>
       </div>
     </div>
   );
@@ -51,19 +51,11 @@ type DashBoardLinkProps = React.ComponentPropsWithoutRef<"a"> & {
   children: React.ReactNode;
 };
 
-const DashboardLink = (props: DashBoardLinkProps) => {
+const SidebarLink = (props: DashBoardLinkProps) => {
   const { children, href = "/", ...rest } = props;
   return (
-    <StyledLink
-      style={{
-        textWrap: "nowrap",
-        color: `${colors.blueLink}`,
-        textDecoration: "underline",
-      }}
-      href={href}
-      {...rest}
-    >
+    <Link className="link" href={href} {...rest}>
       {children}
-    </StyledLink>
+    </Link>
   );
 };

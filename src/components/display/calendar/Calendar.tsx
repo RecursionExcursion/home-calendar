@@ -35,7 +35,7 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <div className="colContainer" style={{ gap: "0rem", width: "98%" }}>
+    <div className="col-container" style={{ width: "98%" }}>
       <h1 style={{ padding: "0.5rem 0" }}>{monthName}</h1>
       {generateCalendar()}
     </div>

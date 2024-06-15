@@ -5,7 +5,7 @@ import Calendar from "../../../../components/display/calendar/Calendar";
 
 export default async function CalendarWeekView() {
   return (
-    <div className="colContainer">
+    <div className="col-container">
       <Calendar mode={"week"} />
       <BudgetDiplay />
     </div>

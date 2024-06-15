@@ -1,0 +1,23 @@
+@mixin button-base {
+  background: $black;
+  border: 1px solid $white;
+  border-radius: 0.25rem;
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-width: 6rem;
+  padding: 0.25rem 0.5rem;
+  text-wrap: nowrap;
+
+  &:disabled {
+    @include button-disabled;
+  }
+}
+
+@mixin button-disabled {
+  background: $lightGray;
+  border: 1px solid $slate300;
+  color: $darkGray;
+  cursor: not-allowed;
+}

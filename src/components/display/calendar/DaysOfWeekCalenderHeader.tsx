@@ -26,12 +26,8 @@ export default function DaysOfWeekCalenderHeader(props: DaysOfWeekCalenderHeader
       {daysOfWeek.map((day) => (
         <div
           key={day}
-          className="rowContainer"
-          style={{
-            border: "1px solid white",
-            borderCollapse: "collapse",
-            padding: "1rem 0",
-          }}
+          className="row-container basic-border"
+          style={{ padding: "1rem 0" }}
         >
           {day}
         </div>

@@ -24,7 +24,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <div className="greedyContainer rowContainer" style={{ position: "relative" }}>
+      <div className="greedy-container row-container" style={{ position: "relative" }}>
         {children}
         <Toast />
       </div>

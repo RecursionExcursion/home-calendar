@@ -79,7 +79,7 @@ export default function DaySquare(props: DaySquareProps) {
         }}
       >
         <div
-          className="rowContainer"
+          className="row-container"
           style={{
             padding: "0 0.5rem",
             outline: "1px solid white",

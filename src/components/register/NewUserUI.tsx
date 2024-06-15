@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { createNewUser } from "../../api/user/userService";
 import { useDashboardContext } from "../../contexts";
-import { H2, Input, Button } from "../base";
 
 export default function NewUserUI() {
   const { showToast } = useDashboardContext();
@@ -69,32 +68,34 @@ export default function NewUserUI() {
 
   return (
     <div style={{ height: "100%", display: "flex", justifyContent: "center" }}>
-      <div className="colContainer">
-        <H2 theme="dashboard">Create an account!</H2>
-        <Input
-          theme="primary"
+      <div className="col-container gap-1">
+        <h2>Create an account!</h2>
+        <input
+          className="login-input"
           placeholder="Username"
           value={newAccountCredentials.username}
           onChange={handleInputChange}
           name="username"
         />
-        <Input
-          theme="primary"
+        <input
+          className="login-input"
           placeholder="Password"
           value={newAccountCredentials.password}
           onChange={handleInputChange}
           name="password"
           type="password"
         />
-        <Input
-          theme="primary"
+        <input
+          className="login-input"
           placeholder="Confirm Password"
           value={newAccountCredentials.confirmPassword}
           onChange={handleInputChange}
           name="confirmPassword"
           type="password"
         />
-        <Button child="Create Account" onClick={handleCreateAccount} />
+        <button className="login-button" onClick={handleCreateAccount}>
+          Create Account
+        </button>
       </div>
     </div>
   );
