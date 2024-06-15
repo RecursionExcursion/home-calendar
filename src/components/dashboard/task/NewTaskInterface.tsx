@@ -106,10 +106,7 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <div
-              className="row-container"
-              style={{ justifyContent: "space-evenly", }}
-            >
+            <div className="row-container" style={{ justifyContent: "space-evenly" }}>
               <input
                 className="db-input"
                 type="time"
@@ -162,9 +159,9 @@ export default function NewTaskInterface() {
               disabled
             />
 
-            <div className="col-container" style={{ gap: "0.5rem" }}>
+            <div className="row-container gap-0_5">
               {/* TODO: Will need to be a select that pulls down the priority */}
-              <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
+              <label className="text-lg" htmlFor="priortiy" style={{ fontWeight: "600" }}>
                 Priority
               </label>
               <input

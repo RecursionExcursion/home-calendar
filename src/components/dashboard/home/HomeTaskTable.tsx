@@ -43,8 +43,10 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div className="greedy-container col-container">
-      <h2 className="db-h2">HomeTaskTable</h2>
+    <div className="greedy-container col-container" style={{
+      padding: "1rem 0",
+    }}>
+      <h2 className="db-h2">Tasks</h2>
 
       <div
         className="row-container"
@@ -52,6 +54,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
           justifyContent: "space-around",
           textDecoration: "underline",
           width: "80%",
+          margin: "1rem 0",
         }}
       >
         <div>
@@ -88,13 +91,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
               };
 
               return (
-                <tr
-                  className="basic-border"
-                  key={key}
-                  style={{
-                    height: "5rem",
-                  }}
-                >
+                <tr className="basic-border" key={key} style={{ height: "5rem" }}>
                   <td style={{ ...tdStyle, ...tdWidth.description }}>{task.task} </td>
                   <td style={{ ...dateStyle, ...tdStyle, ...tdWidth.date }}>
                     {displayDate}
