@@ -4,7 +4,6 @@ import { AddChargeInterface } from "./AddChargeInterface";
 import EditBudgetInteface from "./EditBudgetInterface";
 import { Budget } from "../../../types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { H2 } from "../../base";
 
 type DashboardBudgetUIProps = {
   budgetJSON: string;
@@ -23,7 +22,7 @@ export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
    */
 
   return (
-    <div className="colContainer gap-1">
+    <div className="col-container gap-1">
       <h2 className="db-h2">Budget</h2>
       <EditBudgetInteface budgetState={{ budget, setBudget }} />
       <AddChargeInterface budgetState={{ budget, setBudget }} />

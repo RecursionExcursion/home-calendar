@@ -2,21 +2,6 @@
 @import "../styles/vars.scss";
 @import "../styles/colors.scss";
 
-@import "../styles/base.scss";
-@import "../styles/gap.scss";
-@import "../styles/position.scss";
-@import "../styles/text.scss";
-
-@import "../styles/button.scss";
-@import "../styles/container.scss";
-@import "../styles/border.scss";
-@import "../styles/input.scss";
-
-@import "../styles/grid.scss";
-
-@import "../styles/dashboard.scss";
-
-@import "../styles/spinner.scss";
-
-@import "../styles/media.scss";
-@import "../styles/rotate.scss";
+@import "../styles/base/_index.scss";
+@import "../styles/components/index.scss";
+@import "../styles/views/index.scss";

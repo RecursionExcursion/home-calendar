@@ -5,7 +5,6 @@ import { Task } from "../../../types";
 import { colors } from "../../../styles/colors";
 import { getDateAndTime } from "../../../util";
 
-
 type TaskListProps = {
   tasks: Task[];
 };
@@ -52,11 +51,10 @@ export const TaskList = (props: TaskListProps) => {
 
   return (
     <div
-      className="colContainer"
+      className="col-container"
       style={{
         borderRadius: "0.5rem",
         color: colors.black,
-        gap: "0rem",
         height: "85%",
         overflow: "hidden",
         padding: "0.5rem",
@@ -77,6 +75,7 @@ export const TaskList = (props: TaskListProps) => {
         Tasks
       </h3>
       <div
+        className="greedy-container"
         ref={divAreaRef}
         style={{
           backgroundColor: colors.white,
@@ -84,8 +83,6 @@ export const TaskList = (props: TaskListProps) => {
           overflow: "hidden",
           resize: "none",
           scrollBehavior: "smooth",
-          height: "100%",
-          width: "100%",
         }}
       >
         {tasks.map((t) => (

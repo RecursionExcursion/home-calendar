@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, Input, Link } from "../base";
-
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
 import { miscRoutes } from "../../constants/routes";
@@ -13,6 +11,7 @@ import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { colors } from "../../styles/colors";
 import { areDatesLessThanXDaysApart } from "../../util";
 import { useDashboardContext } from "../../contexts";
+import Link from "next/link";
 
 export default function LoginUI() {
   const router = useRouter();
@@ -66,30 +65,29 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="greedyContainer rowContainer">
+    <div className="greedy-container row-container">
       <div style={{ minWidth: "10rem", maxWidth: "20rem", width: "50%" }}>
-        <div className="colContainer" style={{ gap: ".5rem" }}>
-          <Input
-            theme="primary"
+        <div className="col-container gap-0_5">
+          <input
+            className="login-input"
             placeholder="UserName"
             value={loginCredentials.username}
             onChange={handleInputChange}
             name="username"
           />
-          <Input
-            theme="primary"
+          <input
+            className="login-input"
             placeholder="Password"
             value={loginCredentials.password}
             onChange={handleInputChange}
             name="password"
             type="password"
           />
-          <Button child={"Log In"} onClick={handleLogin} />
+          <button className="login-button" onClick={handleLogin}>
+            Login
+          </button>
           {showRegistration && (
-            <Link
-              style={{ color: colors.blueLink, textDecoration: "underline" }}
-              href={miscRoutes.register}
-            >
+            <Link className="link" href={miscRoutes.register}>
               Create an account
             </Link>
           )}

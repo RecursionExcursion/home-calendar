@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
-import { Button, H2, Input } from "../../base";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
 
@@ -79,14 +78,14 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div className="greedyContainer colContainer" style={{ gap: "0.5rem" }}>
+    <div className="greedy-container col-container gap-0_5">
       <h2 className="db-h2">Create a Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <div className="greedyContainer" style={{ gap: "1rem" }}>
+        <div className="greedy-container">
           <div
-            className="greedyContainer colContainer"
-            style={{ gap: "0.5rem", alignItems: "normal" }}
+            className="greedy-container col-container gap-0_5"
+            style={{ alignItems: "normal" }}
           >
             <input
               className="db-input"
@@ -108,8 +107,8 @@ export default function NewTaskInterface() {
               required
             />
             <div
-              className="rowContainer"
-              style={{ justifyContent: "space-evenly", alignItems: "center" }}
+              className="row-container"
+              style={{ justifyContent: "space-evenly", }}
             >
               <input
                 className="db-input"
@@ -120,7 +119,7 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div className="rowContainer gap-0_5">
+              <div className="row-container gap-0_5">
                 <label htmlFor="allDay">All Day</label>
                 <input
                   className="db-checkbox"
@@ -163,7 +162,7 @@ export default function NewTaskInterface() {
               disabled
             />
 
-            <div className="colContainer" style={{ gap: "0.5rem" }}>
+            <div className="col-container" style={{ gap: "0.5rem" }}>
               {/* TODO: Will need to be a select that pulls down the priority */}
               <label htmlFor="priortiy" style={{ fontWeight: "600" }}>
                 Priority

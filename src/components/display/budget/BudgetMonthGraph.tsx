@@ -22,11 +22,8 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
   );
 
   return (
-    <div
-      className="rowContainer"
-      style={{ alignItems: "start", width: "80%", gap: "0.5rem" }}
-    >
-      <div className="colContainer" style={{ height: `${graphHeight}`, gap: "25px" }}>
+    <div className="row-container gap-0_5" style={{ alignItems: "start", width: "80%" }}>
+      <div className="col-container" style={{ height: `${graphHeight}`, gap: "25px" }}>
         <div>{budgetMax}</div>
         <div>{budgetMax * 0.75}</div>
         <div>{budgetMax * 0.5}</div>
@@ -47,7 +44,7 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
           });
 
           return (
-            <div key={budget.date} className="colContainer" style={{ width: "20%" }}>
+            <div key={budget.date} className="col-container" style={{ width: "20%" }}>
               <div
                 className="relative"
                 style={{
@@ -58,14 +55,14 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
                 }}
               >
                 <div
-                  className="colContainer"
+                  className="col-container"
                   style={{
                     backgroundColor: colors.prioirtyColors.good,
                     width: "25px",
                     height: `${(budget.actual / budgetMax) * 200}px`,
                   }}
                 ></div>
-                <span className="verticalText absoluteCenter" style={{}}>
+                <span className="verticalText absolute-center" style={{}}>
                   {budget.actual}
                 </span>
               </div>

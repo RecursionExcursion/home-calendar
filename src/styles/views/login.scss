@@ -1,0 +1,10 @@
+.login-input {
+  @include input-base;
+  @include text-base;
+  width: 100%;
+}
+
+.login-button {
+  @include button-base;
+  width: 100%;
+}

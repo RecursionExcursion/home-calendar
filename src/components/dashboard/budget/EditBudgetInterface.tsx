@@ -78,12 +78,12 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
 
   return !loaded ? null : (
     <div
-      className="colContainer"
+      className="col-container"
       style={{
         gap: "1rem",
       }}
     >
-      <div className="rowContainer gap-0_5">
+      <div className="row-container gap-0_5">
         <label className="text-xl text-nowrap">Edit Budget</label>
         <input
           className="db-checkbox"
@@ -95,7 +95,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
 
       {editMode && (
         <>
-          <div className="colContainer">
+          <div className="col--container">
             <label>Weekly Budget</label>
             <input
               className="db-input"

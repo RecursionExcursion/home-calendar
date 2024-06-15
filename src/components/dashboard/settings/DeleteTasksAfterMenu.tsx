@@ -1,6 +1,5 @@
 "use client";
 
-import { Button, Input } from "../../base";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
@@ -45,16 +44,30 @@ export default function DeleteTasksAfterMenu() {
   };
 
   return (
-    <div className="rowContainer" style={{ gap: "1rem" }}>
-      <label>Delete tasks after</label>
-      <Input
-        theme="number"
-        type="number"
-        value={deleteAfterNDays}
-        onChange={handleNumberChange}
-      />
-      <label>days</label>
-      <Button child={"Save"} onClick={handleSaveClick} disabled={!enableSaveButton} />
+    <div
+      className="col-container gap-1 basic-border"
+      style={{
+        padding: "1rem",
+        width: "100%",
+      }}
+    >
+      <label className="text-nowrap">Delete tasks after</label>
+      <div className="row-container gap-0_5">
+        <input
+          className="db-input"
+          type="number"
+          value={deleteAfterNDays}
+          onChange={handleNumberChange}
+        />
+        <label>days</label>
+      </div>
+      <button
+        className="db-button"
+        onClick={handleSaveClick}
+        disabled={!enableSaveButton}
+      >
+        Save
+      </button>
     </div>
   );
 }

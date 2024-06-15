@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "../../base";
 import { useUserContext } from "../../../contexts";
 import { saveUser } from "../../../api/user/userService";
 import { User } from "../../../types";
@@ -66,13 +65,19 @@ export default function WeatherOptionsMenu() {
   };
 
   return (
-    <div className="rowContainer" style={{
-      gap: "1rem",
-    }}>
-      <label htmlFor="enableWeatherCheckbox">Enable forecast</label>
-      <Input
+    <div
+      className="row-container gap-1 basic-border"
+      style={{
+        width: "100%",
+        padding: "1rem",
+      }}
+    >
+      <label className="text-nowrap" htmlFor="enableWeatherCheckbox">
+        Enable forecast
+      </label>
+      <input
         name="enableWeatherCheckbox"
-        theme="checkbox"
+        className="db-checkbox"
         type="checkbox"
         checked={enableWeather}
         onChange={handleEnableWeatherClick}

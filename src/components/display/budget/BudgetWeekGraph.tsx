@@ -18,8 +18,8 @@ export default function BudgetWeekGraph(props: BudgetGraphProps) {
 
   return (
     <div
-      className="colContainer"
-      style={{ width: "80%", padding: "0.5rem", gap: "1.25rem" }}
+      className="col-container gap-1_5"
+      style={{ width: "80%", padding: "0.5rem"}}
     >
       <div
         style={{
@@ -32,21 +32,21 @@ export default function BudgetWeekGraph(props: BudgetGraphProps) {
         Budget
       </div>
       <div
-        className="basicBorder relative"
+        className="basic-border relative"
         style={{
           width: "100%",
           height: "5rem",
         }}
       >
         <div
-          className="rowContainer"
+          className="row-container"
           style={{
             height: "100%",
             width: `${Math.min(barPercentage, 100)}%`,
             backgroundColor: colors.prioirtyColors[barColor],
           }}
         ></div>
-        <span className="absoluteCenter" style={{ color: colors.white, fontWeight: 700 }}>
+        <span className="absolute-center" style={{ color: colors.white, fontWeight: 700 }}>
           {spanText}
         </span>
       </div>

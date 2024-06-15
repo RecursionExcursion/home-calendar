@@ -1,10 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { dashboardRoutes } from "../../constants/routes";
 import { getIconGroup } from "../../lib/icons/icons";
 import { DashboardIcons, IconGroupParams } from "../../lib/icons/types";
 import { colors } from "../../styles/colors";
-import StyledLink from "../base/Link";
 
 const iconSize = 30;
 
@@ -23,25 +23,25 @@ export default function DashboardSideBar() {
         padding: "0 1rem",
       }}
     >
-      <div className="colContainer" style={{ gap: "5rem", height: "100%" }}>
-        <DashboardLink href="/">
+      <div className="col-container gap-5" style={{ height: "100%" }}>
+        <SidebarLink href="/">
           <icons.home size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.tasks}>
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.tasks}>
           <icons.tasks size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.budget}>
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.budget}>
           <icons.budget size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.display}>
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.display}>
           <icons.display size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.settings}>
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.settings}>
           <icons.settings size={iconSize} />
-        </DashboardLink>
-        <DashboardLink href={dashboardRoutes.logout}>
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.logout}>
           <icons.logout size={iconSize} />
-        </DashboardLink>{" "}
+        </SidebarLink>
       </div>
     </div>
   );
@@ -51,19 +51,11 @@ type DashBoardLinkProps = React.ComponentPropsWithoutRef<"a"> & {
   children: React.ReactNode;
 };
 
-const DashboardLink = (props: DashBoardLinkProps) => {
+const SidebarLink = (props: DashBoardLinkProps) => {
   const { children, href = "/", ...rest } = props;
   return (
-    <StyledLink
-      style={{
-        textWrap: "nowrap",
-        color: `${colors.blueLink}`,
-        textDecoration: "underline",
-      }}
-      href={href}
-      {...rest}
-    >
+    <Link className="link" href={href} {...rest}>
       {children}
-    </StyledLink>
+    </Link>
   );
 };

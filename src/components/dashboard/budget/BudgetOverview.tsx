@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import BudgetWeekGraph, { BudgetGraphProps } from "../../display/budget/BudgetWeekGraph";
+import BudgetWeekGraph from "../../display/budget/BudgetWeekGraph";
 import BudgetMonthGraph from "../../display/budget/BudgetMonthGraph";
 import BudgetYearGraph from "../../display/budget/BudgetYearGraph";
 import { Budget } from "../../../types";
@@ -41,11 +41,14 @@ export default function BudgetOverview(props: BudgetOverviewProps) {
   }, [selectedView]);
 
   return (
-    <div className="greedyContainer" style={{
+    <div
+      className="greedy-container"
+      style={{
         padding: "0 1rem",
-    }}>
+      }}
+    >
       <div
-        className="rowContainer"
+        className="row-container"
         style={{
           height: "25%",
         }}
@@ -62,7 +65,7 @@ export default function BudgetOverview(props: BudgetOverviewProps) {
         />
         {/* <BudgetOverviewRadioButton setView={setSelectedView} value="YTD" /> */}
       </div>
-      <div className="rowContainer">{renderedView}</div>
+      <div className="row-container">{renderedView}</div>
     </div>
   );
 }
@@ -100,7 +103,7 @@ const BudgetOverviewRadioButton = (props: BudgetOverviewRadioButtonProps) => {
 
   return (
     <div
-      className="basicBorder flexGrow"
+      className="basic-border flex-grow"
       style={{
         padding: "0.5rem",
         backgroundColor: `${selectedView === value ? colors.darkGray : "transparent"}`,

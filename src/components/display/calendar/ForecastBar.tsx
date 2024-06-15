@@ -88,11 +88,11 @@ type ForecastSectionProps = {
 const ForecastSection = (props: ForecastSectionProps) => {
   const { icon, forecast, theme } = props;
   return forecast ? (
-    <div className="rowContainer" style={{ ...styles.base, ...styles[theme] }}>
+    <div className="row-container" style={{ ...styles.base, ...styles[theme] }}>
       {forecast.temp}°{icon}
     </div>
   ) : (
-    <div className="rowContainer" style={{ ...styles.base, ...styles[theme] }}>
+    <div className="row-container" style={{ ...styles.base, ...styles[theme] }}>
       {null}
     </div>
   );
