@@ -58,11 +58,6 @@ const generateDaySquares = ({ mode, date }: params): JSX.Element[] => {
   return Array.from({ length: calendarLength }).map((_, i) => {
     const date = changeDate(calenderStartDate, i, "day");
     return <DaySquare key={i} date={date} />;
-    // return (
-    //   <div className="basic-border" key={i}>
-    //     {i}
-    //   </div>
-    // );
   });
 };
 

@@ -6,6 +6,7 @@ import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";
 import { createNewCharge, serializeCharge } from "../../../service/chargeService";
+import DatePicker from "../../base/datePicker/DatePicker";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -17,6 +18,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const { showToast } = useDashboardContext();
 
   const [chargeDraft, setChargeDraft] = useState(getEmptyCharge());
+  const [chargeDraftDate, setChargeDraftDate] = useState(new Date(chargeDraft.utcDate));
 
   const handleAddCharge = async () => {
     console.log(validateCharge());
@@ -24,7 +26,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     const budgetCopy = { ...budget };
 
     const newCharge = createNewCharge(
-      chargeDraft.utcDate,
+      chargeDraftDate.toISOString(),
       chargeDraft.amount,
       chargeDraft.description
     );
@@ -44,8 +46,6 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const handleChargeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
     let { value } = e.target;
-
-    console.log({ name, value });
 
     switch (name) {
       case "utcDate":
@@ -95,13 +95,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         <label className="text-xl" htmlFor="date">
           Date
         </label>
-        <input
-          className="db-input"
-          type="date"
-          name="utcDate"
-          value={chargeDraft.utcDate}
-          onChange={handleChargeChange}
-        />
+        <DatePicker date={chargeDraftDate} setDate={setChargeDraftDate} />
       </div>
 
       <div className="col-container gap-1">

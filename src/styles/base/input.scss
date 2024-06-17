@@ -1,6 +1,6 @@
 @mixin input-base {
   background: $secondary;
-  border: 1px solid $focusColor;
+  border: 1px solid $focus;
   border-radius: 0.25rem;
   color: $altTextColor;
   padding: 0.25rem 0.5rem;
@@ -9,8 +9,6 @@
     @include disabled-input;
   }
 }
-
-
 
 .input-base {
   @include input-base;

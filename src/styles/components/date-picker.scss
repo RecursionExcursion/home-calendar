@@ -3,11 +3,12 @@
   @include row-container;
   color: $primary;
   background: $secondary;
+  height: 3rem;
   width: fit-content;
   border-radius: 5px;
 
   &-invalid {
-    border: 1px solid $invalid;
+    outline: 1px solid $invalid;
   }
 }
 
@@ -21,5 +22,82 @@
 
   &-year {
     width: 2.5rem;
+  }
+}
+
+.dp-button {
+  color: $primary;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+$border-radius: 10px;
+/* Date Selector */
+.ds-dialog {
+  border-radius: $border-radius;
+}
+
+.ds-wrapper {
+  @include col-container;
+  @include greedy-container;
+  gap: 0.5rem;
+}
+
+.ds-control-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: $slate300;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: $border-radius $border-radius 0 0;
+
+  button {
+    cursor: pointer;
+    font-weight: 700;
+    color: $black;
+  }
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.ds-cell,
+.ds-cell-today {
+  text-align: center;
+  border: 1px solid $black;
+  padding: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $aqua;
+  }
+
+  &-today {
+    background-color: $ds-green;
+  }
+}
+
+.ds-month-button {
+  color: $primary;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ds-month-container {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1rem 1fr 1rem;
+  padding: 0 0.5rem;
+
+  h3 {
+    text-align: center;
+    font-weight: 700;
   }
 }

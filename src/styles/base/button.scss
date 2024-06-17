@@ -13,6 +13,8 @@
   &:disabled {
     @include button-disabled;
   }
+
+  &:focus {
+    border-color: $focus;
+  }
 }
-
-

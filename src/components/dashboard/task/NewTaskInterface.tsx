@@ -5,7 +5,7 @@ import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
-import DatePicker from "../../base/DatePicker";
+import DatePicker from "../../base/datePicker/DatePicker";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
