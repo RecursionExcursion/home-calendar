@@ -114,7 +114,7 @@ export default function DatePicker(props: DatePickerProps) {
             <FaCalendar />
           </button>
         </div>
-        <dialog className="ds-dialog" open={showDialog}>
+        <dialog className="ds -dialog" open={showDialog}>
           <DateSelector setParentDate={setThisDate} setShowDialog={setShowDialog} />
         </dialog>
       </div>
