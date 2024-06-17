@@ -2,6 +2,8 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { changeDate, getFirstOnCalender, getFullMonthName } from "../../../util";
+import { DateSelectorCell } from "./DateSelectorCell";
+import { MonthSelectorButton } from "./MonthSelectorButton";
 
 type DateSelectorProps = {
   setParentDate: Dispatch<SetStateAction<Date>>;
@@ -54,45 +56,3 @@ export default function DateSelector(props: DateSelectorProps) {
     </div>
   );
 }
-
-type DateSelectorCellProps = {
-  date: Date;
-  setter: Dispatch<SetStateAction<Date>>;
-  setShowDialog: Dispatch<SetStateAction<boolean>>;
-};
-const DateSelectorCell = (props: DateSelectorCellProps) => {
-  const { date, setter, setShowDialog } = props;
-
-  const setDate = () => {
-    setter(date);
-    setShowDialog(false);
-  };
-
-  const today = new Date();
-  const isToday = date.toLocaleDateString() === today.toLocaleDateString();
-
-  return (
-    <div className={!isToday ? "ds-cell" : "ds-cell-today"} onClick={setDate}
-    // onMouseOver={}
-    >
-      {date.getDate()}
-    </div>
-  );
-};
-
-type MonthSelectorButtonProps = {
-  dir: "back" | "forward";
-  onClick: () => void;
-};
-
-const MonthSelectorButton = (props: MonthSelectorButtonProps) => {
-  const { dir, onClick } = props;
-
-  const text = dir === "back" ? "<" : ">";
-
-  return (
-    <button className="ds-month-button" onClick={onClick}>
-      {text}
-    </button>
-  );
-};
