@@ -1,4 +1,3 @@
 .basic-border {
-  border: 1px solid white;
-  border-collapse: collapse;
+  @include basic-border;
 }

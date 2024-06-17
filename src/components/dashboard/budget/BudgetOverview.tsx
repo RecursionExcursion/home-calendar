@@ -2,36 +2,45 @@
 
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import BudgetWeekGraph from "../../display/budget/BudgetWeekGraph";
-import BudgetMonthGraph from "../../display/budget/BudgetMonthGraph";
 import BudgetYearGraph from "../../display/budget/BudgetYearGraph";
-import { Budget } from "../../../types";
-import {
-  getBudgetEntriesAsPastBudgets,
-  getBudgetWeekGraphParams,
-} from "../../../service/budgetService";
 import { colors } from "../../../styles/colors";
+import {
+  ChargeSum,
+  WeekGraphProps,
+  getChargeSumsByWeek,
+  getGraphParams,
+} from "../../../service/graphService";
+import BudgetMonthGraph from "../../display/budget/BudgetMonthGraph";
 
-type BudgetOverviewProps = {
-  budgetJson: string;
-};
-
-export default function BudgetOverview(props: BudgetOverviewProps) {
-  const { budgetJson } = props;
-  const parsedBudget = JSON.parse(budgetJson) as Budget;
-
-  const [renderedView, setRenderedView] = useState<JSX.Element | null>(null);
+export default function BudgetOverview() {
+  const [renderedView, setRenderedView] = useState<JSX.Element | null>(null); //TODO Add no data view
   const [selectedView, setSelectedView] = useState<Views>("week");
 
   useEffect(() => {
     switch (selectedView) {
       case "week":
-        getBudgetWeekGraphParams(parsedBudget).then((params) => {
-          setRenderedView(<BudgetWeekGraph {...params} />);
+        getChargeSumsByWeek().then((chargeMap) => {
+          getGraphParams({
+            charges: chargeMap,
+            view: "week",
+          }).then((params) => {
+            if (params === null) return;
+            setRenderedView(
+              <BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />
+            );
+          });
         });
+
         break;
       case "last4":
-        getBudgetEntriesAsPastBudgets(parsedBudget).then((pastBudgets) => {
-          setRenderedView(<BudgetMonthGraph allBudgets={pastBudgets} />);
+        getChargeSumsByWeek().then((chargeMap) => {
+          getGraphParams({
+            charges: chargeMap,
+            view: "last4",
+          }).then((params) => {
+            if (params === null) return;
+            setRenderedView(<BudgetMonthGraph charges={params as ChargeSum[]} />);
+          });
         });
         break;
       case "YTD":

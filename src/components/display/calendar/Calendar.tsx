@@ -35,7 +35,10 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <div className="col-container" style={{ width: "98%" }}>
+    <div
+      className="greedy-container col-container"
+      style={{ width: "98%", height: "98%" }}
+    >
       <h1 style={{ padding: "0.5rem 0" }}>{monthName}</h1>
       {generateCalendar()}
     </div>
@@ -55,6 +58,11 @@ const generateDaySquares = ({ mode, date }: params): JSX.Element[] => {
   return Array.from({ length: calendarLength }).map((_, i) => {
     const date = changeDate(calenderStartDate, i, "day");
     return <DaySquare key={i} date={date} />;
+    // return (
+    //   <div className="basic-border" key={i}>
+    //     {i}
+    //   </div>
+    // );
   });
 };
 

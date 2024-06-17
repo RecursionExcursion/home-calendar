@@ -5,11 +5,13 @@ import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
+import DatePicker from "../../base/DatePicker";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
+  const [newTaskDate, setNewTaskDate] = useState(new Date(newTaskForm.date));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ export default function NewTaskInterface() {
     const form = e.currentTarget;
 
     const newDate = dateAndTimeToDate({
-      date: newTaskForm.date,
+      date: newTaskDate.toISOString().split("T")[0],
       time: newTaskForm.time,
     });
 
@@ -97,15 +99,10 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <input
-              className="db-input"
-              type="date"
-              id="date"
-              name="date"
-              value={newTaskForm.date}
-              onChange={handleFormChange}
-              required
-            />
+            <div className="row-container gap-0_5">
+              {/* TODO: Need to handle invalid state preventing submission */}
+              <DatePicker date={newTaskDate} setDate={setNewTaskDate} />
+            </div>
             <div className="row-container" style={{ justifyContent: "space-evenly" }}>
               <input
                 className="db-input"

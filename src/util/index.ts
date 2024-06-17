@@ -41,8 +41,9 @@ export const dateAndTimeToDate = (dateAndTime: DateAndTime) => {
   const { date, time } = dateAndTime;
 
   const newDate = new Date(`${date}T${time}:00`);
-
+  
   return newDate;
+
 };
 
 type ChangeType = "day" | "week" | "month" | "year";

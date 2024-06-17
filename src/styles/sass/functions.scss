@@ -1,0 +1,16 @@
+@function str-replace($string, $search, $replace: "") {
+  $string: if(type-of($string) != "string", inspect($string), $string);
+  $index: str-index($string, $search);
+
+  @if $index {
+    $front: str-slice($string, 1, $index - 1);
+    $injected: $replace;
+    $back: str-replace(
+      str-slice($string, $index + str-length($search)),
+      $search,
+      $replace
+    );
+    @return $front + $injected + $back;
+  }
+  @return $string;
+}

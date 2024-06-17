@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Task } from "../../../types";
 import { colors } from "../../../styles/colors";
 import { getDateAndTime } from "../../../util";
@@ -50,41 +50,9 @@ export const TaskList = (props: TaskListProps) => {
   }, []);
 
   return (
-    <div
-      className="col-container"
-      style={{
-        borderRadius: "0.5rem",
-        color: colors.black,
-        height: "85%",
-        overflow: "hidden",
-        padding: "0.5rem",
-      }}
-    >
-      <h3
-        style={{
-          backgroundColor: colors.slate300,
-          borderRadius: "0.5rem 0.5rem 0 0",
-          display: "flex",
-          fontSize: "1.125rem",
-          fontWeight: 600,
-          justifyContent: "center",
-          lineHeight: "1.75rem",
-          width: "100%",
-        }}
-      >
-        Tasks
-      </h3>
-      <div
-        className="greedy-container"
-        ref={divAreaRef}
-        style={{
-          backgroundColor: colors.white,
-          borderRadius: "0 0 0.5rem 0.5rem",
-          overflow: "hidden",
-          resize: "none",
-          scrollBehavior: "smooth",
-        }}
-      >
+    <div className="task-list-container">
+      <h3 className="task-list-h3">Tasks</h3>
+      <div ref={divAreaRef} className="task-area">
         {tasks.map((t) => (
           <TaskDiv key={t._id.toString()} task={t} />
         ))}
@@ -111,24 +79,15 @@ const TaskDiv = (props: TaskDivProps) => {
 
   const timeString = task.allDay ? "All Day" : time;
 
-  const divStyle: CSSProperties = {
-    width: "50%",
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "center",
-  };
-
   return (
     <div
+      className="task-container"
       style={{
-        display: "flex",
-        justifyContent: "center",
-        textWrap: "nowrap",
         backgroundColor: priorityColorsMap.get(task.priority),
       }}
     >
-      <div style={divStyle}>{task.task}</div>
-      <div style={divStyle}>{timeString}</div>
+      <div className="task-item">{task.task}</div>
+      <div className="task-item">{timeString}</div>
     </div>
   );
 };

@@ -7,7 +7,6 @@ import { getUser } from "../../api/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
-import { computeBudget } from "../../service/budgetService";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords, User } from "../../types";
 
@@ -40,10 +39,6 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
     tasksJSON = await getAllTasks();
     budgetJSON = await getBudget();
   } catch (e) {}
-
-
-  //TODO is this the best place to do this? Should this be done in the DisplayProvider or Service?
-  await computeBudget(budgetJSON);
 
   return (
     <UserProvider>

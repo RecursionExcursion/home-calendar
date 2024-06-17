@@ -1,24 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDisplayContext } from "../../../contexts/DisplayContext";
-import BudgetWeekGraph, { BudgetGraphProps } from "./BudgetWeekGraph";
-import { getBudgetWeekGraphParams } from "../../../service/budgetService";
+import BudgetWeekGraph from "./BudgetWeekGraph";
+import {
+  WeekGraphProps,
+  getChargeSumsByWeek,
+  getGraphParams,
+} from "../../../service/graphService";
 
 export default function BudgetDiplay() {
-  const { budget } = useDisplayContext();
-
-  const [graphParams, setGraphParams] = useState<BudgetGraphProps>({
-    limit: 0,
-    total: 0,
-    barPercentage: 0,
-  });
+  const [renderedView, setRenderedView] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    getBudgetWeekGraphParams(budget).then((params) => setGraphParams(params));
+    getChargeSumsByWeek().then((chargeMap) => {
+      getGraphParams({
+        charges: chargeMap,
+        view: "week",
+      }).then((params) => {
+        if (params === null) return;
+        setRenderedView(<BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />);
+      });
+    });
   }, []);
 
-  if (budget.weeklyBudget === 0) return null;
-
-  return <BudgetWeekGraph {...graphParams} />;
+  return renderedView;
 }

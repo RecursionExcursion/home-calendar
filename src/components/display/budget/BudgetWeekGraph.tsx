@@ -1,15 +1,14 @@
 "use client";
 
+import { WeekGraphProps } from "../../../service/graphService";
 import { colors } from "../../../styles/colors";
 
 export type BudgetGraphProps = {
-  limit: number;
-  total: number;
-  barPercentage: number;
+  weekGraphProps: WeekGraphProps;
 };
 
 export default function BudgetWeekGraph(props: BudgetGraphProps) {
-  const { limit, total, barPercentage } = props;
+  const { limit, total, barPercentage } = props.weekGraphProps;
 
   let barColor: keyof typeof colors.prioirtyColors =
     barPercentage > 100 ? "danger" : barPercentage > 75 ? "warning" : "good";
@@ -17,10 +16,7 @@ export default function BudgetWeekGraph(props: BudgetGraphProps) {
   const spanText = `${total} / ${limit} (${barPercentage}%)`;
 
   return (
-    <div
-      className="col-container gap-1_5"
-      style={{ width: "80%", padding: "0.5rem"}}
-    >
+    <div className="col-container gap-1_5" style={{ width: "80%", padding: "0.5rem" }}>
       <div
         style={{
           fontSize: "1.5rem",
@@ -46,7 +42,10 @@ export default function BudgetWeekGraph(props: BudgetGraphProps) {
             backgroundColor: colors.prioirtyColors[barColor],
           }}
         ></div>
-        <span className="absolute-center" style={{ color: colors.white, fontWeight: 700 }}>
+        <span
+          className="absolute-center"
+          style={{ color: colors.white, fontWeight: 700 }}
+        >
           {spanText}
         </span>
       </div>

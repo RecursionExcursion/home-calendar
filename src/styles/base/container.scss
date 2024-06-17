@@ -1,22 +1,15 @@
 .greedy-container {
-  height: 100%;
-  width: 100%;
+  @include greedy-container;
 }
 
 .col-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include col-container;
 }
 
 .row-container {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  @include row-container;
 }
 
 .flex-grow {
-  flex-grow: 1;
+  @include flex-grow;
 }

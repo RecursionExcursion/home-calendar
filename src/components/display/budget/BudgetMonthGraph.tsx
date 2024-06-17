@@ -1,23 +1,21 @@
 "use client";
 
 import { roundToNextMultipleOf100 } from "../../../lib/util";
+import { ChargeSum } from "../../../service/graphService";
 import { colors } from "../../../styles/colors";
-import { PastBudget } from "../../../types";
 
 type BudgetGraphProps = {
-  allBudgets: PastBudget[];
+  charges: ChargeSum[];
 };
 
 const graphHeight = "200px";
 
 export default function BudgetMonthGraph(props: BudgetGraphProps) {
-  const { allBudgets } = props;
-
-  const last4Budgets = allBudgets.slice(-4);
+  const { charges } = props;
 
   const budgetMax = roundToNextMultipleOf100(
-    last4Budgets.reduce((acc, budget) => {
-      return Math.max(acc, budget.actual);
+    charges.reduce((acc, charge) => {
+      return Math.max(acc, charge.chargeSum);
     }, 0)
   );
 
@@ -37,14 +35,14 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
           justifyContent: "space-around",
         }}
       >
-        {last4Budgets.map((budget) => {
-          const formattedDate = new Date(budget.date).toLocaleDateString("en-US", {
+        {charges.map((budget) => {
+          const formattedDate = new Date(budget.utcDate).toLocaleDateString("en-US", {
             month: "numeric",
             day: "numeric",
           });
 
           return (
-            <div key={budget.date} className="col-container" style={{ width: "20%" }}>
+            <div key={budget.utcDate} className="col-container" style={{ width: "20%" }}>
               <div
                 className="relative"
                 style={{
@@ -59,11 +57,11 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
                   style={{
                     backgroundColor: colors.prioirtyColors.good,
                     width: "25px",
-                    height: `${(budget.actual / budgetMax) * 200}px`,
+                    height: `${(budget.chargeSum / budgetMax) * 200}px`,
                   }}
                 ></div>
                 <span className="verticalText absolute-center" style={{}}>
-                  {budget.actual}
+                  {budget.chargeSum}
                 </span>
               </div>
               <span>{formattedDate}</span>

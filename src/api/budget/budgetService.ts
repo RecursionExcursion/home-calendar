@@ -3,7 +3,6 @@
 import { ObjectId } from "mongodb";
 import { Budget } from "../../types";
 import { createBudget, readAllBudgets, updateBudget } from "./budgetRepo";
-import { computeBudget } from "../../service/budgetService";
 
 const getAllBudgets = async (): Promise<Budget[]> => {
   return (await readAllBudgets()) as Budget[];
@@ -17,9 +16,8 @@ export const newBudget = async (): Promise<boolean> => {
   }
 
   const newBudget: Budget = {
-    weeklyBudget: 0,
-    weeklyCharges: [],
-    historicalBudgets: [],
+    limit: 0,
+    charges: [],
   };
 
   await createBudget(newBudget);
@@ -34,7 +32,9 @@ export const getBudget = async () => {
     budgets = await getAllBudgets();
   }
 
-  return budgetToJSON(budgets[0]);
+  const budget = budgets[0];
+
+  return budgetToJSON(budget);
 };
 
 export const saveBudget = async (budget: Budget) => {
@@ -50,9 +50,8 @@ export const budgetFromJSON = async (json: string): Promise<Budget> => {
   const parsed = JSON.parse(json);
   return {
     _id: parsed._id ? ObjectId.createFromHexString(parsed._id) : undefined,
-    weeklyBudget: parsed.weeklyBudget,
-    weeklyCharges: parsed.weeklyCharges,
-    historicalBudgets: parsed.historicalBudgets,
+    limit: parsed.limit,
+    charges: parsed.charges,
   };
 };
 

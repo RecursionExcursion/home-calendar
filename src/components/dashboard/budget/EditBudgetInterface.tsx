@@ -28,7 +28,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   }, []);
 
   useEffect(() => {
-    if (initalBudget?.weeklyBudget !== budget?.weeklyBudget) {
+    if (initalBudget?.limit !== budget?.limit) {
       setStateHasChanged(true);
       return;
     }
@@ -101,7 +101,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
               className="db-input"
               disabled={!editMode}
               type="number"
-              value={budget?.weeklyBudget}
+              value={budget?.limit}
               onChange={handleBudgetLimitChange}
             />
           </div>

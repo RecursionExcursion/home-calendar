@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Charge } from "../../../types";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";
+import { createNewCharge, serializeCharge } from "../../../service/chargeService";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -16,17 +16,24 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
 
   const { showToast } = useDashboardContext();
 
-  const [newCharge, setNewCharge] = useState(getEmptyCharge());
+  const [chargeDraft, setChargeDraft] = useState(getEmptyCharge());
 
   const handleAddCharge = async () => {
     console.log(validateCharge());
 
     const budgetCopy = { ...budget };
 
-    budgetCopy.weeklyCharges.push(newCharge);
+    const newCharge = createNewCharge(
+      chargeDraft.utcDate,
+      chargeDraft.amount,
+      chargeDraft.description
+    );
+
+    budgetCopy.charges.push(serializeCharge(newCharge));
+
     await saveBudget(budgetCopy);
     setBudget(budgetCopy);
-    setNewCharge(getEmptyCharge());
+    setChargeDraft(getEmptyCharge());
     showToast({
       title: "Success",
       message: "Charge added successfully",
@@ -41,7 +48,11 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     console.log({ name, value });
 
     switch (name) {
-      case "date":
+      case "utcDate":
+        const date = new Date(value);
+
+        value = date.toISOString();
+
         break;
       case "amount":
         if (value === "") break;
@@ -58,7 +69,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         break;
     }
 
-    setNewCharge((prev) => ({
+    setChargeDraft((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -67,11 +78,11 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const validateCharge = (): boolean => {
     const amountRegex = /^\$?[\d,]+(\.\d*)?$/;
 
-    if (!amountRegex.test(newCharge.amount.toString())) {
+    if (!amountRegex.test(chargeDraft.amount.toString())) {
       return false;
     }
 
-    newCharge.amount = parseFloat(newCharge.amount.toString());
+    chargeDraft.amount = parseFloat(chargeDraft.amount.toString());
 
     return true;
   };
@@ -87,8 +98,8 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         <input
           className="db-input"
           type="date"
-          name="date"
-          value={newCharge.date}
+          name="utcDate"
+          value={chargeDraft.utcDate}
           onChange={handleChargeChange}
         />
       </div>
@@ -98,11 +109,11 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
           Amount
         </label>
         <NumberInput
-          setter={setNewCharge}
+          setter={setChargeDraft}
           className="db-input"
           type="text"
           name="amount"
-          value={newCharge.amount}
+          value={chargeDraft.amount}
         />
       </div>
 
@@ -114,7 +125,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
           className="db-input"
           type="text"
           name="description"
-          value={newCharge.description}
+          value={chargeDraft.description}
           onChange={handleChargeChange}
         />
       </div>
@@ -126,9 +137,15 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   );
 };
 
-const getEmptyCharge = (): Charge => {
+type ChargeDraft = {
+  utcDate: string;
+  amount: number;
+  description: string;
+};
+
+const getEmptyCharge = (): ChargeDraft => {
   return {
-    date: new Date().toISOString(),
+    utcDate: new Date().toISOString(),
     amount: 0.0,
     description: "",
   };

@@ -1,6 +1,6 @@
 @mixin button-base {
-  background: $black;
-  border: 1px solid $white;
+  background: $primary;
+  border: 1px solid $secondary;
   border-radius: 0.25rem;
   color: $white;
   cursor: pointer;
@@ -15,9 +15,4 @@
   }
 }
 
-@mixin button-disabled {
-  background: $lightGray;
-  border: 1px solid $slate300;
-  color: $darkGray;
-  cursor: not-allowed;
-}
+
