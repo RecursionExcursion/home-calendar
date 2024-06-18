@@ -8,3 +8,7 @@
   @include button-base;
   width: 100%;
 }
+
+.login-ui-container {
+ width: clamp(10rem, 50%, 20rem);
+}

@@ -1,3 +1,4 @@
+/* Base */
 .db-input {
   @include input-base;
   @include text-base;
@@ -29,3 +30,94 @@ $checkboxSize: 1.5rem;
   align-items: center;
 }
 
+/* Sidebar */
+.db-sidebar-container {
+  width: 3rem;
+  height: 100%;
+  background-color: $blueGray;
+  padding: 0 1rem;
+
+  div {
+    @include col-container;
+    gap: 5rem;
+    height: 100%;
+  }
+}
+
+/* Budget Overview */
+.db-budget-overview {
+  @include greedy-container;
+  padding: 0 1rem;
+}
+
+.db-budget-overview-radio-container {
+  @include row-container;
+  height: 25%;
+}
+
+.db-budget-overview-radio-button-wrapper {
+  @include basic-border;
+  @include flex-grow;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: transparent;
+
+  &-selected {
+    @extend .db-budget-overview-radio-button-wrapper;
+    background-color: $blueGray;
+  }
+}
+
+/* Layout */
+.db-layout-container {
+  @include greedy-container;
+  display: flex;
+}
+
+.db-layout-content-container {
+  @include greedy-container;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+/* Task Table */
+.db-task-table-container {
+  @include greedy-container;
+  @include col-container;
+  padding: 1rem 0;
+}
+
+.db-task-table-info-header {
+  @include row-container;
+  justify-content: space-around;
+  text-decoration: underline;
+  margin: 1rem 0;
+}
+
+.db-task-table-table-container {
+  @include greedy-container;
+  overflow-y: auto;
+}
+
+.db-task-table-table-tr {
+  @include basic-border;
+  height: 5rem;
+  text-align: center;
+}
+
+.db-task-table-table-td {
+  &-desc {
+    width: 40%;
+  }
+  &-date {
+    width: 30%;
+    &-past {
+      @extend .db-task-table-table-td-date;
+      color: $danger;
+    }
+  }
+  &-delete {
+    width: 20%;
+  }
+}

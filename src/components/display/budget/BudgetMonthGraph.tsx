@@ -61,7 +61,7 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
                   }}
                 ></div>
                 <span className="verticalText absolute-center" style={{}}>
-                  {budget.chargeSum}
+                  {budget.chargeSum.toFixed(0)}
                 </span>
               </div>
               <span>{formattedDate}</span>

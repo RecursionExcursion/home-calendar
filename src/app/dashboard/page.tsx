@@ -13,10 +13,10 @@ export default async function DashboardPage() {
 
   return (
     <div className="greedy-container">
-      <div style={{ height: "50%" }}>
+      <div className="h-50">
         <HomeTaskTable tasks={allTasks} />
       </div>
-      <div className="row-container" style={{ height: "50%" }}>
+      <div className="row-container h-50" >
         <BudgetOverview />
       </div>
     </div>

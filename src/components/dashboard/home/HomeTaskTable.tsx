@@ -43,20 +43,10 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   };
 
   return (
-    <div className="greedy-container col-container" style={{
-      padding: "1rem 0",
-    }}>
+    <div className="db-task-table-container">
       <h2 className="db-h2">Tasks</h2>
 
-      <div
-        className="row-container"
-        style={{
-          justifyContent: "space-around",
-          textDecoration: "underline",
-          width: "80%",
-          margin: "1rem 0",
-        }}
-      >
+      <div className="db-task-table-info-header w-80">
         <div>
           <span>Total: </span>
           <span>{`${totalTasks}`}</span>
@@ -67,7 +57,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         </div>
       </div>
 
-      <div className="greedy-container" style={{ overflowY: "auto", width: "95%" }}>
+      <div className="db-task-table-table-container w-95">
         <table className="basic-border greedy-container">
           <tbody>
             {tasks.map((task, i) => {
@@ -75,28 +65,18 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
 
               const taskDate = new Date(task.date);
 
-              const dateStyle: CSSProperties = {
-                color:
-                  taskDate < new Date() ? colors.prioirtyColors.danger : colors.white,
-              };
-
               const displayDate = new Date(task.date).toLocaleDateString();
 
-              const tdStyle: CSSProperties = { textAlign: "center" };
-
-              const tdWidth: Record<string, CSSProperties> = {
-                description: { width: "40%" },
-                date: { width: "30%" },
-                delete: { width: "20%" },
-              };
+              const dateStyle =
+                taskDate < new Date()
+                  ? "db-task-table-table-td-date-past"
+                  : "db-task-table-table-td-date";
 
               return (
-                <tr className="basic-border" key={key} style={{ height: "5rem" }}>
-                  <td style={{ ...tdStyle, ...tdWidth.description }}>{task.task} </td>
-                  <td style={{ ...dateStyle, ...tdStyle, ...tdWidth.date }}>
-                    {displayDate}
-                  </td>
-                  <td style={{ ...tdStyle, ...tdWidth.delete }}>
+                <tr className="db-task-table-table-tr" key={key}>
+                  <td className="db-task-table-table-td-desc">{task.task} </td>
+                  <td className={dateStyle}>{displayDate}</td>
+                  <td className="db-task-table-table-td-delete">
                     <button onClick={() => handleDeleteTaskClick(task._id.toString())}>
                       <FaTrash />
                     </button>

@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import BudgetWeekGraph from "../../display/budget/BudgetWeekGraph";
 import BudgetYearGraph from "../../display/budget/BudgetYearGraph";
-import { colors } from "../../../styles/colors";
 import {
   ChargeSum,
   WeekGraphProps,
@@ -50,18 +49,8 @@ export default function BudgetOverview() {
   }, [selectedView]);
 
   return (
-    <div
-      className="greedy-container"
-      style={{
-        padding: "0 1rem",
-      }}
-    >
-      <div
-        className="row-container"
-        style={{
-          height: "25%",
-        }}
-      >
+    <div className="db-budget-overview">
+      <div className="db-budget-overview-radio-container">
         <BudgetOverviewRadioButton
           selectedView={selectedView}
           setView={setSelectedView}
@@ -110,17 +99,13 @@ const BudgetOverviewRadioButton = (props: BudgetOverviewRadioButtonProps) => {
     }
   };
 
+  const className =
+    selectedView === value
+      ? "db-budget-overview-radio-button-wrapper-selected"
+      : "db-budget-overview-radio-button-wrapper";
+
   return (
-    <div
-      className="basic-border flex-grow"
-      style={{
-        padding: "0.5rem",
-        backgroundColor: `${selectedView === value ? colors.darkGray : "transparent"}`,
-        textAlign: "center",
-        cursor: "pointer",
-      }}
-      onClick={handleLabelClick}
-    >
+    <div className={className} onClick={handleLabelClick}>
       <input ref={inputRef} type="radio" placeholder="Search" name="type" hidden />
       <label>{getLabel()}</label>
     </div>
