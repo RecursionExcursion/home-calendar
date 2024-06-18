@@ -1,25 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import DateSelector from "./DateSelector";
 
-//TODO Move to iconservice
+//TODO Move to icon service
 import { FaCalendar } from "react-icons/fa6";
 
 type DatePickerProps = {
   date: Date;
-  setDate?: (date: Date) => void;
+  setDate: Dispatch<SetStateAction<Date>>;
+  setValidityFlag?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function DatePicker(props: DatePickerProps) {
-  const { date, setDate } = props;
+  const { date: initalDate, setDate: setParentDate, setValidityFlag } = props;
 
-  const [thisDate, setThisDate] = useState(date);
+  const [date, setDate] = useState(initalDate);
 
   const [inputDate, setInputDate] = useState({
-    month: thisDate.getMonth() + 1,
-    day: thisDate.getDate(),
-    year: thisDate.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    year: date.getFullYear(),
   });
 
   const [dateIsValid, setDateIsValid] = useState(true);
@@ -28,11 +29,11 @@ export default function DatePicker(props: DatePickerProps) {
 
   useEffect(() => {
     setInputDate({
-      month: thisDate.getMonth() + 1,
-      day: thisDate.getDate(),
-      year: thisDate.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      year: date.getFullYear(),
     });
-  }, [thisDate]);
+  }, [date]);
 
   useEffect(() => {
     const newDate = new Date(inputDate.year, inputDate.month - 1, inputDate.day);
@@ -41,18 +42,21 @@ export default function DatePicker(props: DatePickerProps) {
     const daysAreEqual = newDate.getDate() == inputDate.day;
     const yearsAreEqual = newDate.getFullYear() === inputDate.year;
     const datesAreEqual = monthsAreEqual && daysAreEqual && yearsAreEqual;
+    
 
     setDateIsValid(datesAreEqual);
 
     if (datesAreEqual) {
-      if (setDate) {
-        // setThisDate(newDate);
-        setDate(newDate);
+      if (setParentDate) {
+        setParentDate(newDate);
       }
+    }
+    if (setValidityFlag) {
+      setValidityFlag(datesAreEqual);
     }
   }, [inputDate]);
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let returnValue: number | "" = parseInt(value);
 
@@ -114,8 +118,8 @@ export default function DatePicker(props: DatePickerProps) {
             <FaCalendar />
           </button>
         </div>
-        <dialog className="ds -dialog" open={showDialog}>
-          <DateSelector setParentDate={setThisDate} setShowDialog={setShowDialog} />
+        <dialog className="ds-dialog" open={showDialog}>
+          <DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />
         </dialog>
       </div>
     </div>

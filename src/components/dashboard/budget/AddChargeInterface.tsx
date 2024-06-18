@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
@@ -20,9 +20,16 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const [chargeDraft, setChargeDraft] = useState(getEmptyCharge());
   const [chargeDraftDate, setChargeDraftDate] = useState(new Date(chargeDraft.utcDate));
 
-  const handleAddCharge = async () => {
-    console.log(validateCharge());
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [dateIsValidFlag, setDateIsValidFlag] = useState(true);
 
+  useEffect(() => {
+    console.log({ chargeDraft, chargeDraftDate, dateIsValidFlag });
+
+    setButtonEnabled(chargeDraft.amount > 0 && dateIsValidFlag);
+  }, [chargeDraft, chargeDraftDate, dateIsValidFlag]);
+
+  const handleAddCharge = async () => {
     const budgetCopy = { ...budget };
 
     const newCharge = createNewCharge(
@@ -95,7 +102,11 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         <label className="text-xl" htmlFor="date">
           Date
         </label>
-        <DatePicker date={chargeDraftDate} setDate={setChargeDraftDate} />
+        <DatePicker
+          date={chargeDraftDate}
+          setDate={setChargeDraftDate}
+          setValidityFlag={setDateIsValidFlag}
+        />
       </div>
 
       <div className="col-container gap-1">
@@ -124,7 +135,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         />
       </div>
 
-      <button className="db-button" onClick={handleAddCharge}>
+      <button className="db-button" onClick={handleAddCharge} disabled={!buttonEnabled}>
         Add Charge
       </button>
     </div>

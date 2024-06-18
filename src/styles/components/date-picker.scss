@@ -1,103 +1,110 @@
-.dp-wrapper,
-.dp-wrapper-invalid {
-  @include row-container;
-  color: $primary;
-  background: $secondary;
-  height: 3rem;
-  width: fit-content;
-  border-radius: 5px;
+.dp {
+  &-wrapper {
+    @include row-container;
+    color: $primary;
+    background: $secondary;
+    height: 3rem;
+    width: fit-content;
+    border-radius: 5px;
 
-  &-invalid {
-    outline: 1px solid $invalid;
-  }
-}
-
-.dp-input,
-.dp-input-year {
-  @include input-base;
-  border: 0px;
-  background: transparent;
-  width: 1.25rem;
-  text-align: center;
-
-  &-year {
-    width: 2.5rem;
-  }
-}
-
-.dp-button {
-  color: $primary;
-  padding: 0 0.5rem;
-  cursor: pointer;
-}
-
-$border-radius: 10px;
-/* Date Selector */
-.ds-dialog {
-  border-radius: $border-radius;
-}
-
-.ds-wrapper {
-  @include col-container;
-  @include greedy-container;
-  gap: 0.5rem;
-}
-
-.ds-control-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: $slate300;
-  padding: 0.5rem;
-  box-sizing: border-box;
-  border-radius: $border-radius $border-radius 0 0;
-
-  button {
-    cursor: pointer;
-    font-weight: 700;
-    color: $black;
-  }
-}
-
-.ds-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 0.5rem 0.5rem 0.5rem;
-}
-
-.ds-cell,
-.ds-cell-today {
-  text-align: center;
-  border: 1px solid $black;
-  padding: 0.5rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $aqua;
+    &-invalid {
+      @extend .dp-wrapper;
+      outline: .2rem solid $invalid;
+    }
   }
 
-  &-today {
-    background-color: $ds-green;
-  }
-}
-
-.ds-month-button {
-  color: $primary;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.ds-month-container {
-  box-sizing: border-box;
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1rem 1fr 1rem;
-  padding: 0 0.5rem;
-
-  h3 {
+  &-input {
+    @include input-base;
+    border: 0px;
+    background: transparent;
+    width: 1.25rem;
     text-align: center;
-    font-weight: 700;
+
+    &-year {
+      @extend .dp-input;
+      width: 2.5rem;
+    }
+  }
+
+  &-button {
+    color: $primary;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    &:focus{
+      color: $focus;  ;
+    }
+  }
+}
+
+$border-curve: 10px;
+/* Date Selector */
+.ds {
+  &-dialog {
+    border-radius: $border-curve;
+  }
+
+  &-wrapper {
+    @include col-container;
+    @include greedy-container;
+    gap: 0.5rem;
+  }
+
+  &-control-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: $slate300;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: $border-curve $border-curve 0 0;
+
+    button {
+      cursor: pointer;
+      font-weight: 700;
+      color: $black;
+    }
+  }
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+  }
+
+  &-cell {
+    text-align: center;
+    border: 1px solid $black;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $aqua;
+    }
+
+    &-today {
+      @extend .ds-cell;
+      background-color: $ds-green;
+    }
+  }
+
+  &-month {
+    &-button {
+      color: $primary;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    &-container {
+      box-sizing: border-box;
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1rem 1fr 1rem;
+      padding: 0 0.5rem;
+
+      h3 {
+        text-align: center;
+        font-weight: 700;
+      }
+    }
   }
 }
