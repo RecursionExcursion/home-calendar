@@ -2,7 +2,7 @@
 
 import { getUser } from "../api/user/userService";
 import { createSha256Hash, normalizeString } from "../lib/util";
-import { Session, User } from "../types";
+import { User } from "../types";
 import { manageSession } from "./sessionService";
 
 export const login = async (

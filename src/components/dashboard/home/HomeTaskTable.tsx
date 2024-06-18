@@ -2,8 +2,7 @@
 
 import { FaTrash } from "react-icons/fa";
 import { Task } from "../../../types";
-import { colors } from "../../../styles/colors";
-import { CSSProperties, useState } from "react";
+import {  useState } from "react";
 import { deleteTask, getAllTasks } from "../../../api/task/taskService";
 import { useDashboardContext } from "../../../contexts";
 
@@ -53,7 +52,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         </div>
         <div>
           <span>Overdue: </span>
-          <span style={{ color: colors.prioirtyColors.danger }}>{`${overdueTasks}`}</span>
+          <span className="db-overdue-span">{`${overdueTasks}`}</span>
         </div>
       </div>
 

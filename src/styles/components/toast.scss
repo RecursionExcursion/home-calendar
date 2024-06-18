@@ -1,0 +1,36 @@
+.toast {
+  &-container {
+    @include col-container;
+    border-radius: 0.375rem;
+    bottom: 10px;
+    left: 50%;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    width: 200px;
+    &-info {
+      @extend .toast-container;
+      background-color: $aqua;
+    }
+    &-success {
+      @extend .toast-container;
+      background-color: $good;
+    }
+    &-warning {
+      @extend .toast-container;
+      background-color: $warning;
+    }
+    &-danger {
+      @extend .toast-container;
+      background-color: $danger;
+    }
+    h4 {
+      @include text-xl;
+      font-weight: 600;
+    }
+    p {
+      text-wrap: wrap;
+    }
+  }
+}

@@ -1,10 +1,20 @@
-.dayGrid {
+.calendar-wrapper {
+  @include greedy-container;
+  @include col-container;
+  width: 98%;
+  height: 98%;
+  h1 {
+    padding: 0.5rem 0;
+  }
+}
+
+.day-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   width: 100%;
 }
 
-.headerGrid {
+.header-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
@@ -14,38 +24,35 @@
   }
 }
 
-.calendarGrid {
+.calendar-grid {
   display: grid;
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+  grid-template-rows: repeat(auto-fit, 1fr);
 
   @media screen and (min-width: $tablet) {
     grid-template-columns: repeat(3, 1fr);
   }
   @media screen and (min-width: $desktop) {
     grid-template-columns: repeat(7, 1fr);
-  }
-}
-
-@mixin calendar-grid-cell {
-  @include basic-border;
-  overflow: hidden;
-}
-
-.calendar-grid-cell-task,
-.calendar-grid-cell-today,
-.calendar-grid-cell {
-  @include calendar-grid-cell;
-  background: $black;
-
-  &-today {
-    background: $ds-blue;
+    grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
   }
 
-  &-task {
-    background: $ds-green;
+  &-cell {
+    @include basic-border;
+    overflow: hidden;
+    background: $black;
+
+    &-today {
+      @extend .calendar-grid-cell;
+      background: $ds-blue;
+    }
+
+    &-task {
+      @extend .calendar-grid-cell;
+      background: $ds-green;
+    }
   }
 }
 
@@ -65,46 +72,59 @@
   border-collapse: collapse;
 }
 
-.task-section {
-  height: 80%;
-}
-
-.task-list-container {
-  @include col-container;
-  border-radius: 0.5rem;
-  color: $black;
-  height: 80%;
-  overflow: hidden;
-  padding: 0.5rem;
-}
-
-.task-list-h3 {
-  @include text-xl;
-  background-color: $slate300;
-  border-radius: 0.5rem 0.5rem 0 0;
-  display: flex;
-  font-weight: 600;
-  justify-content: center;
-  width: 100%;
-}
-
-.task-area {
-  @include greedy-container;
-  background-color: $white;
-  border-radius: 0 0 0.5rem 0.5rem;
-  overflow: hidden;
-  scroll-behavior: smooth;
-}
-
-.task-container {
-  display: flex;
-  justify-content: center;
-  text-wrap: nowrap;
-}
-
-.task-item {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 50%;
+.task {
+  &-section {
+    height: 80%;
+  }
+  &-list-container {
+    @include col-container;
+    border-radius: 0.5rem;
+    color: $black;
+    height: 80%;
+    overflow: hidden;
+    padding: 0.5rem;
+    h3 {
+      @include text-xl;
+      background-color: $slate300;
+      border-radius: 0.5rem 0.5rem 0 0;
+      display: flex;
+      font-weight: 600;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  &-area {
+    @include greedy-container;
+    background-color: $white;
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
+    scroll-behavior: smooth;
+  }
+  &-item {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 50%;
+  }
+  &-container {
+    display: flex;
+    justify-content: center;
+    text-wrap: nowrap;
+    &-0 {
+      @extend .task-container;
+      background-color: $white;
+    }
+    &-1 {
+      @extend .task-container;
+      background-color: $good;
+    }
+    &-2 {
+      @extend .task-container;
+      background-color: $warning;
+    }
+    &-3 {
+      @extend .task-container;
+      background-color: $danger;
+    }
+  }
 }

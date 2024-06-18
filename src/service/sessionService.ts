@@ -21,7 +21,7 @@ const checkUserSession = (user: User): boolean => {
 const createSessionExiprationDate = (): Date => {
   const now = new Date();
   now.setHours(0, 0, 0, 0); //Set to midnight
-  const weekFromMid = new Date(now.getTime() + msTimestamps.oneDay * 7);
+  const weekFromMid = new Date(now.getTime() + msTimestamps.oneDay * 7); //one week from today 00:00:00
   return weekFromMid;
 };
 
@@ -29,14 +29,14 @@ export const manageSession = async (user: User) => {
   const sessionIsValid = checkUserSession(user);
 
   if (!sessionIsValid) {
-    //TODO remove
-    // if (user.session) {
-    //   await removeSession(user);
-    // }
     await createClientSession(user);
   }
 
-  const sessionExp = JSON.parse(user.session!!).exp as number; //Either valid or just created
+  if (user.session === null) {
+    throw new Error("Session was not created");
+  }
+
+  const sessionExp = JSON.parse(user.session).exp as number;
   const expDate = new Date(sessionExp);
 
   await createSessionCookie(user, expDate);
@@ -98,7 +98,8 @@ export const validateClientSessionCookie = async (
 
   //Check if session in db has expired
   if (dbUserSession.exp <= new Date().getTime()) {
-    deleteUserCookie();
+    await removeSession(user);
+    await deleteUserCookie();
     return null;
   }
 

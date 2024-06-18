@@ -1,8 +1,8 @@
 "use client";
 
+import { CSSProperties } from "react";
 import { roundToNextMultipleOf100 } from "../../../lib/util";
 import { ChargeSum } from "../../../service/graphService";
-import { colors } from "../../../styles/colors";
 
 type BudgetGraphProps = {
   charges: ChargeSum[];
@@ -20,21 +20,15 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
   );
 
   return (
-    <div className="row-container gap-0_5" style={{ alignItems: "start", width: "80%" }}>
-      <div className="col-container" style={{ height: `${graphHeight}`, gap: "25px" }}>
+    <div className="bud-month-graph-container">
+      <div className="bud-month-graph-y-axis">
         <div>{budgetMax}</div>
         <div>{budgetMax * 0.75}</div>
         <div>{budgetMax * 0.5}</div>
         <div>{budgetMax * 0.25}</div>
         <div>{0}</div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "1rem",
-          justifyContent: "space-around",
-        }}
-      >
+      <div className="bud-month-graph-graph-container">
         {charges.map((budget) => {
           const formattedDate = new Date(budget.utcDate).toLocaleDateString("en-US", {
             month: "numeric",
@@ -42,25 +36,17 @@ export default function BudgetMonthGraph(props: BudgetGraphProps) {
           });
 
           return (
-            <div key={budget.utcDate} className="col-container" style={{ width: "20%" }}>
-              <div
-                className="relative"
-                style={{
-                  height: `${graphHeight}`,
-                  alignItems: "flex-end",
-                  display: "flex",
-                  backgroundColor: colors.darkGray,
-                }}
-              >
+            <div key={budget.utcDate} className="bud-month-graph-bar-container">
+              <div className="bud-month-graph-bar">
                 <div
-                  className="col-container"
-                  style={{
-                    backgroundColor: colors.prioirtyColors.good,
-                    width: "25px",
-                    height: `${(budget.chargeSum / budgetMax) * 200}px`,
-                  }}
+                  className="bud-month-graph-bar-budget"
+                  style={
+                    {
+                      "--budget-amount": `${(budget.chargeSum / budgetMax) * 200}px`,
+                    } as CSSProperties
+                  }
                 ></div>
-                <span className="verticalText absolute-center" style={{}}>
+                <span className="verticalText absolute-center">
                   {budget.chargeSum.toFixed(0)}
                 </span>
               </div>

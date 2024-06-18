@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { Task } from "../../../types";
-import { colors } from "../../../styles/colors";
 import { getDateAndTime } from "../../../util";
 
 type TaskListProps = {
@@ -51,7 +50,7 @@ export const TaskList = (props: TaskListProps) => {
 
   return (
     <div className="task-list-container">
-      <h3 className="task-list-h3">Tasks</h3>
+      <h3>Tasks</h3>
       <div ref={divAreaRef} className="task-area">
         {tasks.map((t) => (
           <TaskDiv key={t._id.toString()} task={t} />
@@ -65,13 +64,6 @@ type TaskDivProps = {
   task: Task;
 };
 
-const priorityColorsMap = new Map<number, string>([
-  [0, colors.white],
-  [1, colors.prioirtyColors.good],
-  [2, colors.prioirtyColors.warning],
-  [3, colors.prioirtyColors.danger],
-]);
-
 const TaskDiv = (props: TaskDivProps) => {
   const { task } = props;
 
@@ -80,12 +72,7 @@ const TaskDiv = (props: TaskDivProps) => {
   const timeString = task.allDay ? "All Day" : time;
 
   return (
-    <div
-      className="task-container"
-      style={{
-        backgroundColor: priorityColorsMap.get(task.priority),
-      }}
-    >
+    <div className={`task-container-${task.priority}`}>
       <div className="task-item">{task.task}</div>
       <div className="task-item">{timeString}</div>
     </div>
