@@ -3,7 +3,7 @@
 import { getUser } from "../api/user/userService";
 import { createSha256Hash, normalizeString } from "../lib/util";
 import { Session, User } from "../types";
-import { createSessionCookie, checkUserSession } from "./sessionService";
+import { manageSession } from "./sessionService";
 
 export const login = async (
   username: string,
@@ -20,17 +20,7 @@ export const login = async (
     };
   }
 
-  /*TODO Consider resuing old sessions tp prevent needing to login again
-   * on new devices after logging in on one device
-   */
-  await checkUserSession(user);
-
-  /*TODO Retrieving the user twice in the same fn, may need to be reworked */
-  user = await retrieveUser(normalizeUN);
-
-  await createSessionCookie(user);
-
-  const sessionExp = (JSON.parse(user.session!!) as Session).exp; //Will never be null as we just added a session
+  const sessionExp = await manageSession(user);
 
   return {
     success: true,

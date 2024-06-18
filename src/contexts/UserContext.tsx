@@ -1,10 +1,10 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { validateClientSessionCookie } from "../service/sessionService";
 import { User } from "../types";
 import { getUserCookie } from "../lib/cookieManager";
+import { serverRedirect } from "../lib/serverActions";
 
 type UserContextState = {
   user: User;
@@ -19,20 +19,18 @@ type UserProviderProps = {
 };
 
 export const UserProvider = (props: UserProviderProps) => {
-  const router = useRouter();
   const [user, setUser] = useState({} as User);
-
   const [initalized, setInitialized] = useState(false);
 
   useEffect(() => {
     getUserCookie().then((cookie) => {
       if (!cookie) {
-        router.push("/login");
+        serverRedirect("/login");
         return;
       }
-      validateClientSessionCookie(cookie.value).then((user) => {
+      validateClientSessionCookie(cookie).then((user) => {
         if (!user) {
-          router.push("/login");
+          serverRedirect("/login");
           return;
         }
         setUser(user);

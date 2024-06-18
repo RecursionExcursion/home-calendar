@@ -2,17 +2,17 @@
 
 import { cookies } from "next/headers";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import { msTimestamps } from "./util";
 import { decryptData } from "./crypto";
 
 export const getUserCookie = async (): Promise<RequestCookie | undefined> => {
   return cookies().get("user");
 };
 
-export const createUserCookie = async (sessionId: string) => {
+export const createUserCookie = async (sessionId: string, expirationDate: Date) => {
   cookies().set("user", sessionId, {
     httpOnly: true,
-    maxAge: msTimestamps.oneWeek,
+    expires: expirationDate,
+    sameSite: "lax",
   });
 };
 

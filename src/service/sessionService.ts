@@ -1,42 +1,68 @@
 "use server";
 
 import { getUser, saveUser } from "../api/user/userService";
-import { createUserCookie, getUserCookie } from "../lib/cookieManager";
+import { createUserCookie, deleteUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { decryptData, encryptData } from "../lib/crypto";
 import { msTimestamps } from "../lib/util";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
-/*TODO This function is doing too much, consider splitting it up */
-export const checkUserSession = async (user: User) => {
+const checkUserSession = (user: User): boolean => {
   if (user.session) {
     const currentSession = deserializeSession(user.session);
     if (currentSession.exp > new Date().getTime()) {
-      return;
+      return true;
     }
-    await removeSession(user);
   }
-  await createClientSession(user);
+  return false;
+};
+
+const createSessionExiprationDate = (): Date => {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0); //Set to midnight
+  const weekFromMid = new Date(now.getTime() + msTimestamps.oneDay * 7);
+  return weekFromMid;
+};
+
+export const manageSession = async (user: User) => {
+  const sessionIsValid = checkUserSession(user);
+
+  if (!sessionIsValid) {
+    //TODO remove
+    // if (user.session) {
+    //   await removeSession(user);
+    // }
+    await createClientSession(user);
+  }
+
+  const sessionExp = JSON.parse(user.session!!).exp as number; //Either valid or just created
+  const expDate = new Date(sessionExp);
+
+  await createSessionCookie(user, expDate);
+
+  return sessionExp;
 };
 
 const createClientSession = async (user: User) => {
   const session = createSession(user);
-  user.session = serializeSession(session);
+  user.session = serializeSession(await session);
   await saveUser(JSON.stringify(user));
 };
 
-export const createSessionCookie = async (user: User) => {
-  const session = deserializeSession(user.session!!);
-  const encryptedSession = await encryptSession(session);
-  await createUserCookie(encryptedSession);
-};
-
-const createSession = (user: User): Session => {
+const createSession = async (user: User): Promise<Session> => {
+  const exp = createSessionExiprationDate();
   return {
     _id: uuidv4(),
     userId: user._id.toString(),
-    exp: new Date().getTime() + msTimestamps.oneWeek,
+    exp: exp.getTime(),
   };
+};
+
+const createSessionCookie = async (user: User, expirationDate: Date) => {
+  const session = deserializeSession(user.session!!);
+  const encryptedSession = await encryptSession(session);
+  await createUserCookie(encryptedSession, expirationDate);
 };
 
 export const removeSession = async (user: User) => {
@@ -44,25 +70,11 @@ export const removeSession = async (user: User) => {
   await saveUser(JSON.stringify(user));
 };
 
-const serializeSession = (session: Session): string => {
-  return JSON.stringify(session);
-};
-
-const deserializeSession = (sessionString: string): Session => {
-  return JSON.parse(sessionString) as Session;
-};
-
-const encryptSession = async (session: Session): Promise<string> => {
-  return await encryptData(JSON.stringify(session)).then((data) => data.encryptedData);
-};
-
-const decryptSession = async (sessionString: string): Promise<Session> => {
-  return JSON.parse(await decryptData(sessionString)) as Session;
-};
-
 export const validateClientSessionCookie = async (
-  cookieValue: string
+  cookie: RequestCookie
 ): Promise<User | null> => {
+  const cookieValue = cookie.value;
+
   if (cookieValue === "") {
     return null;
   }
@@ -86,14 +98,17 @@ export const validateClientSessionCookie = async (
 
   //Check if session in db has expired
   if (dbUserSession.exp <= new Date().getTime()) {
+    deleteUserCookie();
     return null;
   }
 
   /* At this point the only mismatching data can be the expiration date
    * If it is we update the client cookie to match the db session
    */
+
   if (clientSession.exp !== dbUserSession.exp) {
-    await createSessionCookie(user);
+    const expDate = new Date(dbUserSession.exp);
+    await createSessionCookie(user, expDate);
   }
 
   return user;
@@ -108,9 +123,28 @@ export const renewSession = async () => {
   const user = await getUser(clientSession.userId, "id").then((user) => {
     return JSON.parse(user) as User;
   });
+  //Update session in db
   const oldSession = deserializeSession(user.session!!);
-  oldSession.exp = new Date().getTime() + msTimestamps.oneWeek;
+  const sessionExp = createSessionExiprationDate();
+  oldSession.exp = sessionExp.getTime();
   user.session = serializeSession(oldSession);
   await saveUser(JSON.stringify(user));
-  await createSessionCookie(user);
+  //Update client cookie
+  await createSessionCookie(user, sessionExp);
+};
+
+const serializeSession = (session: Session): string => {
+  return JSON.stringify(session);
+};
+
+const deserializeSession = (sessionString: string): Session => {
+  return JSON.parse(sessionString) as Session;
+};
+
+const encryptSession = async (session: Session): Promise<string> => {
+  return await encryptData(JSON.stringify(session)).then((data) => data.encryptedData);
+};
+
+const decryptSession = async (sessionString: string): Promise<Session> => {
+  return JSON.parse(await decryptData(sessionString)) as Session;
 };
