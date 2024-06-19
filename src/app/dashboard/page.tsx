@@ -2,7 +2,7 @@
 
 import BudgetOverview from "../../components/dashboard/budget/BudgetOverview";
 import HomeTaskTable from "../../components/dashboard/home/HomeTaskTable";
-import { getAllTasks } from "../../task/taskService";
+import { getAllTasks } from "../../service/task/taskService";
 import { Task } from "../../types";
 
 export default async function DashboardPage() {

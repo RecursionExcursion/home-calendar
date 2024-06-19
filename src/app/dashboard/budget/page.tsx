@@ -1,7 +1,7 @@
 "use server";
 
-import { getBudget } from "../../../budget/budgetService";
 import DashboardBudgetUI from "../../../components/dashboard/budget/DashboardBudgetUI";
+import { getBudget } from "../../../service/budget/budgetService";
 
 export default async function BudgetPage() {
   const dbBudget = await getBudget();

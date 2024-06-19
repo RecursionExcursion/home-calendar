@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Budget } from "../../../types";
-import { saveBudget } from "../../../budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
+import { saveBudget } from "../../../service/budget/budgetService";
 
 type EditBudgetIntefaceProps = {
   budgetState: BudgetState;
@@ -17,6 +17,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
 
   const [stateHasChanged, setStateHasChanged] = useState(false);
 
+  //TODO remove?
   const [initalBudget, setInitialBudget] = useState<Budget>({ ...budget });
 
   const [editMode, setEditMode] = useState(false);

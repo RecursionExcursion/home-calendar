@@ -3,7 +3,7 @@
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
-import { saveUser } from "../../../user/userService";
+import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
 
 export default function DeleteTasksAfterMenu() {

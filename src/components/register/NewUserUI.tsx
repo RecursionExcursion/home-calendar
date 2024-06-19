@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createNewUser } from "../../user/userService";
+import { createNewUser } from "../../service/user/userService";
 import { useDashboardContext } from "../../contexts";
 
 export default function NewUserUI() {

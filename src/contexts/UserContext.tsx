@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types";
 import { getUserIdFromCookie } from "../lib/cookieManager";
-import { getUser } from "../user/userService";
+import { getUser } from "../service/user/userService";
 
 type UserContextState = {
   user: User;

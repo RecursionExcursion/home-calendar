@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser, saveUser } from "../user/userService";
+import { getUser, saveUser } from "./user/userService";
 import { createUserCookie, deleteUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";

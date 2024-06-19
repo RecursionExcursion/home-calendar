@@ -1,9 +1,9 @@
 "use server";
 
-import { getUserIdFromCookie } from "../lib/cookieManager";
-import { NewTask, Task, TaskFactory, User } from "../types";
+import { getUserIdFromCookie } from "../../lib/cookieManager";
+import { NewTask, Task, TaskFactory, User } from "../../types";
 import { getUser } from "../user/userService";
-import { changeDate } from "../util";
+import { changeDate } from "../../util";
 import {
   deleteTaskById,
   findAllTasks,

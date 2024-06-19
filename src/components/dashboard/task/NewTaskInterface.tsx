@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
 import DatePicker from "../../base/datePicker/DatePicker";
+import { createNewTask } from "../../../service/task/taskService";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();

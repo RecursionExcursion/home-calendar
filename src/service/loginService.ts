@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser } from "../user/userService";
+import { getUser } from "./user/userService";
 import { createSha256Hash, normalizeString } from "../lib/util";
 import { User } from "../types";
 import { manageSession } from "./sessionService";

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useUserContext } from "../../../contexts";
-import { saveUser } from "../../../user/userService";
+import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 

@@ -1,14 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getBudget } from "../../budget/budgetService";
-import { getUser } from "../../user/userService";
+import { getUser } from "../../service/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords, User } from "../../types";
-import { getAllTasks } from "../../task/taskService";
+import { getAllTasks } from "../../service/task/taskService";
+import { getBudget } from "../../service/budget/budgetService";
 
 type CalendarLayoutProps = {
   children: React.ReactNode;
