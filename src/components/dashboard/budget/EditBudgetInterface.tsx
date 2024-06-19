@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Budget } from "../../../types";
-import { saveBudget } from "../../../api/budget/budgetService";
+import { saveBudget } from "../../../budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser, saveUser } from "../api/user/userService";
+import { getUser, saveUser } from "../user/userService";
 import { createUserCookie, deleteUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";
@@ -71,9 +71,14 @@ export const removeSession = async (user: User) => {
 };
 
 export const validateClientSessionCookie = async (
-  cookie: RequestCookie
+  cookie: RequestCookie | string
 ): Promise<User | null> => {
-  const cookieValue = cookie.value;
+  let cookieValue = "";
+  if (typeof cookie !== "string") {
+    cookieValue = cookie.value;
+  } else {
+    cookieValue = cookie;
+  }
 
   if (cookieValue === "") {
     return null;

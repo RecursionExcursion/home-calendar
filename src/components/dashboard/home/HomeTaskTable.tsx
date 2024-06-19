@@ -3,7 +3,7 @@
 import { FaTrash } from "react-icons/fa";
 import { Task } from "../../../types";
 import {  useState } from "react";
-import { deleteTask, getAllTasks } from "../../../api/task/taskService";
+import { deleteTask, getAllTasks } from "../../../task/taskService";
 import { useDashboardContext } from "../../../contexts";
 
 type HomeTaskTableProps = {

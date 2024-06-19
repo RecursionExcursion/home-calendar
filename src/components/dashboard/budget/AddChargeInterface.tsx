@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { saveBudget } from "../../../api/budget/budgetService";
+import { saveBudget } from "../../../budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";

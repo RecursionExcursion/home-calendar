@@ -1,6 +1,6 @@
 "use sever";
 
-import { getBudget } from "../api/budget/budgetService";
+import { getBudget } from "../budget/budgetService";
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge } from "../types";
 import { getFirstOfWeek } from "../util";

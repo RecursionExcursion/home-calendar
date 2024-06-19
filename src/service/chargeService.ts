@@ -1,4 +1,4 @@
-import { getBudget, saveBudget } from "../api/budget/budgetService";
+import { getBudget, saveBudget } from "../budget/budgetService";
 import { Charge } from "../types";
 import { v4 as uuidv4 } from "uuid";
 

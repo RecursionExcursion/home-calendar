@@ -1,7 +1,7 @@
 "use server";
 
-import { createSha256Hash, normalizeString } from "../../lib/util";
-import { User, buildUserFromJSON, createEmptyUser } from "../../types";
+import { createSha256Hash, normalizeString } from "../lib/util";
+import { User, buildUserFromJSON, createEmptyUser } from "../types";
 import { createUser, deleteUser, readUser, updateUser } from "./userRepo";
 
 export const createNewUser = async (username: string, password: string) => {
