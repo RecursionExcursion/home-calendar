@@ -20,7 +20,9 @@ export async function POST(request: Request) {
 
   const cookieInfo = await decryptData(cookieData);
 
-  return new Response(JSON.stringify({ cookieInfo }), {
+  const data = JSON.stringify(cookieInfo);
+
+  return new Response(data, {
     status: isValid ? 200 : 401,
     headers: {
       "Content-Type": "application/json",
