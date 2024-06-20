@@ -9,19 +9,22 @@ export const middleware = async (request: NextRequest) => {
   };
 
   const actions = {
-    verifyUserCookie: await verifyUserCookie(request),
+    verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
   };
 
-  //TODO Currenlty not working, throwing erros upon extending the session from the login page
+  // TODO Currenlty not working, throwing erros upon extending the session from the login page
   // if (routes.login) {
-  //   if (actions.verifyUserCookie) {
+  //   const userCookieIsValid = await actions.verifyUserCookie(request);
+
+  //   if (userCookieIsValid) {
   //     return NextResponse.redirect(new URL("/dashboard", request.url));
   //   }
   // }
 
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
-    if (!actions.verifyUserCookie) {
+    const userCookieIsValid = await actions.verifyUserCookie(request);
+    if (!userCookieIsValid) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
@@ -37,6 +40,7 @@ const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
   if (!cookie) return false;
+
   return await fetch(new URL("/api/auth", request.url), {
     method: "POST",
     body: JSON.stringify(cookie.value),
