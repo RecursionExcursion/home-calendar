@@ -27,19 +27,19 @@ export const middleware = async (request: NextRequest) => {
   // }
 
   /* Protected by cookie auth */
-  if (routes.dashboard || routes.display) {
-    const userCookieIsValid = await actions.verifyUserCookie(request);
-    if (!userCookieIsValid) {
-      return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
-    }
+  // if (routes.dashboard || routes.display) {
+  const userCookieIsValid = await actions.verifyUserCookie(request);
+  if (!userCookieIsValid) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
   }
+  // }
 
   return NextResponse.next();
 };
 
-// export const config = {
-//   matcher: ["/dashboard/:path*", "/display/:path*", "/login"],
-// };
+export const config = {
+  matcher: ["/dashboard/:path*", "/display/:path*"],
+};
 
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
