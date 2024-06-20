@@ -26,6 +26,8 @@ export const middleware = async (request: NextRequest) => {
   //   }
   // }
 
+  console.log("Hello from middleware");
+
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
     const userCookieIsValid = await verifyUserCookie(request);
