@@ -9,8 +9,7 @@ import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
 import Link from "next/link";
-import { serverRedirect } from "../../lib/serverActions";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function LoginUI() {
   const router = useRouter();
