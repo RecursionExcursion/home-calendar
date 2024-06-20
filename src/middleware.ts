@@ -12,6 +12,11 @@ export const middleware = async (request: NextRequest) => {
     verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
   };
 
+  // console.log({ request });
+  console.log({ url: request.url });
+  console.log({ nextUrl: request.nextUrl });
+  console.log({ orgin: request.nextUrl.origin });
+
   // TODO Currenlty not working, throwing erros upon extending the session from the login page
   // if (routes.login) {
   //   const userCookieIsValid = await actions.verifyUserCookie(request);
@@ -22,12 +27,12 @@ export const middleware = async (request: NextRequest) => {
   // }
 
   /* Protected by cookie auth */
-  // if (routes.dashboard || routes.display) {
-  //   const userCookieIsValid = await actions.verifyUserCookie(request);
-  //   if (!userCookieIsValid) {
-  //     return NextResponse.redirect(new URL("/login", request.url));
-  //   }
-  // }
+  if (routes.dashboard || routes.display) {
+    const userCookieIsValid = await actions.verifyUserCookie(request);
+    if (!userCookieIsValid) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
+    }
+  }
 
   return NextResponse.next();
 };
@@ -41,7 +46,7 @@ const verifyUserCookie = async (request: NextRequest) => {
 
   if (!cookie) return false;
 
-  return await fetch(new URL("/api/auth", request.url), {
+  return await fetch(new URL("/api/auth", request.nextUrl.origin), {
     method: "POST",
     body: JSON.stringify(cookie.value),
     headers: {
