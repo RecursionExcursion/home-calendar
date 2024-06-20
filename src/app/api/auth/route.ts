@@ -3,7 +3,11 @@ import { validateClientSessionCookie } from "../../../service/sessionService";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {}
+export async function GET(request: Request) {
+  return new Response(null, {
+    status: 200,
+  });
+}
 
 export async function POST(request: Request) {
   console.log("POST /api/auth");
@@ -19,8 +23,7 @@ export async function POST(request: Request) {
   console.log("User is valid: ", isValid);
 
   const cookieInfo = await decryptData(cookieData);
-  console.log({ cookieInfo});
-  
+  console.log({ cookieInfo });
 
   const data = JSON.stringify(cookieInfo);
 

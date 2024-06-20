@@ -1,3 +1,4 @@
+import { NextURL } from "next/dist/server/web/next-url";
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = async (request: NextRequest) => {
@@ -7,6 +8,13 @@ export const middleware = async (request: NextRequest) => {
     login: request.nextUrl.pathname.startsWith("/login"),
     register: request.nextUrl.pathname.startsWith("/register"),
   };
+
+  const foo = await fetch(`${request.nextUrl.origin}/auth/api`, {
+    next: { revalidate: 0 },
+    method: "GET",
+  });
+
+  console.log({ foo: foo.status });
 
   // const actions = {
   //   verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
