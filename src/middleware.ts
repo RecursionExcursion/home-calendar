@@ -41,7 +41,7 @@ export const middleware = async (request: NextRequest) => {
     const userCookieIsValid = await verifyUserCookie(request);
 
     if (!userCookieIsValid) {
-      const url = new URL("/login", `https://${request.nextUrl.host}`);
+      const url = new URL("/login", request.nextUrl.origin);
 
       console.log("User validation failed, redirecting to login page", url.toString());
 
@@ -57,18 +57,18 @@ export const middleware = async (request: NextRequest) => {
 // };
 
 
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
-}
+// export const config = {
+//   matcher: [
+//     /*
+//      * Match all request paths except for the ones starting with:
+//      * - api (API routes)
+//      * - _next/static (static files)
+//      * - _next/image (image optimization files)
+//      * - favicon.ico (favicon file)
+//      */
+//     '/((?!api|_next/static|_next/image|favicon.ico).*)',
+//   ],
+// }
 
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
