@@ -32,9 +32,10 @@ $checkboxSize: 1.5rem;
 
 /* Sidebar */
 .db-sidebar-container {
+  @include pop-in-sequence-no-hue(1);
   width: 3rem;
   height: 100%;
-  background-color: $blueGray;
+  background-color: $secondary;
   padding: 0 1rem;
 
   div {
@@ -65,7 +66,7 @@ $checkboxSize: 1.5rem;
 
   &-selected {
     @extend .db-budget-overview-radio-button-wrapper;
-    background-color: $blueGray;
+    background-color: $darkGray;
   }
 }
 
@@ -144,7 +145,6 @@ $checkboxSize: 1.5rem;
     &-section {
       @include flex-col;
       gap: 1rem;
-      // align-items: start;
       &-wrapper {
         @include flex;
         gap: 1rem;
@@ -154,17 +154,56 @@ $checkboxSize: 1.5rem;
       @include text-base;
     }
     &-selector {
-      background-color: $darkGray;
-      border: 1px solid $slate300;
+      background-color: $slate300;
+      border: 0.15rem solid $black;
       border-radius: 5px;
-      color: $white;
+      color: $black;
       height: 2em;
       text-align: center;
       width: 5em;
+      &:focus {
+        border-color: $aqua;
+      }
 
       &-container {
         @include flex;
         gap: 1rem;
+      }
+    }
+  }
+  &-collection {
+    &-grid {
+      @include full;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(auto-fit, minmax(min(50px, 100%), 1fr));
+
+      &-card {
+        @include flex;
+        background-color: $primary;
+        border-radius: $border-rad-primary;
+      }
+    }
+    &-wrapper {
+      @include flex-col;
+      @include full;
+      align-items: unset;
+      gap: 1rem;
+    }
+    &-info {
+      &-wrapper {
+        @include flex-col;
+        align-items: flex-start;
+        font-size: 0.7rem;
+      }
+      &-data {
+      }
+      &-grid {
+        @include full;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, auto-fit);
+        grid-template-rows: repeat(auto-fit, auto-fit);
       }
     }
   }
@@ -174,7 +213,7 @@ $checkboxSize: 1.5rem;
   @include flex-col;
   @include pop-in-sequence($order);
   border-radius: 1rem;
-  background-color: $blueGray;
+  background-color: $secondary;
   justify-content: space-evenly;
   padding: 0.5rem;
 }

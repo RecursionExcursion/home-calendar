@@ -24,3 +24,39 @@
   left: 50%;
   top: 50%;
 }
+
+.full {
+  @include full;
+}
+
+.flex-col {
+  @include flex-col;
+}
+
+.flex {
+  @include flex;
+}
+
+.flex-grow {
+  @include flex-grow;
+}
+
+.flex-w {
+  @include flex;
+  width: 100%;
+}
+
+.flex-h {
+  @include flex;
+  height: 100%;
+}
+
+.flex-col-w {
+  @include flex-col;
+  width: 100%;
+}
+
+.flex-col-h {
+  @include flex-col;
+  height: 100%;
+}

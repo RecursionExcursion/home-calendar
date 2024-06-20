@@ -3,6 +3,7 @@ import {
   ConversionIndex,
   byteConverter,
 } from "../../../lib/byteConverter";
+import { shortenNumber, toFixedAndLocale } from "../../../lib/util";
 
 type StatSpanProps = {
   label: string;
@@ -20,29 +21,15 @@ export const StatSpan = (props: StatSpanProps) => {
     num: stat,
   };
 
-  let fixed = 0;
-  switch (targetSize) {
-    case "kb":
-      fixed = 2;
-      break;
-    case "mb":
-      fixed = 4;
-      break;
-    case "gb":
-      fixed = 6;
-      break;
-    case "tb":
-      fixed = 8;
-      break;
-    default:
-      break;
-  }
-
-  const convertedStats = byteConverter(params).toFixed(fixed);
+  const convertedStats = byteConverter(params);
+  const fixedStats = shortenNumber(convertedStats);
 
   return (
-    <span className="db-db-stat-span">
-      {label}: {convertedStats} {targetSize.toUpperCase()}
-    </span>
+    <div className="flex-col">
+      <span className="db-db-stat-span">{label}</span>
+      <span className="db-db-stat-span">
+        {fixedStats} {targetSize.toUpperCase()}
+      </span>
+    </div>
   );
 };

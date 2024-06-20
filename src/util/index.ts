@@ -97,3 +97,7 @@ export const getFirstOnCalender = (date: Date): Date => {
 export const getFullMonthName = (date: Date): string => {
   return date.toLocaleString("default", { month: "long" });
 };
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};

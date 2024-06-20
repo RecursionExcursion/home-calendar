@@ -15,6 +15,8 @@ export default function BudgetOverview() {
   const [renderedView, setRenderedView] = useState<JSX.Element | null>(null); //TODO Add no data view
   const [selectedView, setSelectedView] = useState<Views>("week");
 
+
+  //TODO move fetch calls to parent
   useEffect(() => {
     switch (selectedView) {
       case "week":

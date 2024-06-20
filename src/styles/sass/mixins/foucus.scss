@@ -1,0 +1,10 @@
+@mixin foucus {
+  outline: 1px solid transparent;
+  &:focus {
+    border-color: $focus;
+  }
+}
+
+.foucus {
+  @include foucus;
+}

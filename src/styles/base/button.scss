@@ -1,6 +1,26 @@
+@mixin button-lite {
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-wrap: nowrap;
+  border: 1px solid $primary;
+
+  &:disabled {
+    @include button-disabled;
+  }
+
+  &:focus {
+    border-color: $focus;
+  }
+  &:hover {
+    border-color: $focus;
+  }
+}
+
 @mixin button-base {
   background: $primary;
-  border: 1px solid $secondary;
+  border: 1px solid $accent;
   border-radius: 0.25rem;
   color: $white;
   cursor: pointer;
@@ -17,4 +37,12 @@
   &:focus {
     border-color: $focus;
   }
+}
+
+.btn {
+  @include button-base;
+}
+
+.btn-lite {
+  @include button-lite;
 }
