@@ -30,7 +30,7 @@ export const middleware = async (request: NextRequest) => {
   if (routes.dashboard || routes.display) {
     const userCookieIsValid = await verifyUserCookie(request);
     if (!userCookieIsValid) {
-      // return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
+      return NextResponse.redirect(new URL("/login", `https://${request.nextUrl.host}`));
     }
   }
 
@@ -44,7 +44,6 @@ export const middleware = async (request: NextRequest) => {
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
-  // return !!cookie;
   if (!cookie) return false;
 
   return await fetch(new URL("/api/auth", request.nextUrl.origin), {
