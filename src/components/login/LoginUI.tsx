@@ -14,7 +14,7 @@ import { serverRedirect } from "../../lib/serverActions";
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // const [dialogOpen, setDialogOpen] = useState(false);
 
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -68,7 +68,7 @@ export default function LoginUI() {
           <div className="flex-col gap-0_5">
             <input
               className="login-input"
-              placeholder="UserName"
+              placeholder="Username"
               value={loginCredentials.username}
               onChange={handleInputChange}
               name="username"
