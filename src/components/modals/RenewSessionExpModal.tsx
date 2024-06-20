@@ -27,15 +27,15 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
       message: "Your session has been successfully renewed!",
       type: "success",
     });
-    setTimeout(() => {
-      serverRedirect(dashboardRoutes.home);
+    setTimeout(async () => {
+      await serverRedirect(dashboardRoutes.home);
     }, 2000);
     closeModal();
   };
 
-  const handleNoClick = () => {
+  const handleNoClick = async () => {
+    await serverRedirect(dashboardRoutes.home);
     closeModal();
-    serverRedirect(dashboardRoutes.home);
   };
 
   return (
