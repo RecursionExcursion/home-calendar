@@ -1,31 +1,40 @@
 "use client";
 
 import { useAppContext } from "../../contexts/AppContext";
+import { serverRedirect } from "../../lib/serverActions";
 import { getTimeDifference } from "../../lib/util";
 import { renewSession } from "../../service/sessionService";
 
 type RenewSessionModalProps = {
   sessionExp: number;
   currentTime: number;
-  toDashboardAction: () => void;
 };
 
 export default function RenewSessionModal(props: RenewSessionModalProps) {
   const { closeModal } = useAppContext();
 
-  const { sessionExp, currentTime, toDashboardAction } = props;
+  const { showToast } = useAppContext();
+
+  const { sessionExp, currentTime } = props;
 
   const timeDifference = getTimeDifference(sessionExp, currentTime);
 
   const handleYesClick = async () => {
     await renewSession();
+    showToast({
+      title: "Session Renewed",
+      message: "Your session has been successfully renewed!",
+      type: "success",
+    });
+    setTimeout(() => {
+      serverRedirect("/dashboard");
+    }, 2000);
     closeModal();
-    toDashboardAction();
   };
 
   const handleNoClick = () => {
     closeModal();
-    toDashboardAction();
+    serverRedirect("/dashboard");
   };
 
   return (

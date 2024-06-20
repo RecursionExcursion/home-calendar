@@ -122,9 +122,9 @@ export const validateClientSessionCookie = async (
 
 export const renewSession = async () => {
   const userCookie = await getUserCookie();
-  if (!userCookie) {
-    return;
-  }
+
+  if (!userCookie) return;
+
   const clientSession = await decryptSession(userCookie.value);
   const user = await getUser(clientSession.userId, "id").then((user) => {
     return JSON.parse(user) as User;

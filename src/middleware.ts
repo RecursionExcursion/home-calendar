@@ -12,11 +12,12 @@ export const middleware = async (request: NextRequest) => {
     verifyUserCookie: await verifyUserCookie(request),
   };
 
-  if (routes.login) {
-    if (actions.verifyUserCookie) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
+  //TODO Currenlty not working, throwing erros upon extending the session from the login page
+  // if (routes.login) {
+  //   if (actions.verifyUserCookie) {
+  //     return NextResponse.redirect(new URL("/dashboard", request.url));
+  //   }
+  // }
 
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {

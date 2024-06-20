@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
@@ -9,11 +8,10 @@ import { miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
-import { useDashboardContext } from "../../contexts";
 import Link from "next/link";
+import { serverRedirect } from "../../lib/serverActions";
 
 export default function LoginUI() {
-  const router = useRouter();
   const { showModal, showToast } = useAppContext();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -51,11 +49,10 @@ export default function LoginUI() {
         <RenewSessionModal
           sessionExp={exirationTime.getTime()}
           currentTime={currentTime.getTime()}
-          toDashboardAction={() => router.push("/dashboard")}
         />
       );
     } else {
-      router.push("/dashboard");
+      serverRedirect("/dashboard");
     }
   };
 
@@ -95,9 +92,6 @@ export default function LoginUI() {
           </div>
         </div>
       </div>
-      <dialog>
-        Invalid name
-      </dialog>
       <dialog open={dialogOpen}>
         <p>Dialog</p>
       </dialog>
