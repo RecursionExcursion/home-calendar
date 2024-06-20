@@ -9,7 +9,7 @@ export const middleware = async (request: NextRequest) => {
     register: request.nextUrl.pathname.startsWith("/register"),
   };
 
-  const foo = await fetch(`${request.nextUrl.origin}/auth/api`, {
+  const foo = await fetch(`${request.nextUrl.origin}/api/auth`, {
     next: { revalidate: 0 },
     method: "GET",
   });
@@ -56,6 +56,20 @@ export const middleware = async (request: NextRequest) => {
 //   matcher: ["/dashboard/:path*", "/display/:path*"],
 // };
 
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+}
+
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
@@ -74,7 +88,7 @@ const verifyUserCookie = async (request: NextRequest) => {
       "Content-Type": "application/json",
     },
   });
-  console.log({ body: resp.body });
+  // console.log({ body: resp.body });
 
   const status = resp.status;
   console.log({ status: status });
