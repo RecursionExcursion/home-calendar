@@ -29,9 +29,9 @@ export const middleware = async (request: NextRequest) => {
   return NextResponse.next();
 };
 
-export const config = {
-  matcher: ["/dashboard/:path*", "/display/:path*", "/login"],
-};
+// export const config = {
+//   matcher: ["/dashboard/:path*", "/display/:path*", "/login"],
+// };
 
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
