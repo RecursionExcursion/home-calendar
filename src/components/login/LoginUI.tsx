@@ -25,7 +25,6 @@ export default function LoginUI() {
 
   useEffect(() => {
     getEnvRegistration().then((resp) => setShowRegistration(resp));
-    fetch("/api/auth").then((res) => console.log(res.status));
   }, []);
 
   const handleLogin = async () => {

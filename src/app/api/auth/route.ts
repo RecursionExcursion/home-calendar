@@ -1,33 +1,16 @@
-import { decryptData } from "../../../lib/crypto";
 import { validateClientSessionCookie } from "../../../service/sessionService";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
-  return new Response(null, {
-    status: 200,
-  });
-}
-
+export async function GET(request: Request) {}
 export async function POST(request: Request) {
-  console.log("POST /api/auth");
-
   const cookieData = await request.json();
-
-  console.log({ cookieData });
 
   const user = await validateClientSessionCookie(cookieData);
 
   const isValid = !!user ? true : false;
 
-  console.log("User is valid: ", isValid);
-
-  const cookieInfo = await decryptData(cookieData);
-  console.log({ cookieInfo });
-
-  const data = JSON.stringify(cookieInfo);
-
-  return new Response(data, {
+  return new Response(null, {
     status: isValid ? 200 : 403,
     headers: {
       "Content-Type": "application/json",

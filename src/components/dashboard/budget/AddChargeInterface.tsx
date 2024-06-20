@@ -24,8 +24,6 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const [dateIsValidFlag, setDateIsValidFlag] = useState(true);
 
   useEffect(() => {
-    console.log({ chargeDraft, chargeDraftDate, dateIsValidFlag });
-
     setButtonEnabled(chargeDraft.amount > 0 && dateIsValidFlag);
   }, [chargeDraft, chargeDraftDate, dateIsValidFlag]);
 
