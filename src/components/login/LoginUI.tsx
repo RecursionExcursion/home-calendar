@@ -9,10 +9,10 @@ import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { serverRedirect } from "../../lib/serverActions";
+import { useRouter } from "next/router";
 
 export default function LoginUI() {
-  const router = useRouter();
   const { showModal, showToast } = useAppContext();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -53,7 +53,7 @@ export default function LoginUI() {
         />
       );
     } else {
-      router.push(dashboardRoutes.home);
+     await serverRedirect(dashboardRoutes.home);
     }
   };
 

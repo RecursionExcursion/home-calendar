@@ -13,9 +13,9 @@ export const middleware = async (request: NextRequest) => {
   };
 
   // console.log({ request });
-  console.log({ url: request.url });
-  console.log({ nextUrl: request.nextUrl });
-  console.log({ orgin: request.nextUrl.origin });
+  // console.log({ url: request.url });
+  // console.log({ nextUrl: request.nextUrl });
+  // console.log({ orgin: request.nextUrl.origin });
 
   // TODO Currenlty not working, throwing erros upon extending the session from the login page
   // if (routes.login) {
