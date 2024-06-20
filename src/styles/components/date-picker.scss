@@ -41,6 +41,7 @@ $border-curve: 10px;
 .ds {
   &-dialog {
     border-radius: $border-curve;
+    background-color: $white;
   }
 
   &-wrapper {
