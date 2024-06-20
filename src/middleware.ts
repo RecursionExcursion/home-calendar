@@ -56,6 +56,7 @@ const verifyUserCookie = async (request: NextRequest) => {
   const url = new URL("/api/auth", request.nextUrl.origin);
 
   console.log("Verifying user cookie as", url.toString());
+  console.log({ cookie });
 
   const status = await fetch(url, {
     next: { revalidate: 0 },
