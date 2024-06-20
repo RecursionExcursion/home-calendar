@@ -1,0 +1,25 @@
+.fb {
+  &-wrapper {
+    width: 100%;
+  }
+  &-container {
+    height: 100%;
+    display: flex;
+  }
+  &-forecast-section {
+    @include flex;
+    gap: 0.25rem;
+    height: 100%;
+    width: 50%;
+    &-day {
+      @extend .fb-forecast-section;
+      background-color: $white;
+      color: $black;
+    }
+    &-night {
+      @extend .fb-forecast-section;
+      background-color: $darkGray;
+      color: $white;
+    }
+  }
+}

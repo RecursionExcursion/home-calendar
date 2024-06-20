@@ -1,10 +1,14 @@
 .login-input {
   @include input-base;
   @include text-base;
-  width: 100%;
+  width: clamp(10rem, 50%, 20rem);
 }
 
 .login-button {
   @include button-base;
-  width: 100%;
+  width: clamp(10rem, 50%, 20rem);;
+}
+
+.login-ui-container {
+  width: clamp(10rem, 50%, 20rem);
 }

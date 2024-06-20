@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useUserContext } from "../../../contexts";
-import { saveUser } from "../../../api/user/userService";
+import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 
@@ -66,7 +66,7 @@ export default function WeatherOptionsMenu() {
 
   return (
     <div
-      className="row-container gap-1 basic-border"
+      className="flex gap-1"
       style={{
         width: "100%",
         padding: "1rem",

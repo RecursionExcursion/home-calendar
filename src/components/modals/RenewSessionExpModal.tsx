@@ -29,10 +29,10 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
   };
 
   return (
-    <div className="col-container">
+    <div className="flex-col">
       <span>{`Your session is about to expire in ${timeDifference}!`}</span>
       <span>{`Would you like to renew your session on all devices?`}</span>
-      <div className="row-container gap-0_5" style={{ margin: "0.5rem 0 0 0" }}>
+      <div className="flex gap-0_5" style={{ margin: "0.5rem 0 0 0" }}>
         <button className="modal-button" onClick={handleYesClick}>
           Yes
         </button>

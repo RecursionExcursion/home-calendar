@@ -1,8 +1,8 @@
 @mixin input-base {
-  background: $white;
-  border: 1px solid $aqua;
+  background: $accent;
+  border: 1px solid $focus;
   border-radius: 0.25rem;
-  color: $black;
+  color: $altTextColor;
   padding: 0.25rem 0.5rem;
 
   &:disabled {
@@ -10,9 +10,6 @@
   }
 }
 
-@mixin disabled-input {
-  background: $lightGray;
-  border: 1px solid $slate300;
-  color: $darkGray;
-  cursor: not-allowed;
+.input-base {
+  @include input-base;
 }

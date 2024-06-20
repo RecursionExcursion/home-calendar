@@ -1,0 +1,4 @@
+@for $i from 1 through 20 {
+  @include height-mixin($i * 5);
+  @include width-mixin($i * 5);
+}

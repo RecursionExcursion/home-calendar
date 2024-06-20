@@ -1,3 +1,4 @@
+/* Base */
 .db-input {
   @include input-base;
   @include text-base;
@@ -27,4 +28,220 @@ $checkboxSize: 1.5rem;
   height: 3rem;
   display: flex;
   align-items: center;
+}
+
+/* Sidebar */
+.db-sidebar-container {
+  @include pop-in-sequence-no-hue(1);
+  width: 3rem;
+  height: 100%;
+  background-color: $secondary;
+  padding: 0 1rem;
+
+  div {
+    @include flex-col;
+    justify-content: space-evenly;
+    height: 100%;
+  }
+}
+
+/* Budget Overview */
+.db-budget-overview {
+  @include full;
+  padding: 0 1rem;
+}
+
+.db-budget-overview-radio-container {
+  @include flex;
+  height: 25%;
+}
+
+.db-budget-overview-radio-button-wrapper {
+  @include basic-border;
+  @include flex-grow;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: transparent;
+
+  &-selected {
+    @extend .db-budget-overview-radio-button-wrapper;
+    background-color: $darkGray;
+  }
+}
+
+/* Layout */
+.db-layout-container {
+  @include full;
+  display: flex;
+}
+
+.db-layout-content-container {
+  @include full;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+/* Task Table */
+.db-task-table-container {
+  @include full;
+  @include flex-col;
+  padding: 1rem 0;
+}
+
+.db-task-table-info-header {
+  @include flex;
+  justify-content: space-around;
+  text-decoration: underline;
+  margin: 1rem 0;
+}
+
+.db-task-table-table-container {
+  @include full;
+  overflow-y: auto;
+}
+
+.db-task-table-table-tr {
+  @include basic-border;
+  height: 5rem;
+  text-align: center;
+}
+
+.db-task-table-table-td {
+  &-desc {
+    width: 40%;
+  }
+  &-date {
+    width: 30%;
+    &-past {
+      @extend .db-task-table-table-td-date;
+      color: $danger;
+    }
+  }
+  &-delete {
+    width: 20%;
+  }
+}
+
+.db-overdue-span {
+  color: $danger;
+}
+
+/* Database */
+.db-db {
+  &-container {
+    @include flex-col;
+    gap: 1rem;
+  }
+  &-stat {
+    &-container {
+      @include flex-col;
+      gap: 1rem;
+      background-color: $darkGray;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid $slate300;
+    }
+    &-section {
+      @include flex-col;
+      gap: 1rem;
+      &-wrapper {
+        @include flex;
+        gap: 1rem;
+      }
+    }
+    &-span {
+      @include text-base;
+    }
+    &-selector {
+      background-color: $slate300;
+      border: 0.15rem solid $black;
+      border-radius: 5px;
+      color: $black;
+      height: 2em;
+      text-align: center;
+      width: 5em;
+      &:focus {
+        border-color: $aqua;
+      }
+
+      &-container {
+        @include flex;
+        gap: 1rem;
+      }
+    }
+  }
+  &-collection {
+    &-grid {
+      @include full;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(auto-fit, minmax(min(50px, 100%), 1fr));
+
+      &-card {
+        @include flex;
+        background-color: $primary;
+        border-radius: $border-rad-primary;
+      }
+    }
+    &-wrapper {
+      @include flex-col;
+      @include full;
+      align-items: unset;
+      gap: 1rem;
+    }
+    &-info {
+      &-wrapper {
+        @include flex-col;
+        align-items: flex-start;
+        font-size: 0.7rem;
+      }
+      &-grid {
+        @include full;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, auto-fit);
+        grid-template-rows: repeat(auto-fit, auto-fit);
+      }
+    }
+  }
+}
+
+@mixin grid-card($order: 1) {
+  @include flex-col;
+  @include pop-in-sequence($order);
+  border-radius: 1rem;
+  background-color: $secondary;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+}
+
+/* Grid */
+
+$stagger-delay: 500ms;
+
+.db-vert-grid {
+  margin: 1rem;
+  width: clamp(0%, 90%, 100%);
+  height: 95%;
+
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: repeat(auto-fit, minmax(min(50px, 100%), 1fr));
+
+  grid-template-columns: 1fr;
+  &-card {
+    &-1 {
+      @include grid-card(1);
+    }
+    &-2 {
+      @include grid-card(2);
+    }
+    &-3 {
+      @include grid-card(3);
+    }
+    &-4 {
+      @include grid-card(4);
+    }
+  }
 }

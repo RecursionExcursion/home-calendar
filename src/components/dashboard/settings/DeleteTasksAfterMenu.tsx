@@ -3,7 +3,7 @@
 import { useLoadingContext } from "../../../contexts/LoadingContext";
 import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
-import { saveUser } from "../../../api/user/userService";
+import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
 
 export default function DeleteTasksAfterMenu() {
@@ -45,14 +45,14 @@ export default function DeleteTasksAfterMenu() {
 
   return (
     <div
-      className="col-container gap-1 basic-border"
+      className="flex-col gap-1"
       style={{
         padding: "1rem",
         width: "100%",
       }}
     >
       <label className="text-nowrap">Delete tasks after</label>
-      <div className="row-container gap-0_5">
+      <div className="flex gap-0_5">
         <input
           className="db-input"
           type="number"

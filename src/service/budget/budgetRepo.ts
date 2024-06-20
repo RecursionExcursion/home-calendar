@@ -1,7 +1,7 @@
 "use server";
 
-import { Budget } from "../../types";
 import { getMongoConnection } from "../../db/mongoConnection";
+import { Budget } from "../../types";
 import { budgetCollectionName as collectionName } from "../../db/collectionConstants";
 
 export const createBudget = async (budget: Budget) => {

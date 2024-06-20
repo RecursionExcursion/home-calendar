@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createNewUser } from "../../api/user/userService";
+import { createNewUser } from "../../service/user/userService";
 import { useDashboardContext } from "../../contexts";
 
 export default function NewUserUI() {
@@ -68,7 +68,7 @@ export default function NewUserUI() {
 
   return (
     <div style={{ height: "100%", display: "flex", justifyContent: "center" }}>
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <h2>Create an account!</h2>
         <input
           className="login-input"

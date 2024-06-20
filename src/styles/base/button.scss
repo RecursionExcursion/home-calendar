@@ -1,23 +1,48 @@
+@mixin button-lite {
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-wrap: nowrap;
+  border: 1px solid $primary;
+
+  &:disabled {
+    @include button-disabled;
+  }
+
+  &:focus {
+    border-color: $focus;
+  }
+  &:hover {
+    border-color: $focus;
+  }
+}
+
 @mixin button-base {
-  background: $black;
-  border: 1px solid $white;
+  background: $primary;
+  border: 1px solid $accent;
   border-radius: 0.25rem;
   color: $white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   min-width: 6rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0;
   text-wrap: nowrap;
 
   &:disabled {
     @include button-disabled;
   }
+
+  &:focus {
+    border-color: $focus;
+  }
 }
 
-@mixin button-disabled {
-  background: $lightGray;
-  border: 1px solid $slate300;
-  color: $darkGray;
-  cursor: not-allowed;
+.btn {
+  @include button-base;
+}
+
+.btn-lite {
+  @include button-lite;
 }

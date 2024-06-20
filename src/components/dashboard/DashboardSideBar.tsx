@@ -4,7 +4,6 @@ import Link from "next/link";
 import { dashboardRoutes } from "../../constants/routes";
 import { getIconGroup } from "../../lib/icons/icons";
 import { DashboardIcons, IconGroupParams } from "../../lib/icons/types";
-import { colors } from "../../styles/colors";
 
 const iconSize = 30;
 
@@ -15,15 +14,8 @@ export default function DashboardSideBar() {
   };
   const icons = getIconGroup(iconGroupParams) as DashboardIcons;
   return (
-    <div
-      style={{
-        width: "3rem",
-        height: "100%",
-        backgroundColor: colors.blueGray,
-        padding: "0 1rem",
-      }}
-    >
-      <div className="col-container gap-5" style={{ height: "100%" }}>
+    <div className="db-sidebar-container">
+      <div>
         <SidebarLink href="/">
           <icons.home size={iconSize} />
         </SidebarLink>
@@ -38,6 +30,9 @@ export default function DashboardSideBar() {
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.settings}>
           <icons.settings size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.database}>
+          <icons.database size={iconSize} />
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.logout}>
           <icons.logout size={iconSize} />

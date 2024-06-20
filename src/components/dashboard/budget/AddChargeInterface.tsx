@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Charge } from "../../../types";
-import { saveBudget } from "../../../api/budget/budgetService";
+import { useEffect, useState } from "react";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
+import NumberInput from "../../base/NumberInput";
+import { createNewCharge, serializeCharge } from "../../../service/chargeService";
+import DatePicker from "../../base/datePicker/DatePicker";
+import { saveBudget } from "../../../service/budget/budgetService";
 
 type AddChargeInterfaceProps = {
   budgetState: BudgetState;
@@ -15,17 +17,32 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
 
   const { showToast } = useDashboardContext();
 
-  const [newCharge, setNewCharge] = useState(getEmptyCharge());
+  const [chargeDraft, setChargeDraft] = useState(getEmptyCharge());
+  const [chargeDraftDate, setChargeDraftDate] = useState(new Date(chargeDraft.utcDate));
+
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [dateIsValidFlag, setDateIsValidFlag] = useState(true);
+
+  useEffect(() => {
+    console.log({ chargeDraft, chargeDraftDate, dateIsValidFlag });
+
+    setButtonEnabled(chargeDraft.amount > 0 && dateIsValidFlag);
+  }, [chargeDraft, chargeDraftDate, dateIsValidFlag]);
 
   const handleAddCharge = async () => {
-    console.log(validateCharge());
-
     const budgetCopy = { ...budget };
 
-    budgetCopy.weeklyCharges.push(newCharge);
+    const newCharge = createNewCharge(
+      chargeDraftDate.toISOString(),
+      chargeDraft.amount,
+      chargeDraft.description
+    );
+
+    budgetCopy.charges.push(serializeCharge(newCharge));
+
     await saveBudget(budgetCopy);
     setBudget(budgetCopy);
-    setNewCharge(getEmptyCharge());
+    setChargeDraft(getEmptyCharge());
     showToast({
       title: "Success",
       message: "Charge added successfully",
@@ -37,10 +54,12 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     const { name } = e.target;
     let { value } = e.target;
 
-    console.log({ name, value });
-
     switch (name) {
-      case "date":
+      case "utcDate":
+        const date = new Date(value);
+
+        value = date.toISOString();
+
         break;
       case "amount":
         if (value === "") break;
@@ -57,7 +76,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         break;
     }
 
-    setNewCharge((prev) => ({
+    setChargeDraft((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -66,46 +85,44 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   const validateCharge = (): boolean => {
     const amountRegex = /^\$?[\d,]+(\.\d*)?$/;
 
-    if (!amountRegex.test(newCharge.amount.toString())) {
+    if (!amountRegex.test(chargeDraft.amount.toString())) {
       return false;
     }
 
-    newCharge.amount = parseFloat(newCharge.amount.toString());
+    chargeDraft.amount = parseFloat(chargeDraft.amount.toString());
 
     return true;
   };
 
   return (
-    <div className="col-container gap-1">
+    <div className="flex-col gap-1">
       <h2 className="text-2xl">Add a Charge</h2>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Date
         </label>
-        <input
-          className="db-input"
-          type="date"
-          name="date"
-          value={newCharge.date}
-          onChange={handleChargeChange}
+        <DatePicker
+          date={chargeDraftDate}
+          setDate={setChargeDraftDate}
+          setValidityFlag={setDateIsValidFlag}
         />
       </div>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Amount
         </label>
-        <input
+        <NumberInput
+          setter={setChargeDraft}
           className="db-input"
           type="text"
           name="amount"
-          value={newCharge.amount}
-          onChange={handleChargeChange}
+          value={chargeDraft.amount}
         />
       </div>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Description
         </label>
@@ -113,21 +130,27 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
           className="db-input"
           type="text"
           name="description"
-          value={newCharge.description}
+          value={chargeDraft.description}
           onChange={handleChargeChange}
         />
       </div>
 
-      <button className="db-button" onClick={handleAddCharge}>
+      <button className="db-button" onClick={handleAddCharge} disabled={!buttonEnabled}>
         Add Charge
       </button>
     </div>
   );
 };
 
-const getEmptyCharge = (): Charge => {
+type ChargeDraft = {
+  utcDate: string;
+  amount: number;
+  description: string;
+};
+
+const getEmptyCharge = (): ChargeDraft => {
   return {
-    date: new Date().toISOString(),
+    utcDate: new Date().toISOString(),
     amount: 0.0,
     description: "",
   };

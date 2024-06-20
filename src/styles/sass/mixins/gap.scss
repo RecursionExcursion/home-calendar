@@ -1,0 +1,12 @@
+@mixin gap-mixin($gap: 1) {
+  $gap-str: str-replace($gap, ".", "_");
+  .gap-#{$gap-str} {
+    gap: #{$gap}rem;
+  }
+}
+$gaps: 0, 0.5, 1, 1.5, 2, 5;
+
+//Creates a class for each gap value gap-0, gap-0_5, gap-1, gap-1_5, etc
+@each $gap in $gaps {
+  @include gap-mixin($gap);
+}

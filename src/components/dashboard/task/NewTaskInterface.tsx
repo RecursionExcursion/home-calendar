@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { createNewTask } from "../../../api/task/taskService";
 import { NewTask } from "../../../types/task";
 import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
+import DatePicker from "../../base/datePicker/DatePicker";
+import { createNewTask } from "../../../service/task/taskService";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
+  const [newTaskDate, setNewTaskDate] = useState(new Date(newTaskForm.date));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ export default function NewTaskInterface() {
     const form = e.currentTarget;
 
     const newDate = dateAndTimeToDate({
-      date: newTaskForm.date,
+      date: newTaskDate.toISOString().split("T")[0],
       time: newTaskForm.time,
     });
 
@@ -78,13 +80,13 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div className="greedy-container col-container gap-0_5">
+    <div className="full flex-col gap-0_5">
       <h2 className="db-h2">Create a Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <div className="greedy-container">
+        <div className="full">
           <div
-            className="greedy-container col-container gap-0_5"
+            className="full flex-col gap-0_5"
             style={{ alignItems: "normal" }}
           >
             <input
@@ -97,16 +99,11 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <input
-              className="db-input"
-              type="date"
-              id="date"
-              name="date"
-              value={newTaskForm.date}
-              onChange={handleFormChange}
-              required
-            />
-            <div className="row-container" style={{ justifyContent: "space-evenly" }}>
+            <div className="flex gap-0_5">
+              {/* TODO: Need to handle invalid state preventing submission */}
+              <DatePicker date={newTaskDate} setDate={setNewTaskDate} />
+            </div>
+            <div className="flex" style={{ justifyContent: "space-evenly" }}>
               <input
                 className="db-input"
                 type="time"
@@ -116,7 +113,7 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div className="row-container gap-0_5">
+              <div className="flex gap-0_5">
                 <label htmlFor="allDay">All Day</label>
                 <input
                   className="db-checkbox"
@@ -126,6 +123,8 @@ export default function NewTaskInterface() {
                 />
               </div>
             </div>
+
+            {/* Hidden ad disabled for now */}
             <input
               className="db-input"
               type="text"
@@ -135,6 +134,7 @@ export default function NewTaskInterface() {
               value={newTaskForm.createdById}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
             <input
@@ -146,6 +146,7 @@ export default function NewTaskInterface() {
               value={newTaskForm.assignedToId ?? undefined}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
             <input
@@ -157,11 +158,17 @@ export default function NewTaskInterface() {
               value={newTaskForm.expiration ?? undefined}
               onChange={handleFormChange}
               disabled
+              hidden
             />
 
-            <div className="row-container gap-0_5">
+            <div className="flex gap-0_5">
               {/* TODO: Will need to be a select that pulls down the priority */}
-              <label className="text-lg" htmlFor="priortiy" style={{ fontWeight: "600" }}>
+              <label
+                className="text-lg"
+                htmlFor="priortiy"
+                style={{ fontWeight: "600" }}
+                hidden
+              >
                 Priority
               </label>
               <input
@@ -171,8 +178,11 @@ export default function NewTaskInterface() {
                 name="priortiy"
                 value={newTaskForm.priortiy}
                 onChange={handleFormChange}
+                disabled
+                hidden
               />
             </div>
+            {/* end hidden and disabled*/}
           </div>
           <button className="db-button" type="submit">
             Submit

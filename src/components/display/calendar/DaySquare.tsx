@@ -1,13 +1,9 @@
 "use client";
 
-import { CSSProperties } from "react";
-
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
 import { useDisplayContext } from "../../../contexts";
 import { isSameDate, sortTasks } from "../../../util";
-import { colors } from "../../../styles/colors";
-
 
 type DaySquareProps = {
   date: Date;
@@ -49,50 +45,23 @@ export default function DaySquare(props: DaySquareProps) {
 
   const sortedTasks = sortTasks(tasksForDate);
 
-  //TODO clean up styles
-  const baseStyle: CSSProperties = {
-    height: "10rem",
-    display: "flex",
-    flexDirection: "column",
-    border: "1px solid white",
-    borderCollapse: "collapse",
-  };
-  const styleColors = {
-    blue: { backgroundColor: colors.daySquare.blue },
-    black: { backgroundColor: colors.black },
-    green: { backgroundColor: colors.daySquare.green },
-  };
+  const getWrapperClass = () => {
+    const normal = "calendar-grid-cell";
+    const today = "calendar-grid-cell-today";
+    const task = "calendar-grid-cell-task";
 
-  const wrapperStyle: CSSProperties = (() => {
-    let style = sortedTasks.length > 0 ? styleColors.green : styleColors.black;
-    style = !isSameDate(date, currentDate) ? style : styleColors.blue;
-    return { ...baseStyle, ...style };
-  })();
+    let style = sortedTasks.length > 0 ? task : normal;
+    style = !isSameDate(date, currentDate) ? style : today;
+    return style;
+  };
 
   return (
-    <div style={wrapperStyle}>
-      <div
-        style={{
-          display: "flex",
-          height: "20%",
-          outline: "1px solid white",
-        }}
-      >
-        <div
-          className="row-container"
-          style={{
-            padding: "0 0.5rem",
-            outline: "1px solid white",
-            width: "1rem",
-            height: "100%",
-            borderCollapse: "collapse",
-          }}
-        >
-          {day}
-        </div>
+    <div className={getWrapperClass()}>
+      <div className="grid-banner">
+        <div className="grid-banner-content-wrapper">{day}</div>
         <ForecastBar forecast={forecastForDate} />
       </div>
-      <div style={{ height: "80%" }}>
+      <div className="task-section">
         {sortedTasks.length > 0 && <TaskList tasks={sortedTasks} />}
       </div>
     </div>

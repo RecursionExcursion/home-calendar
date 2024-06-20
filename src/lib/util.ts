@@ -56,3 +56,45 @@ export const getTimeDifference = (epoch1: number, epoch2: number) => {
   // Return the formatted string
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 };
+
+export const normalizeString = (str: string) => {
+  return str.toLowerCase();
+};
+
+export const toFixedAndLocale = (num: number, fixed: number): string => {
+  const fixedString = num.toFixed(fixed);
+  const fixedNum = Number(fixedString);
+  return fixedNum.toLocaleString();
+};
+
+
+export const shortenNumber = (num: number): string => {
+  const million = 1_000_000;
+  const billion = 1_000_000_000;
+  const trillion = 1_000_000_000_000;
+
+  if (num > trillion) {
+    return toFixedAndLocale(num / trillion, 0) + "t";
+  }
+  if (num > billion) {
+    return toFixedAndLocale(num / billion, 0) + "b";
+  }
+  if (num > million) {
+    return toFixedAndLocale(num / million, 0) + "m";
+  }
+
+  let fixed = 4;
+  if (num > 100) {
+    return toFixedAndLocale(num, 0);
+  } else if (num > 10) {
+    return num.toFixed(1);
+  }
+
+  let fixedStats = toFixedAndLocale(num, fixed);
+
+  if (Number(fixedStats) === 0) {
+    return toFixedAndLocale(num, 0);
+  }
+
+  return fixedStats;
+};

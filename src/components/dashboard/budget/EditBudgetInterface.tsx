@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Budget } from "../../../types";
-import { saveBudget } from "../../../api/budget/budgetService";
 import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
+import { saveBudget } from "../../../service/budget/budgetService";
 
 type EditBudgetIntefaceProps = {
   budgetState: BudgetState;
@@ -17,6 +17,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
 
   const [stateHasChanged, setStateHasChanged] = useState(false);
 
+  //TODO remove?
   const [initalBudget, setInitialBudget] = useState<Budget>({ ...budget });
 
   const [editMode, setEditMode] = useState(false);
@@ -28,7 +29,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
   }, []);
 
   useEffect(() => {
-    if (initalBudget?.weeklyBudget !== budget?.weeklyBudget) {
+    if (initalBudget?.limit !== budget?.limit) {
       setStateHasChanged(true);
       return;
     }
@@ -78,12 +79,12 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
 
   return !loaded ? null : (
     <div
-      className="col-container"
+      className="flex-col"
       style={{
         gap: "1rem",
       }}
     >
-      <div className="row-container gap-0_5">
+      <div className="flex gap-0_5">
         <label className="text-xl text-nowrap">Edit Budget</label>
         <input
           className="db-checkbox"
@@ -101,7 +102,7 @@ export default function EditBudgetInteface(props: EditBudgetIntefaceProps) {
               className="db-input"
               disabled={!editMode}
               type="number"
-              value={budget?.weeklyBudget}
+              value={budget?.limit}
               onChange={handleBudgetLimitChange}
             />
           </div>

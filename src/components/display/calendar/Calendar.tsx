@@ -23,8 +23,8 @@ export default function Calendar(props: CalendarProps) {
   const monthName = `${getFullMonthName(date)} ${date.getFullYear()}`;
 
   const generateCalendar = () => {
-    const headerClass = mode === "day" ? "dayGrid" : "headerGrid";
-    const calendarClass = mode === "day" ? "dayGrid" : "calendarGrid";
+    const headerClass = mode === "day" ? "day-grid" : "header-grid";
+    const calendarClass = mode === "day" ? "day-grid" : "calendar-grid";
 
     return (
       <>
@@ -35,8 +35,8 @@ export default function Calendar(props: CalendarProps) {
   };
 
   return (
-    <div className="col-container" style={{ width: "98%" }}>
-      <h1 style={{ padding: "0.5rem 0" }}>{monthName}</h1>
+    <div className="calendar-wrapper">
+      <h1>{monthName}</h1>
       {generateCalendar()}
     </div>
   );

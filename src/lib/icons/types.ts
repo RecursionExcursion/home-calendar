@@ -2,6 +2,10 @@ import { ComponentType } from "react";
 import { dashboardIconMappings } from "./dashboardIcons";
 import { forecastIconMappings } from "./forecastIcons";
 
+/*
+ * This file should only be touched when adding a new library of icons.
+ */
+
 /* Mappings */
 export type ForecastMappings = keyof typeof forecastIconMappings;
 export type DashboardMappings = keyof typeof dashboardIconMappings;

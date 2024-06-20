@@ -11,24 +11,9 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
     <UserProvider>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-        }}
-      >
+      <div className="db-layout-container">
         <DashboardSideBar />
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
+        <div className="full flex relative">
           <DashboardProvider>
             <LoadingProvider>{children}</LoadingProvider>
           </DashboardProvider>

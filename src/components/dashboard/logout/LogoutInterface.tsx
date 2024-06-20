@@ -30,9 +30,9 @@ export default function LogOutInterface() {
   };
 
   return (
-    <div className="col-container gap-2">
+    <div className="flex-col gap-2">
       <h2 className="db-h2">Logout</h2>
-      <div className="row-container gap-0_5" style={{ textWrap: "nowrap" }}>
+      <div className="flex gap-0_5" style={{ textWrap: "nowrap" }}>
         <label className="text-base" htmlFor="logoutAllSessions">
           Logout of all sessions?
         </label>

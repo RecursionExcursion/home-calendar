@@ -1,15 +1,17 @@
 "use server";
 
-import { getUser } from "../api/user/userService";
-import { createSha256Hash } from "../lib/util";
-import { Session, User } from "../types";
-import { createSessionCookie, checkUserSession } from "./sessionService";
+import { getUser } from "./user/userService";
+import { createSha256Hash, normalizeString } from "../lib/util";
+import { User } from "../types";
+import { manageSession } from "./sessionService";
 
 export const login = async (
   username: string,
   password: string
 ): Promise<LoginReponse> => {
-  let user = await retrieveUser(username);
+  const normalizeUN = normalizeString(username);
+
+  let user = await retrieveUser(normalizeUN);
 
   if (!user || user.password !== createSha256Hash(password)) {
     return {
@@ -18,17 +20,7 @@ export const login = async (
     };
   }
 
-  /*TODO Consider resuing old sessions tp prevent needing to login again
-   * on new devices after logging in on one device
-   */
-  await checkUserSession(user);
-
-  /*TODO Retrieving the user twice in the same fn, may need to be reworked */
-  user = await retrieveUser(username);
-
-  await createSessionCookie(user);
-
-  const sessionExp = (JSON.parse(user.session!!) as Session).exp; //Will never be null as we just added a session
+  const sessionExp = await manageSession(user);
 
   return {
     success: true,

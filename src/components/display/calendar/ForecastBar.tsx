@@ -1,7 +1,6 @@
-import { CSSProperties, ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { DailyForecast, PartialForecast } from "../../../types";
-import { colors } from "../../../styles/colors";
 import { getIconGroup } from "../../../lib/icons/icons";
 import { WiAlien } from "react-icons/wi";
 import {
@@ -22,8 +21,8 @@ export default function ForecastBar(props: ForecastBarProps) {
   }
 
   return (
-    <div style={{ width: "100%" }}>
-      <div style={{ display: "flex", height: "100%" }}>
+    <div className="fb-wrapper">
+      <div className="fb-container">
         <ForecastSection
           icon={getForecastType(forecast?.day)}
           forecast={forecast?.day}
@@ -73,27 +72,22 @@ const getForecastType = (forecast: PartialForecast | undefined): ReactElement =>
   return <WiAlien size={iconSize} />;
 };
 
-const styles: Record<string, CSSProperties> = {
-  base: { gap: "0.25rem", height: "100%", width: "50%" },
-  day: { backgroundColor: colors.white, color: colors.black },
-  night: { backgroundColor: colors.darkGray, color: colors.white },
-};
-
 type ForecastSectionProps = {
   icon: ReactElement;
   forecast: PartialForecast | undefined;
-  theme: keyof typeof styles;
+  theme: "day" | "night";
 };
 
 const ForecastSection = (props: ForecastSectionProps) => {
   const { icon, forecast, theme } = props;
+
+  const style = theme === "day" ? "fb-forecast-section-day" : "fb-forecast-section-night";
+
   return forecast ? (
-    <div className="row-container" style={{ ...styles.base, ...styles[theme] }}>
+    <div className={style}>
       {forecast.temp}°{icon}
     </div>
   ) : (
-    <div className="row-container" style={{ ...styles.base, ...styles[theme] }}>
-      {null}
-    </div>
+    <div className={style}>{null}</div>
   );
 };

@@ -3,5 +3,9 @@
 import Calendar from "../../../../components/display/calendar/Calendar";
 
 export default async function CalendarMonthView() {
-  return <Calendar mode={"month"} />;
+  return (
+    <div className="full flex">
+      <Calendar mode={"month"} />
+    </div>
+  );
 }

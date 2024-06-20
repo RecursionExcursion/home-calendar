@@ -52,15 +52,7 @@ export const DisplayProvider = (props: DisplayProviderProps) => {
 
   return (
     <DisplayContext.Provider value={state}>
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        {children}
-      </div>
+      <div className="full relative">{children}</div>
     </DisplayContext.Provider>
   );
 };

@@ -8,7 +8,6 @@ import { useAppContext } from "../../contexts/AppContext";
 import { miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
-import { colors } from "../../styles/colors";
 import { areDatesLessThanXDaysApart } from "../../util";
 import { useDashboardContext } from "../../contexts";
 import Link from "next/link";
@@ -65,9 +64,9 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="greedy-container row-container">
-      <div style={{ minWidth: "10rem", maxWidth: "20rem", width: "50%" }}>
-        <div className="col-container gap-0_5">
+    <div className="flex">
+      <div className="login-ui-container">
+        <div className="flex-col gap-0_5">
           <input
             className="login-input"
             placeholder="UserName"
@@ -87,7 +86,7 @@ export default function LoginUI() {
             Login
           </button>
           {showRegistration && (
-            <Link className="link" href={miscRoutes.register}>
+            <Link className="login-button" href={miscRoutes.register}>
               Create an account
             </Link>
           )}

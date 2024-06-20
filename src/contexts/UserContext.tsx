@@ -1,10 +1,9 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { validateClientSessionCookie } from "../service/sessionService";
 import { User } from "../types";
-import { getUserCookie } from "../lib/cookieManager";
+import { getUserIdFromCookie } from "../lib/cookieManager";
+import { getUser } from "../service/user/userService";
 
 type UserContextState = {
   user: User;
@@ -19,22 +18,17 @@ type UserProviderProps = {
 };
 
 export const UserProvider = (props: UserProviderProps) => {
-  const router = useRouter();
   const [user, setUser] = useState({} as User);
-
   const [initalized, setInitialized] = useState(false);
 
   useEffect(() => {
-    getUserCookie().then((cookie) => {
-      if (!cookie) {
-        router.push("/login");
-        return;
+    getUserIdFromCookie().then((userId) => {
+      if (!userId) {
+        //This should never happen as it is handled in the middleware
+        throw new Error("No user id found in cookie");
       }
-      validateClientSessionCookie(cookie.value).then((user) => {
-        if (!user) {
-          router.push("/login");
-          return;
-        }
+      getUser(userId, "id").then((userJson) => {
+        const user = JSON.parse(userJson) as User;
         setUser(user);
         setInitialized(true);
       });

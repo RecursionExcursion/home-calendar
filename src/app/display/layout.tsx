@@ -1,15 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getBudget } from "../../api/budget/budgetService";
-import { getAllTasks } from "../../api/task/taskService";
-import { getUser } from "../../api/user/userService";
+import { getUser } from "../../service/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
-import { computeBudget } from "../../service/budgetService";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords, User } from "../../types";
+import { getAllTasks } from "../../service/task/taskService";
+import { getBudget } from "../../service/budget/budgetService";
 
 type CalendarLayoutProps = {
   children: React.ReactNode;
@@ -40,10 +39,6 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
     tasksJSON = await getAllTasks();
     budgetJSON = await getBudget();
   } catch (e) {}
-
-
-  //TODO is this the best place to do this? Should this be done in the DisplayProvider or Service?
-  await computeBudget(budgetJSON);
 
   return (
     <UserProvider>

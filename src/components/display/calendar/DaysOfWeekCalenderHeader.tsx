@@ -26,7 +26,7 @@ export default function DaysOfWeekCalenderHeader(props: DaysOfWeekCalenderHeader
       {daysOfWeek.map((day) => (
         <div
           key={day}
-          className="row-container basic-border"
+          className="flex basic-border"
           style={{ padding: "1rem 0" }}
         >
           {day}
