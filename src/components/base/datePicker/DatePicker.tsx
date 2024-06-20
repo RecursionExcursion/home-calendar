@@ -92,11 +92,6 @@ export default function DatePicker(props: DatePickerProps) {
     }
   }, [showDialog]);
 
-  const showDialogHandler = () => {
-    // setShowDialog(!showDialog);
-    // <DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />
-  };
-
   return (
     <div>
       <div className="flex gap-1">
@@ -128,9 +123,6 @@ export default function DatePicker(props: DatePickerProps) {
             <FaCalendar />
           </button>
         </div>
-        {/* <dialog className="ds-dialog" open={showDialog}>
-          <DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />
-        </dialog> */}
       </div>
     </div>
   );

@@ -8,23 +8,11 @@ export const middleware = async (request: NextRequest) => {
     register: request.nextUrl.pathname.startsWith("/register"),
   };
 
-  const actions = {
-    verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
-  };
-
-  if (routes.login) {
-    const userCookieIsValid = await actions.verifyUserCookie(request);
-
-    if (userCookieIsValid) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
-
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
-    const userCookieIsValid = await actions.verifyUserCookie(request);
-
-    if (!userCookieIsValid) {
+    const userCookie = new UserCookie(() => verifyUserCookie(request));
+    const cookieIsValid = await userCookie.isValid();
+    if (!cookieIsValid) {
       return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
     }
   }
@@ -38,7 +26,6 @@ const verifyUserCookie = async (request: NextRequest) => {
   if (!cookie) return false;
 
   const resp = await fetch(`${request.nextUrl.origin}/api/auth`, {
-    next: { revalidate: 0 },
     method: "POST",
     body: JSON.stringify(cookie.value),
     headers: {
@@ -50,3 +37,17 @@ const verifyUserCookie = async (request: NextRequest) => {
 
   return status === 200;
 };
+
+class UserCookie {
+  value: boolean | undefined;
+  creator: () => Promise<boolean>;
+  constructor(creator: () => Promise<boolean>) {
+    this.creator = creator;
+  }
+  async isValid() {
+    if (this.value === undefined) {
+      this.value = await this.creator();
+    }
+    return this.value;
+  }
+}

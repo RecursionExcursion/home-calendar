@@ -29,7 +29,7 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
     });
     setTimeout(async () => {
       await serverRedirect(dashboardRoutes.home);
-    }, 2000);
+    }, 1000);
     closeModal();
   };
 
@@ -39,16 +39,22 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
   };
 
   return (
-    <div className="flex-col">
-      <span>{`Your session is about to expire in ${timeDifference}!`}</span>
-      <span>{`Would you like to renew your session on all devices?`}</span>
-      <div className="flex gap-0_5" style={{ margin: "0.5rem 0 0 0" }}>
-        <button className="modal-button" onClick={handleYesClick}>
-          Yes
-        </button>
-        <button className="modal-button" onClick={handleNoClick}>
-          No
-        </button>
+    <div className="sr-container">
+      <div className="sr-text-container">
+        <span>{`Your session is about to expire in ${timeDifference}!`}</span>
+        <span>{`Would you like to renew your session on all devices?`}</span>
+      </div>
+      <div className="sr-button-container">
+        <div className="sr-button-wrapper">
+          <button className="sr-button" onClick={handleYesClick}>
+            Yes
+          </button>
+        </div>
+        <div className="sr-button-wrapper">
+          <button className="sr-button" onClick={handleNoClick}>
+            No
+          </button>
+        </div>
       </div>
     </div>
   );

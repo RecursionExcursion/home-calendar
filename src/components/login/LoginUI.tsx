@@ -14,8 +14,6 @@ import { serverRedirect } from "../../lib/serverActions";
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();
 
-  // const [dialogOpen, setDialogOpen] = useState(false);
-
   const [showRegistration, setShowRegistration] = useState(false);
 
   const [loginCredentials, setLoginCredentials] = useState({
@@ -42,7 +40,7 @@ export default function LoginUI() {
     const currentTime = new Date();
     const exirationTime = new Date(resp.sessionExp!!);
 
-    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 5);
+    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 4);
 
     if (sessionCloseToExp) {
       showModal(
@@ -92,10 +90,6 @@ export default function LoginUI() {
           </div>
         </div>
       </div>
-      {/* TODO impl dialog instead of modal */}
-      {/* <dialog open={dialogOpen}>
-        <p>Dialog</p>
-      </dialog> */}
     </>
   );
 }
