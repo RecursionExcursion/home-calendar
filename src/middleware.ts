@@ -65,7 +65,11 @@ const verifyUserCookie = async (request: NextRequest) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((resp) => resp.status);
+  }).then((resp) => {
+    console.log({ res: resp.json() });
+
+    return resp.status;
+  });
 
   console.log({ status });
 

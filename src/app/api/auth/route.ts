@@ -1,3 +1,4 @@
+import { decryptData } from "../../../lib/crypto";
 import { validateClientSessionCookie } from "../../../service/sessionService";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +18,9 @@ export async function POST(request: Request) {
 
   console.log("User is valid: ", isValid);
 
-  return new Response(null, {
+  const cookieInfo = await decryptData(cookieData);
+
+  return new Response(JSON.stringify({ cookieInfo }), {
     status: isValid ? 200 : 401,
     headers: {
       "Content-Type": "application/json",
