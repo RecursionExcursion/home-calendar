@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
-import { miscRoutes } from "../../constants/routes";
+import { dashboardRoutes, miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
@@ -52,7 +52,7 @@ export default function LoginUI() {
         />
       );
     } else {
-     await serverRedirect("/dashboard");
+     await serverRedirect(dashboardRoutes.home);
     }
   };
 

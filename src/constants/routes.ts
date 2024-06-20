@@ -13,6 +13,7 @@ const dashboardRoutes = {
   budget: `${dashboardBase}/budget`,
   database: `${dashboardBase}/database`,
   display: `${dashboardBase}/display`,
+  home: `${dashboardBase}/`,
   logout: `${dashboardBase}/logout`,
   settings: `${dashboardBase}/settings`,
   tasks: `${dashboardBase}/tasks`,

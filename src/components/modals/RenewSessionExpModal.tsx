@@ -1,5 +1,6 @@
 "use client";
 
+import { dashboardRoutes } from "../../constants/routes";
 import { useAppContext } from "../../contexts/AppContext";
 import { serverRedirect } from "../../lib/serverActions";
 import { getTimeDifference } from "../../lib/util";
@@ -27,14 +28,14 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
       type: "success",
     });
     setTimeout(() => {
-      serverRedirect("/dashboard");
+      serverRedirect(dashboardRoutes.home);
     }, 2000);
     closeModal();
   };
 
   const handleNoClick = () => {
     closeModal();
-    serverRedirect("/dashboard");
+    serverRedirect(dashboardRoutes.home);
   };
 
   return (
