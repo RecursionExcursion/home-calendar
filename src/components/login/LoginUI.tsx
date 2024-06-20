@@ -52,7 +52,7 @@ export default function LoginUI() {
         />
       );
     } else {
-      serverRedirect("/dashboard");
+     await serverRedirect("/dashboard");
     }
   };
 
