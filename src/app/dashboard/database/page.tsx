@@ -34,8 +34,6 @@ export default async function DatabasePage() {
     })
   );
 
-  console.log({ stats: collections[0].stats });
-
   return (
     <div className="db-vert-grid">
       <div className="db-vert-grid-card-1">
