@@ -20,11 +20,7 @@ export const useModal = () => {
 
     return (
       <div className="modal-disable-overlay">
-        <div className="modal-wrapper">
-          {/* <div className="modal-container"> */}
-          {modalContent}
-          {/* </div> */}
-        </div>
+        <div className="modal-wrapper">{modalContent}</div>
       </div>
     );
   };

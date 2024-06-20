@@ -1,34 +1,29 @@
 .sr {
   &-container {
     @include flex-col;
-    padding: 1rem 0.5rem;
+    background-color: $white;
+    border-radius: $border-curve;
+    color: $black;
     gap: 1rem;
+    padding: 1rem 0.5rem;
+    width: clamp(5rem, 80%, 20rem);
   }
+
   &-text {
     &-container {
-      text-wrap: wrap;
       @include flex-col;
       gap: 1rem;
-      width: 100%;
       text-align: center;
+      text-wrap: wrap;
+      width: clamp(5rem, 80%, 20rem);
     }
   }
 
   &-button {
     @include button-base;
-
     &-container {
-      width: 80%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-      gap: 1rem;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &-wrapper {
       @include flex;
-      @include full;
+      gap: 1rem;
     }
   }
 }
