@@ -22,12 +22,12 @@ export const middleware = async (request: NextRequest) => {
   // }
 
   /* Protected by cookie auth */
-  if (routes.dashboard || routes.display) {
-    const userCookieIsValid = await actions.verifyUserCookie(request);
-    if (!userCookieIsValid) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-  }
+  // if (routes.dashboard || routes.display) {
+  //   const userCookieIsValid = await actions.verifyUserCookie(request);
+  //   if (!userCookieIsValid) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
+  // }
 
   return NextResponse.next();
 };
