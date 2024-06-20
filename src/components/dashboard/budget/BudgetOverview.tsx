@@ -63,7 +63,7 @@ export default function BudgetOverview() {
         />
         {/* <BudgetOverviewRadioButton setView={setSelectedView} value="YTD" /> */}
       </div>
-      <div className="row-container">{renderedView}</div>
+      <div className="flex">{renderedView}</div>
     </div>
   );
 }

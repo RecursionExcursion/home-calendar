@@ -12,11 +12,11 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="greedy-container">
-      <div className="h-50">
+    <div className="db-vert-grid">
+      <div className="db-vert-grid-card-1">
         <HomeTaskTable tasks={allTasks} />
       </div>
-      <div className="row-container h-50" >
+      <div className="db-vert-grid-card-2">
         <BudgetOverview />
       </div>
     </div>

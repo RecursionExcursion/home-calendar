@@ -1,9 +1,10 @@
-@import "../styles/vars/_index.scss";
-
-@import "../styles/sass/_index.scss";
-
 @import "../styles/reset.scss";
 
-@import "../styles/base/_index.scss";
-@import "../styles/components/_index.scss";
-@import "../styles/views/_index.scss";
+@import "../styles/vars";
+
+@import "../styles/sass";
+
+
+@import "../styles/base";
+@import "../styles/components";
+@import "../styles/views";

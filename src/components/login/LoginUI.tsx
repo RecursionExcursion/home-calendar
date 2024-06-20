@@ -64,9 +64,9 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="greedy-container row-container">
+    <div className="flex">
       <div className="login-ui-container">
-        <div className="col-container gap-0_5">
+        <div className="flex-col gap-0_5">
           <input
             className="login-input"
             placeholder="UserName"
@@ -86,7 +86,7 @@ export default function LoginUI() {
             Login
           </button>
           {showRegistration && (
-            <Link className="link" href={miscRoutes.register}>
+            <Link className="login-button" href={miscRoutes.register}>
               Create an account
             </Link>
           )}

@@ -14,8 +14,7 @@ export default function DashboardSideBar() {
   };
   const icons = getIconGroup(iconGroupParams) as DashboardIcons;
   return (
-    <div className="db-sidebar-container"
-    >
+    <div className="db-sidebar-container">
       <div>
         <SidebarLink href="/">
           <icons.home size={iconSize} />
@@ -31,6 +30,9 @@ export default function DashboardSideBar() {
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.settings}>
           <icons.settings size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.database}>
+          <icons.database size={iconSize} />
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.logout}>
           <icons.logout size={iconSize} />

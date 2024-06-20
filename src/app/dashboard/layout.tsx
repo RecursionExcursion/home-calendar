@@ -13,7 +13,7 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
     <UserProvider>
       <div className="db-layout-container">
         <DashboardSideBar />
-        <div className="greedy-container row-container relative">
+        <div className="full flex relative">
           <DashboardProvider>
             <LoadingProvider>{children}</LoadingProvider>
           </DashboardProvider>

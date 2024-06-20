@@ -22,9 +22,9 @@ export const deleteUserCookie = async () => {
 
 export const getUserIdFromCookie = async (): Promise<string | undefined> => {
   const userCookie = await getUserCookie();
-  if (!userCookie) {
-    return undefined;
-  }
+
+  if (!userCookie) return undefined;
+
   const decryptedUser = await decryptData(userCookie?.value!!);
   const sessionInfo = JSON.parse(decryptedUser);
   return sessionInfo.userId;

@@ -22,7 +22,7 @@ export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
    */
 
   return (
-    <div className="col-container gap-1">
+    <div className="flex-col gap-1">
       <h2 className="db-h2">Budget</h2>
       {/* TODO: This needs to be rehashed out and maybe moved to settings */}
       {/* <EditBudgetInteface budgetState={{ budget, setBudget }} /> */}

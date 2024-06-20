@@ -38,20 +38,20 @@ $checkboxSize: 1.5rem;
   padding: 0 1rem;
 
   div {
-    @include col-container;
-    gap: 5rem;
+    @include flex-col;
+    justify-content: space-evenly;
     height: 100%;
   }
 }
 
 /* Budget Overview */
 .db-budget-overview {
-  @include greedy-container;
+  @include full;
   padding: 0 1rem;
 }
 
 .db-budget-overview-radio-container {
-  @include row-container;
+  @include flex;
   height: 25%;
 }
 
@@ -71,32 +71,32 @@ $checkboxSize: 1.5rem;
 
 /* Layout */
 .db-layout-container {
-  @include greedy-container;
+  @include full;
   display: flex;
 }
 
 .db-layout-content-container {
-  @include greedy-container;
+  @include full;
   padding: 1rem;
   gap: 1rem;
 }
 
 /* Task Table */
 .db-task-table-container {
-  @include greedy-container;
-  @include col-container;
+  @include full;
+  @include flex-col;
   padding: 1rem 0;
 }
 
 .db-task-table-info-header {
-  @include row-container;
+  @include flex;
   justify-content: space-around;
   text-decoration: underline;
   margin: 1rem 0;
 }
 
 .db-task-table-table-container {
-  @include greedy-container;
+  @include full;
   overflow-y: auto;
 }
 
@@ -122,6 +122,89 @@ $checkboxSize: 1.5rem;
   }
 }
 
-.db-overdue-span{
+.db-overdue-span {
   color: $danger;
+}
+
+/* Database */
+.db-db {
+  &-container {
+    @include flex-col;
+    gap: 1rem;
+  }
+  &-stat {
+    &-container {
+      @include flex-col;
+      gap: 1rem;
+      background-color: $darkGray;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid $slate300;
+    }
+    &-section {
+      @include flex-col;
+      gap: 1rem;
+      align-items: start;
+      &-wrapper {
+        @include flex;
+        gap: 1rem;
+      }
+    }
+    &-span {
+      @include text-base;
+    }
+    &-selector {
+      background-color: $darkGray;
+      border: 1px solid $slate300;
+      border-radius: 5px;
+      color: $white;
+      height: 2em;
+      text-align: center;
+      width: 5em;
+
+      &-container {
+        @include flex;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+@mixin grid-card($order: 1) {
+  @include flex-col;
+  @include pop-in-sequence($order);
+  border-radius: 1rem;
+  background-color: $blueGray;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+}
+
+/* Grid */
+
+$stagger-delay: 500ms;
+
+.db-vert-grid {
+  margin: 1rem;
+  width: clamp(0%, 90%, 100%);
+  height: 95%;
+
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: repeat(auto-fit, minmax(min(50px, 100%), 1fr));
+
+  grid-template-columns: 1fr;
+  &-card {
+    &-1 {
+      @include grid-card(1);
+    }
+    &-2 {
+      @include grid-card(2);
+    }
+    &-3 {
+      @include grid-card(3);
+    }
+    &-4 {
+      @include grid-card(4);
+    }
+  }
 }

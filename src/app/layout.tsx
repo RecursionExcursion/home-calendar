@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="greedy-container">
+        <main className="full">
           <AppProvider>{children}</AppProvider>
         </main>
         <Analytics />

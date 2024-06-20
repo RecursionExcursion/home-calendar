@@ -84,7 +84,7 @@ export default function DatePicker(props: DatePickerProps) {
 
   return (
     <div>
-      <div className="row-container gap-1">
+      <div className="flex gap-1">
         <div className={dateIsValid ? "dp-wrapper" : "dp-wrapper-invalid"}>
           <input
             name="month"

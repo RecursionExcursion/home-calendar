@@ -1,6 +1,6 @@
 .toast {
   &-container {
-    @include col-container;
+    @include flex-col;
     border-radius: 0.375rem;
     bottom: 10px;
     left: 50%;

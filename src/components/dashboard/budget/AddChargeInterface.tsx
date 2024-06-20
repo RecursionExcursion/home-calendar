@@ -95,10 +95,10 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   };
 
   return (
-    <div className="col-container gap-1">
+    <div className="flex-col gap-1">
       <h2 className="text-2xl">Add a Charge</h2>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Date
         </label>
@@ -109,7 +109,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         />
       </div>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Amount
         </label>
@@ -122,7 +122,7 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
         />
       </div>
 
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <label className="text-xl" htmlFor="date">
           Description
         </label>

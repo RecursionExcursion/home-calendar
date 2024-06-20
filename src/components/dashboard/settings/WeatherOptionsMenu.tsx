@@ -66,7 +66,7 @@ export default function WeatherOptionsMenu() {
 
   return (
     <div
-      className="row-container gap-1 basic-border"
+      className="flex gap-1"
       style={{
         width: "100%",
         padding: "1rem",

@@ -57,7 +57,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
       </div>
 
       <div className="db-task-table-table-container w-95">
-        <table className="basic-border greedy-container">
+        <table className="basic-border full">
           <tbody>
             {tasks.map((task, i) => {
               const key = i + task?._id?.toString();

@@ -1,6 +1,6 @@
 .dp {
   &-wrapper {
-    @include row-container;
+    @include flex;
     color: $primary;
     background: $secondary;
     height: 3rem;
@@ -44,8 +44,8 @@ $border-curve: 10px;
   }
 
   &-wrapper {
-    @include col-container;
-    @include greedy-container;
+    @include flex-col;
+    @include full;
     gap: 0.5rem;
   }
 

@@ -68,7 +68,7 @@ export default function NewUserUI() {
 
   return (
     <div style={{ height: "100%", display: "flex", justifyContent: "center" }}>
-      <div className="col-container gap-1">
+      <div className="flex-col gap-1">
         <h2>Create an account!</h2>
         <input
           className="login-input"

@@ -1,0 +1,26 @@
+@mixin full {
+  height: 100%;
+  width: 100%;
+}
+
+@mixin flex {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-col {
+  @include flex;
+  flex-direction: column;
+}
+
+@mixin flex-grow {
+  flex-grow: 1;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}

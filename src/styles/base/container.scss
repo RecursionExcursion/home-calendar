@@ -1,13 +1,13 @@
-.greedy-container {
-  @include greedy-container;
+.full {
+  @include full;
 }
 
-.col-container {
-  @include col-container;
+.flex-col {
+  @include flex-col;
 }
 
-.row-container {
-  @include row-container;
+.flex {
+  @include flex;
 }
 
 .flex-grow {

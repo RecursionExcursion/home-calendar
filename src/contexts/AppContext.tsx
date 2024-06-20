@@ -24,13 +24,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         closeModal: () => closeModal(),
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          width: "100%",
-        }}
-      >
+      <div className="full relative">
         {children}
         <Modal />
       </div>

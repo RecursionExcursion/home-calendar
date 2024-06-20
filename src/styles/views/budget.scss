@@ -3,12 +3,12 @@ $graph-height: 200px;
 
 .bud-month-graph {
   &-container {
-    @include row-container;
+    @include flex;
     gap: 0.5rem;
     width: 80%;
   }
   &-y-axis {
-    @include col-container;
+    @include flex-col;
     height: $graph-height;
     gap: 25px;
     margin-bottom: 25px;
@@ -19,7 +19,7 @@ $graph-height: 200px;
     justify-content: space-around;
   }
   &-bar-container {
-    @include col-container;
+    @include flex-col;
     width: 20%;
   }
   &-bar {
@@ -29,7 +29,7 @@ $graph-height: 200px;
     display: flex;
     align-items: flex-end;
     &-budget {
-      @include col-container;
+      @include flex-col;
       background-color: $good;
       width: 25px;
       height: var(--budget-amount);
@@ -40,7 +40,7 @@ $graph-height: 200px;
 /* Week */
 .bud-week-graph {
   &-container {
-    @include col-container;
+    @include flex-col;
     gap: 1.5rem;
     width: 80%;
     padding: 0.5rem;
@@ -57,7 +57,7 @@ $graph-height: 200px;
     width: 100%;
     height: 5rem;
     &-fill {
-      @include row-container;
+      @include flex;
       height: 100%;
       width: var(--budget-width);
 

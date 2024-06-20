@@ -80,13 +80,13 @@ export default function NewTaskInterface() {
   };
 
   return (
-    <div className="greedy-container col-container gap-0_5">
+    <div className="full flex-col gap-0_5">
       <h2 className="db-h2">Create a Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <div className="greedy-container">
+        <div className="full">
           <div
-            className="greedy-container col-container gap-0_5"
+            className="full flex-col gap-0_5"
             style={{ alignItems: "normal" }}
           >
             <input
@@ -99,11 +99,11 @@ export default function NewTaskInterface() {
               onChange={handleFormChange}
               required
             />
-            <div className="row-container gap-0_5">
+            <div className="flex gap-0_5">
               {/* TODO: Need to handle invalid state preventing submission */}
               <DatePicker date={newTaskDate} setDate={setNewTaskDate} />
             </div>
-            <div className="row-container" style={{ justifyContent: "space-evenly" }}>
+            <div className="flex" style={{ justifyContent: "space-evenly" }}>
               <input
                 className="db-input"
                 type="time"
@@ -113,7 +113,7 @@ export default function NewTaskInterface() {
                 onChange={handleFormChange}
                 required
               />
-              <div className="row-container gap-0_5">
+              <div className="flex gap-0_5">
                 <label htmlFor="allDay">All Day</label>
                 <input
                   className="db-checkbox"
@@ -161,7 +161,7 @@ export default function NewTaskInterface() {
               hidden
             />
 
-            <div className="row-container gap-0_5">
+            <div className="flex gap-0_5">
               {/* TODO: Will need to be a select that pulls down the priority */}
               <label
                 className="text-lg"

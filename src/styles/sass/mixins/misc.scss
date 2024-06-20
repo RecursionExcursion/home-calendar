@@ -1,0 +1,29 @@
+@mixin disabled-input {
+  background: $lightGray;
+  border: 1px solid $slate300;
+  color: $darkGray;
+  cursor: not-allowed;
+}
+
+/* Button */
+@mixin button-disabled {
+  background: $lightGray;
+  border: 1px solid $slate300;
+  color: $darkGray;
+  cursor: not-allowed;
+}
+
+/* Size */
+@mixin height-mixin($height) {
+  $height-value: unquote($height + "%");
+  .h-#{$height} {
+    height: $height-value !important;
+  }
+}
+
+@mixin width-mixin($width) {
+  $width-value: unquote($width + "%");
+  .w-#{$width} {
+    width: $width-value !important;
+  }
+}

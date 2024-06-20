@@ -10,5 +10,13 @@ export default async function RegisterPage() {
     redirect("/not_found");
   }
 
-  return <NewUserUI />;
+  return (
+    <div className="full flex">
+      <div className="db-vert-grid">
+        <div className="db-vert-grid-card-1">
+          <NewUserUI />
+        </div>
+      </div>
+    </div>
+  );
 }

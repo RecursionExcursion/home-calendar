@@ -52,7 +52,7 @@ export const DisplayProvider = (props: DisplayProviderProps) => {
 
   return (
     <DisplayContext.Provider value={state}>
-      <div className="greedy-container relative">{children}</div>
+      <div className="full relative">{children}</div>
     </DisplayContext.Provider>
   );
 };

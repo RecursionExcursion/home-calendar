@@ -11,6 +11,7 @@ const dashboardBase = "/dashboard";
 
 const dashboardRoutes = {
   budget: `${dashboardBase}/budget`,
+  database: `${dashboardBase}/database`,
   display: `${dashboardBase}/display`,
   logout: `${dashboardBase}/logout`,
   settings: `${dashboardBase}/settings`,
