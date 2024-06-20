@@ -9,7 +9,7 @@
 
     &-invalid {
       @extend .dp-wrapper;
-      outline: .2rem solid $invalid;
+      outline: 0.2rem solid $invalid;
     }
   }
 
@@ -30,8 +30,8 @@
     color: $primary;
     padding: 0 0.5rem;
     cursor: pointer;
-    &:focus{
-      color: $focus;  ;
+    &:focus {
+      color: $focus;
     }
   }
 }
@@ -39,14 +39,13 @@
 $border-curve: 10px;
 /* Date Selector */
 .ds {
-  &-dialog {
-    border-radius: $border-curve;
-  }
-
   &-wrapper {
     @include flex-col;
     @include full;
     gap: 0.5rem;
+    border-radius: $border-curve;
+    color: $black;
+    background-color: $white;
   }
 
   &-control-container {

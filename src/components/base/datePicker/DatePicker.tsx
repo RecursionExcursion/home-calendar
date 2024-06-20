@@ -5,6 +5,7 @@ import DateSelector from "./DateSelector";
 
 //TODO Move to icon service
 import { FaCalendar } from "react-icons/fa6";
+import { useAppContext } from "../../../contexts";
 
 type DatePickerProps = {
   date: Date;
@@ -14,6 +15,8 @@ type DatePickerProps = {
 
 export default function DatePicker(props: DatePickerProps) {
   const { date: initalDate, setDate: setParentDate, setValidityFlag } = props;
+
+  const { showModal, closeModal } = useAppContext();
 
   const [date, setDate] = useState(initalDate);
 
@@ -42,7 +45,6 @@ export default function DatePicker(props: DatePickerProps) {
     const daysAreEqual = newDate.getDate() == inputDate.day;
     const yearsAreEqual = newDate.getFullYear() === inputDate.year;
     const datesAreEqual = monthsAreEqual && daysAreEqual && yearsAreEqual;
-    
 
     setDateIsValid(datesAreEqual);
 
@@ -82,6 +84,14 @@ export default function DatePicker(props: DatePickerProps) {
     }));
   };
 
+  useEffect(() => {
+    if (showDialog) {
+      showModal(<DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />);
+    } else {
+      closeModal();
+    }
+  }, [showDialog]);
+
   return (
     <div>
       <div className="flex gap-1">
@@ -109,18 +119,10 @@ export default function DatePicker(props: DatePickerProps) {
             value={inputDate.year}
             onChange={handleDateChange}
           />
-          <button
-            className="dp-button"
-            onClick={() => {
-              setShowDialog(!showDialog);
-            }}
-          >
+          <button className="dp-button" onClick={() => setShowDialog(!showDialog)}>
             <FaCalendar />
           </button>
         </div>
-        <dialog className="ds-dialog" open={showDialog}>
-          <DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />
-        </dialog>
       </div>
     </div>
   );

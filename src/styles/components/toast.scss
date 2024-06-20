@@ -21,7 +21,7 @@
       @extend .toast-container;
       background-color: $warning;
     }
-    &-danger {
+    &-error {
       @extend .toast-container;
       background-color: $danger;
     }

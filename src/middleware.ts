@@ -8,39 +8,46 @@ export const middleware = async (request: NextRequest) => {
     register: request.nextUrl.pathname.startsWith("/register"),
   };
 
-  const actions = {
-    verifyUserCookie: await verifyUserCookie(request),
-  };
-
-  if (routes.login) {
-    if (actions.verifyUserCookie) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
-
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
-    if (!actions.verifyUserCookie) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    const userCookie = new UserCookie(() => verifyUserCookie(request));
+    const cookieIsValid = await userCookie.isValid();
+    if (!cookieIsValid) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
     }
   }
 
   return NextResponse.next();
 };
 
-export const config = {
-  matcher: ["/dashboard/:path*", "/display/:path*", "/login"],
-};
-
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
   if (!cookie) return false;
-  return await fetch(new URL("/api/auth", request.url), {
+
+  const resp = await fetch(`${request.nextUrl.origin}/api/auth`, {
     method: "POST",
     body: JSON.stringify(cookie.value),
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((resp) => resp.status === 200);
+  });
+
+  const status = resp.status;
+
+  return status === 200;
 };
+
+class UserCookie {
+  value: boolean | undefined;
+  creator: () => Promise<boolean>;
+  constructor(creator: () => Promise<boolean>) {
+    this.creator = creator;
+  }
+  async isValid() {
+    if (this.value === undefined) {
+      this.value = await this.creator();
+    }
+    return this.value;
+  }
+}

@@ -1,0 +1,29 @@
+.sr {
+  &-container {
+    @include flex-col;
+    background-color: $white;
+    border-radius: $border-curve;
+    color: $black;
+    gap: 1rem;
+    padding: 1rem 0.5rem;
+    width: clamp(5rem, 80%, 20rem);
+  }
+
+  &-text {
+    &-container {
+      @include flex-col;
+      gap: 1rem;
+      text-align: center;
+      text-wrap: wrap;
+      width: clamp(5rem, 80%, 20rem);
+    }
+  }
+
+  &-button {
+    @include button-base;
+    &-container {
+      @include flex;
+      gap: 1rem;
+    }
+  }
+}

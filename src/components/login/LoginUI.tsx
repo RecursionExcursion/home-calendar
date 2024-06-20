@@ -1,21 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { login } from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
-import { miscRoutes } from "../../constants/routes";
+import { dashboardRoutes, miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
-import { useDashboardContext } from "../../contexts";
 import Link from "next/link";
+import { serverRedirect } from "../../lib/serverActions";
 
 export default function LoginUI() {
-  const router = useRouter();
-  const { showModal } = useAppContext();
-  const { showToast } = useDashboardContext();
+  const { showModal, showToast } = useAppContext();
 
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -43,18 +40,17 @@ export default function LoginUI() {
     const currentTime = new Date();
     const exirationTime = new Date(resp.sessionExp!!);
 
-    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 5);
+    const sessionCloseToExp = areDatesLessThanXDaysApart(currentTime, exirationTime, 4);
 
     if (sessionCloseToExp) {
       showModal(
         <RenewSessionModal
           sessionExp={exirationTime.getTime()}
           currentTime={currentTime.getTime()}
-          toDashboardAction={() => router.push("/dashboard")}
         />
       );
     } else {
-      router.push("/dashboard");
+      await serverRedirect(dashboardRoutes.home);
     }
   };
 
@@ -64,34 +60,36 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="flex">
+    <>
       <div className="login-ui-container">
-        <div className="flex-col gap-0_5">
-          <input
-            className="login-input"
-            placeholder="UserName"
-            value={loginCredentials.username}
-            onChange={handleInputChange}
-            name="username"
-          />
-          <input
-            className="login-input"
-            placeholder="Password"
-            value={loginCredentials.password}
-            onChange={handleInputChange}
-            name="password"
-            type="password"
-          />
-          <button className="login-button" onClick={handleLogin}>
-            Login
-          </button>
-          {showRegistration && (
-            <Link className="login-button" href={miscRoutes.register}>
-              Create an account
-            </Link>
-          )}
+        <div className="flex">
+          <div className="flex-col gap-0_5">
+            <input
+              className="login-input"
+              placeholder="Username"
+              value={loginCredentials.username}
+              onChange={handleInputChange}
+              name="username"
+            />
+            <input
+              className="login-input"
+              placeholder="Password"
+              value={loginCredentials.password}
+              onChange={handleInputChange}
+              name="password"
+              type="password"
+            />
+            <button className="login-button" onClick={handleLogin}>
+              Login
+            </button>
+            {showRegistration && (
+              <Link className="login-button" href={miscRoutes.register}>
+                Create an account
+              </Link>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
