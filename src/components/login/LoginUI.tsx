@@ -14,8 +14,9 @@ import Link from "next/link";
 
 export default function LoginUI() {
   const router = useRouter();
-  const { showModal } = useAppContext();
-  const { showToast } = useDashboardContext();
+  const { showModal, showToast } = useAppContext();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -64,34 +65,42 @@ export default function LoginUI() {
   };
 
   return (
-    <div className="flex">
+    <>
       <div className="login-ui-container">
-        <div className="flex-col gap-0_5">
-          <input
-            className="login-input"
-            placeholder="UserName"
-            value={loginCredentials.username}
-            onChange={handleInputChange}
-            name="username"
-          />
-          <input
-            className="login-input"
-            placeholder="Password"
-            value={loginCredentials.password}
-            onChange={handleInputChange}
-            name="password"
-            type="password"
-          />
-          <button className="login-button" onClick={handleLogin}>
-            Login
-          </button>
-          {showRegistration && (
-            <Link className="login-button" href={miscRoutes.register}>
-              Create an account
-            </Link>
-          )}
+        <div className="flex">
+          <div className="flex-col gap-0_5">
+            <input
+              className="login-input"
+              placeholder="UserName"
+              value={loginCredentials.username}
+              onChange={handleInputChange}
+              name="username"
+            />
+            <input
+              className="login-input"
+              placeholder="Password"
+              value={loginCredentials.password}
+              onChange={handleInputChange}
+              name="password"
+              type="password"
+            />
+            <button className="login-button" onClick={handleLogin}>
+              Login
+            </button>
+            {showRegistration && (
+              <Link className="login-button" href={miscRoutes.register}>
+                Create an account
+              </Link>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <dialog>
+        Invalid name
+      </dialog>
+      <dialog open={dialogOpen}>
+        <p>Dialog</p>
+      </dialog>
+    </>
   );
 }
