@@ -14,7 +14,7 @@ export const middleware = async (request: NextRequest) => {
     method: "GET",
   });
 
-  console.log({ foo: foo.status });
+  console.log({ foo2: foo.status });
 
   // const actions = {
   //   verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
@@ -56,7 +56,6 @@ export const middleware = async (request: NextRequest) => {
 //   matcher: ["/dashboard/:path*", "/display/:path*"],
 // };
 
-
 // export const config = {
 //   matcher: [
 //     /*
@@ -76,11 +75,14 @@ const verifyUserCookie = async (request: NextRequest) => {
   if (!cookie) return false;
 
   const url = new URL("/api/auth", request.nextUrl.origin);
+  const url2 = `${request.nextUrl.origin}/api/auth`;
 
   console.log("Verifying user cookie as", url.toString());
   console.log({ cookie });
 
-  const resp = await fetch(url, {
+  const vercelJwt = request.cookies.get("_vercel_jwt");
+
+  const resp = await fetch(url2, {
     next: { revalidate: 0 },
     method: "POST",
     body: JSON.stringify(cookie.value),
@@ -91,7 +93,7 @@ const verifyUserCookie = async (request: NextRequest) => {
   // console.log({ body: resp.body });
 
   const status = resp.status;
-  console.log({ status: status });
+  console.log({ respStatus: status });
 
   // const json = await resp.json();
   // console.log({ json: json });
