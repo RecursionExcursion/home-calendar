@@ -47,7 +47,6 @@ const verifyUserCookie = async (request: NextRequest) => {
   });
 
   const status = resp.status;
-  console.log({ respStatus: status });
 
   return status === 200;
 };

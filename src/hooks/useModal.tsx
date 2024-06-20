@@ -19,60 +19,11 @@ export const useModal = () => {
     }
 
     return (
-      <div
-        style={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          zIndex: 5,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            display: "flex",
-            flexDirection: "column",
-            opacity: "1",
-            zIndex: 10,
-            borderRadius: "5px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-              padding: "0 .25rem 0 0",
-            }}
-          >
-            <button
-              style={{
-                border: "none",
-                backgroundColor: "transparent",
-                color: "black",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                setModalContent(null);
-              }}
-            >
-              X
-            </button>
+      <div className="modal-disable-overlay">
+        <div className="modal-wrapper">
+          <div className="modal-container">
           </div>
-          <div
-            style={{
-              padding: ".25rem 1rem",
-            }}
-          >
-            {modalContent}
-          </div>
+          {modalContent}
         </div>
       </div>
     );

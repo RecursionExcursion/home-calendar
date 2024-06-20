@@ -11,7 +11,8 @@ export async function POST(request: Request) {
   const isValid = !!user ? true : false;
 
   return new Response(null, {
-    status: isValid ? 200 : 403,
+    status: isValid ? 200 : 401,
+    statusText: isValid ? "OK" : "User Unauthorized",
     headers: {
       "Content-Type": "application/json",
     },
