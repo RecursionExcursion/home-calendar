@@ -26,12 +26,14 @@ export const middleware = async (request: NextRequest) => {
   //   }
   // }
 
-  console.log("Hello from middleware");
-
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
     const userCookieIsValid = await verifyUserCookie(request);
     if (!userCookieIsValid) {
+      const url = new URL("/login", `https://${request.nextUrl.host}`);
+
+      console.log("User validation failed, redirecting to login page", url.toString());
+
       return NextResponse.redirect(new URL("/login", `https://${request.nextUrl.host}`));
     }
   }
@@ -47,6 +49,10 @@ const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
   if (!cookie) return false;
+
+  const url = new URL("/api/auth", request.nextUrl.origin);
+
+  console.log("Verifying user cookie as", url.toString());
 
   return await fetch(new URL("/api/auth", request.nextUrl.origin), {
     next: { revalidate: 0 },
