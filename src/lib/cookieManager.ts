@@ -12,7 +12,7 @@ export const createUserCookie = async (sessionId: string, expirationDate: Date) 
   cookies().set("user", sessionId, {
     httpOnly: true,
     expires: expirationDate,
-    // sameSite: "lax",
+    sameSite: "lax",
   });
 };
 
