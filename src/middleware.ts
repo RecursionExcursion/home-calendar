@@ -27,30 +27,31 @@ export const middleware = async (request: NextRequest) => {
   // }
 
   /* Protected by cookie auth */
-  // if (routes.dashboard || routes.display) {
-  const userCookieIsValid = await actions.verifyUserCookie(request);
-  if (!userCookieIsValid) {
-    return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
+  if (routes.dashboard || routes.display) {
+    const userCookieIsValid = await actions.verifyUserCookie(request);
+    if (!userCookieIsValid) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
+    }
   }
-  // }
 
   return NextResponse.next();
 };
 
-export const config = {
-  matcher: ["/dashboard/:path*", "/display/:path*"],
-};
+// export const config = {
+//   matcher: ["/dashboard/:path*", "/display/:path*"],
+// };
 
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
-  if (!cookie) return false;
+  return !!cookie;
+  // if (!cookie) return false;
 
-  return await fetch(new URL("/api/auth", request.nextUrl.origin), {
-    method: "POST",
-    body: JSON.stringify(cookie.value),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((resp) => resp.status === 200);
+  // return await fetch(new URL("/api/auth", request.nextUrl.origin), {
+  //   method: "POST",
+  //   body: JSON.stringify(cookie.value),
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // }).then((resp) => resp.status === 200);
 };
