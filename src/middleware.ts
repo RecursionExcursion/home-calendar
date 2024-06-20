@@ -58,20 +58,22 @@ const verifyUserCookie = async (request: NextRequest) => {
   console.log("Verifying user cookie as", url.toString());
   console.log({ cookie });
 
-  const status = await fetch(url, {
+  const res = await fetch(url, {
     next: { revalidate: 0 },
     method: "POST",
     body: JSON.stringify(cookie.value),
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((resp) => {
-    console.log({ res: resp.json() });
-
-    return resp.status;
+  }).then(async (resp) => {
+    return {
+      status: resp.status,
+      json: await resp.json(),
+    };
   });
 
-  console.log({ status });
+  console.log({ status: res.status });
+  console.log({ json: res.json });
 
-  return status === 200;
+  return res.status === 200;
 };
