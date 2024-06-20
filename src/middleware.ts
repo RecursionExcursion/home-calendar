@@ -66,11 +66,12 @@ const verifyUserCookie = async (request: NextRequest) => {
       "Content-Type": "application/json",
     },
   });
+  console.log({ body: resp.body });
 
   const status = resp.status;
-  const json = await resp.json();
-
   console.log({ status: status });
+
+  const json = await resp.json();
   console.log({ json: json });
 
   return status === 200;

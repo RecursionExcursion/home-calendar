@@ -19,6 +19,8 @@ export async function POST(request: Request) {
   console.log("User is valid: ", isValid);
 
   const cookieInfo = await decryptData(cookieData);
+  console.log({ cookieInfo});
+  
 
   const data = JSON.stringify(cookieInfo);
 
