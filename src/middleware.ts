@@ -71,8 +71,8 @@ const verifyUserCookie = async (request: NextRequest) => {
   const status = resp.status;
   console.log({ status: status });
 
-  const json = await resp.json();
-  console.log({ json: json });
+  // const json = await resp.json();
+  // console.log({ json: json });
 
   return status === 200;
 };

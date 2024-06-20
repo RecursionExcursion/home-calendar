@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   const data = JSON.stringify(cookieInfo);
 
   return new Response(data, {
-    status: isValid ? 200 : 401,
+    status: isValid ? 200 : 403,
     headers: {
       "Content-Type": "application/json",
     },
