@@ -10,7 +10,6 @@ import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
 import Link from "next/link";
 import { serverRedirect } from "../../lib/serverActions";
-import { useRouter } from "next/router";
 
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();
@@ -53,7 +52,7 @@ export default function LoginUI() {
         />
       );
     } else {
-     await serverRedirect(dashboardRoutes.home);
+      await serverRedirect(dashboardRoutes.home);
     }
   };
 
@@ -93,9 +92,10 @@ export default function LoginUI() {
           </div>
         </div>
       </div>
-      <dialog open={dialogOpen}>
+      {/* TODO impl dialog instead of modal */}
+      {/* <dialog open={dialogOpen}>
         <p>Dialog</p>
-      </dialog>
+      </dialog> */}
     </>
   );
 }

@@ -8,9 +8,9 @@ export const middleware = async (request: NextRequest) => {
     register: request.nextUrl.pathname.startsWith("/register"),
   };
 
-  const actions = {
-    verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
-  };
+  // const actions = {
+  //   verifyUserCookie: async (request: NextRequest) => verifyUserCookie(request),
+  // };
 
   // console.log({ request });
   // console.log({ url: request.url });
@@ -28,7 +28,7 @@ export const middleware = async (request: NextRequest) => {
 
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
-    const userCookieIsValid = await actions.verifyUserCookie(request);
+    const userCookieIsValid = await verifyUserCookie(request);
     if (!userCookieIsValid) {
       return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
     }
@@ -44,14 +44,15 @@ export const middleware = async (request: NextRequest) => {
 const verifyUserCookie = async (request: NextRequest) => {
   const cookie = request.cookies.get("user");
 
-  return !!cookie;
-  // if (!cookie) return false;
+  // return !!cookie;
+  if (!cookie) return false;
 
-  // return await fetch(new URL("/api/auth", request.nextUrl.origin), {
-  //   method: "POST",
-  //   body: JSON.stringify(cookie.value),
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // }).then((resp) => resp.status === 200);
+  return await fetch(new URL("/api/auth", request.nextUrl.origin), {
+    next: { revalidate: 0 },
+    method: "POST",
+    body: JSON.stringify(cookie.value),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((resp) => resp.status === 200);
 };
