@@ -27,11 +27,15 @@
   }
 
   &-button {
-    color: $primary;
     padding: 0 0.5rem;
     cursor: pointer;
-    &:focus {
+    &:focus,
+    :hover {
       color: $focus;
+    }
+    &-black {
+      @extend .dp-button;
+      color: $black;
     }
   }
 }

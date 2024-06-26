@@ -1,20 +1,18 @@
 @mixin button-lite {
-  color: $white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   text-wrap: nowrap;
-  border: 1px solid $primary;
 
   &:disabled {
     @include button-disabled;
   }
 
   &:focus {
-    border-color: $focus;
+    color: $focus;
   }
   &:hover {
-    border-color: $focus;
+    color: $focus;
   }
 }
 

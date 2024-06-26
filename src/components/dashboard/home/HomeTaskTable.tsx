@@ -2,7 +2,7 @@
 
 import { FaTrash } from "react-icons/fa";
 import { Task } from "../../../types";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { deleteTask, getAllTasks } from "../../../service/task/taskService";
 import { useDashboardContext } from "../../../contexts";
 
@@ -18,6 +18,10 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
 
   const totalTasks = tasks.length;
   const overdueTasks = tasks.filter((task) => new Date(task.date) < new Date()).length;
+
+  useEffect(() => {
+    setTasks(propTasks);
+  }, [propTasks]);
 
   const handleDeleteTaskClick = async (id: string) => {
     const res = await deleteTask(id);

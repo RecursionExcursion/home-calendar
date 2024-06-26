@@ -11,10 +11,16 @@ type DatePickerProps = {
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
   setValidityFlag?: Dispatch<SetStateAction<boolean>>;
+  onlyModal?: boolean;
 };
 
 export default function DatePicker(props: DatePickerProps) {
-  const { date: initalDate, setDate: setParentDate, setValidityFlag } = props;
+  const {
+    date: initalDate,
+    setDate: setParentDate,
+    setValidityFlag,
+    onlyModal = false,
+  } = props;
 
   const { showModal, closeModal } = useAppContext();
 
@@ -92,7 +98,11 @@ export default function DatePicker(props: DatePickerProps) {
     }
   }, [showDialog]);
 
-  return (
+  return onlyModal ? (
+    <button className="dp-button" onClick={() => setShowDialog(!showDialog)}>
+      <FaCalendar />
+    </button>
+  ) : (
     <div>
       <div className="flex gap-1">
         <div className={dateIsValid ? "dp-wrapper" : "dp-wrapper-invalid"}>
@@ -119,7 +129,7 @@ export default function DatePicker(props: DatePickerProps) {
             value={inputDate.year}
             onChange={handleDateChange}
           />
-          <button className="dp-button" onClick={() => setShowDialog(!showDialog)}>
+          <button className="dp-button-black" onClick={() => setShowDialog(!showDialog)}>
             <FaCalendar />
           </button>
         </div>

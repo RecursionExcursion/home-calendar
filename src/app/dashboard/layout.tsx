@@ -1,5 +1,6 @@
 import DashboardSideBar from "../../components/dashboard/DashboardSideBar";
 import { DashboardProvider } from "../../contexts";
+import { UserContentProvider } from "../../contexts/UserContentProvider";
 import { LoadingProvider } from "../../contexts/LoadingContext";
 import { UserProvider } from "../../contexts/UserContext";
 
@@ -10,7 +11,7 @@ type DashboardLayoutProps = {
 export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
-    <UserProvider>
+    <UserContentProvider>
       <div className="db-layout-container">
         <DashboardSideBar />
         <div className="full flex relative">
@@ -19,6 +20,6 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
           </DashboardProvider>
         </div>
       </div>
-    </UserProvider>
+    </UserContentProvider>
   );
 }

@@ -5,10 +5,12 @@ import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
 import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
+import { useUserContentContext } from "../../../contexts/UserContentProvider";
 
 export default function DeleteTasksAfterMenu() {
   const { setLoading } = useLoadingContext();
-  const { user } = useUserContext();
+  // const { user } = useUserContext();
+  const { user } = useUserContentContext();
 
   const [deleteAfterNDays, setDeleteAfterNDays] = useState(
     user.settings.deleteTasksAfterNDays

@@ -6,9 +6,12 @@ import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
 import DatePicker from "../../base/datePicker/DatePicker";
 import { createNewTask } from "../../../service/task/taskService";
+import { useUserContentContext } from "../../../contexts/UserContentProvider";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
+
+  const { updateContentState } = useUserContentContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
   const [newTaskDate, setNewTaskDate] = useState(new Date(newTaskForm.date));
@@ -52,6 +55,7 @@ export default function NewTaskInterface() {
     }
 
     setNewTaskForm(getBaseTaskForm());
+    updateContentState("tasks");
   };
 
   const priorities: number[] = [0, 1, 2, 3];
@@ -85,10 +89,7 @@ export default function NewTaskInterface() {
 
       <form onSubmit={handleSubmit}>
         <div className="full">
-          <div
-            className="full flex-col gap-0_5"
-            style={{ alignItems: "normal" }}
-          >
+          <div className="full flex-col gap-0_5" style={{ alignItems: "normal" }}>
             <input
               className="db-input"
               type="text"
