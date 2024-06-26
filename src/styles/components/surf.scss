@@ -1,15 +1,47 @@
-.surf{
-    &-grid{
-
-
-
-
-
-
-
-
-
-
-
+.surf {
+  &-grid {
+    @include full;
+    display: grid;
+    grid-template-areas:
+      "F F F F"
+      "F F F F"
+      "T T T T"
+      "S S S S"
+      "W W W W"
+      "W W W W";
+    &-area {
+      &-flag {
+        @include flex;
+        grid-area: F;
+        &-green {
+          @extend .surf-grid-area-flag;
+          background-color: $good;
+        }
+        &-yellow {
+          @extend .surf-grid-area-flag;
+          background-color: $warning;
+        }
+        &-red {
+          @extend .surf-grid-area-flag;
+          background-color: $danger;
+        }
+      }
+      &-temp {
+        @include flex;
+        grid-area: T;
+      }
+      &-wave {
+        @include flex;
+        grid-area: Wa;
+      }
+      &-sun {
+        @include flex;
+        grid-area: S;
+      }
+      &-weather {
+        @include flex;
+        grid-area: W;
+      }
     }
+  }
 }
