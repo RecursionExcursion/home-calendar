@@ -28,7 +28,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <div className="full relative">
+      <div className="app-context">
         {children}
         <Modal />
         <Toast />

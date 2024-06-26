@@ -5,10 +5,10 @@
     grid-template-areas:
       "F F F F"
       "F F F F"
-      "T T T T"
-      "S S S S"
       "W W W W"
-      "W W W W";
+      "W W W W"
+      "T T T T"
+      "S S S S";
     &-area {
       &-flag {
         @include flex;
