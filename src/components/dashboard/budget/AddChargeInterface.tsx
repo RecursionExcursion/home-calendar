@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BudgetState } from "./DashboardBudgetUI";
 import { useDashboardContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";
 import { createNewCharge, serializeCharge } from "../../../service/chargeService";
 import DatePicker from "../../base/datePicker/DatePicker";
 import { saveBudget } from "../../../service/budget/budgetService";
+import { useUserContentContext } from "../../../contexts/UserContentProvider";
 
-type AddChargeInterfaceProps = {
-  budgetState: BudgetState;
-};
 
-export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
-  const { budget, setBudget } = props.budgetState;
+
+export const AddChargeInterface = () => {
+  const { budget, updateContentState } = useUserContentContext();
 
   const { showToast } = useDashboardContext();
 
@@ -28,6 +26,8 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   }, [chargeDraft, chargeDraftDate, dateIsValidFlag]);
 
   const handleAddCharge = async () => {
+    if (!budget) return;
+
     const budgetCopy = { ...budget };
 
     const newCharge = createNewCharge(
@@ -39,13 +39,13 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
     budgetCopy.charges.push(serializeCharge(newCharge));
 
     await saveBudget(budgetCopy);
-    setBudget(budgetCopy);
     setChargeDraft(getEmptyCharge());
     showToast({
       title: "Success",
       message: "Charge added successfully",
       type: "success",
     });
+    updateContentState("charge");
   };
 
   const handleChargeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
-$stagger-delay: 500ms;
+$stagger-delay: 300ms;
 
 @mixin pop-in-sequence($order: 1) {
-  animation: pop-in 1000ms ease-out;
+  animation: pop-in 800ms ease-out;
   animation-delay: calc($order * #{$stagger-delay});
   animation-fill-mode: backwards;
 }

@@ -80,3 +80,101 @@ $graph-height: 200px;
     }
   }
 }
+
+/* Budget UI */
+.bui {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 3rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+/* budget manager */
+.bm {
+  &-container {
+    @include flex-col;
+    @include full;
+    justify-content: flex-start;
+    overflow-x: hidden;
+  }
+  &-list-container {
+    @include flex-col;
+    width: 100%;
+    padding: 0.5rem;
+  }
+  &-charge {
+    &-grid {
+      @include full;
+      @include basic-border;
+      padding: 0.5rem;
+      width: 85%;
+      display: grid;
+      grid-template-areas:
+        "date date date amount"
+        "desc desc desc desc"
+        "button1 button1 button2 button2";
+      grid-row-gap: 0.5rem;
+      &-area {
+        &-date {
+          @include flex;
+          grid-area: date;
+        }
+        &-amount {
+          @include flex;
+          grid-area: amount;
+        }
+        &-desc {
+          @include flex;
+          grid-area: desc;
+          overflow-x: hidden;
+          width: 100%;
+          text-align: center;
+        }
+        &-button1 {
+          @include flex;
+          grid-area: button1;
+        }
+        &-button2 {
+          @include flex;
+          grid-area: button2;
+        }
+      }
+    }
+  }
+
+  &-button {
+    @include button-base;
+    width: 5rem;
+  }
+  &-input {
+    @include full;
+    background-color: $darkGray;
+    border: none;
+    text-align: center;
+    text-wrap: nowrap;
+    overflow-x: auto;
+    &-date {
+      background-color: $darkGray;
+    }
+    &-desc{
+      @extend .bm-charge-grid-area-desc;
+      @extend .bm-input; 
+    }
+  }
+  &-control {
+    &-container {
+      @include flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+    &-button {
+      @include button-base;
+    }
+  }
+}

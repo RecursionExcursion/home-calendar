@@ -10,8 +10,7 @@ export const middleware = async (request: NextRequest) => {
 
   /* Protected by cookie auth */
   if (routes.dashboard || routes.display) {
-    const userCookie = new UserCookie(() => verifyUserCookie(request));
-    const cookieIsValid = await userCookie.isValid();
+    const cookieIsValid = await verifyUserCookie(request);
     if (!cookieIsValid) {
       return NextResponse.redirect(new URL("/login", request.nextUrl.origin));
     }
@@ -37,17 +36,3 @@ const verifyUserCookie = async (request: NextRequest) => {
 
   return status === 200;
 };
-
-class UserCookie {
-  value: boolean | undefined;
-  creator: () => Promise<boolean>;
-  constructor(creator: () => Promise<boolean>) {
-    this.creator = creator;
-  }
-  async isValid() {
-    if (this.value === undefined) {
-      this.value = await this.creator();
-    }
-    return this.value;
-  }
-}

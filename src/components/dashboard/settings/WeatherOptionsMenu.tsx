@@ -5,11 +5,13 @@ import { useUserContext } from "../../../contexts";
 import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
 import { useLoadingContext } from "../../../contexts/LoadingContext";
+import { useUserContentContext } from "../../../contexts/UserContentProvider";
 
 export default function WeatherOptionsMenu() {
   const { setLoading } = useLoadingContext();
 
-  const { user } = useUserContext();
+  const { user } = useUserContentContext();
+  // const { user } = useUserContext();
 
   const [enableWeather, setEnableWeather] = useState(userHasCoords(user));
 
