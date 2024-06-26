@@ -17,7 +17,9 @@ export default function DashboardBudgetUI() {
     { name: "Manage Charges", jsx: <ManageChargesInterface /> },
   ];
 
+
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
+
 
   return (
     <div className="full flex-col relative">

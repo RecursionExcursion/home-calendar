@@ -1,29 +1,28 @@
 import { ComponentType } from "react";
-import { dashboardIconMappings } from "./dashboardIcons";
-import { forecastIconMappings } from "./forecastIcons";
+import { DashboardIconPackage, DashboardIconTypes } from "./groups/dashboardIcons";
+import { ForecastIconPackage, ForecastIconTypes } from "./groups/forecastIcons";
+import { FallbackIconPackage, FallbackIconTypes } from "./groups/fallbackIcons";
+import { SurfIconPackage, SurfIconTypes } from "./groups/surficons";
 
 /*
  * This file should only be touched when adding a new library of icons.
  */
 
-/* Mappings */
-export type ForecastMappings = keyof typeof forecastIconMappings;
-export type DashboardMappings = keyof typeof dashboardIconMappings;
-
 /* Icon Groups */
-export type IconGroup = "forecastBar" | "dashboardSidebar";
+export type IconGroup = "forecastBar" | "dashboardSidebar" | "fallback" | "surf";
 
 /* Icons */
-export type DashboardIcons = Record<DashboardMappings, IconComponentType>;
-export type ForecastIcons = Record<ForecastMappings, IconComponentType>;
-
-export type DashboardIconTypes = keyof typeof dashboardIconMappings;
-export type ForecastIconTypes = keyof typeof forecastIconMappings;
+export type DashboardIcons = Record<DashboardIconTypes, IconComponentType>;
+export type ForecastIcons = Record<ForecastIconTypes, IconComponentType>;
+export type FallbackIcons = Record<FallbackIconTypes, IconComponentType>;
+export type SurfIcons = Record<SurfIconTypes, IconComponentType>;
 
 /* Icon Package names */
-export type DashboardIconPackage = "fa" | "io";
-export type ForecastIconPackage = "wi";
-export type IconPackage = DashboardIconPackage | ForecastIconPackage;
+export type IconPackage =
+  | DashboardIconPackage
+  | ForecastIconPackage
+  | FallbackIconPackage
+  | SurfIconPackage;
 
 /* Params for main fn */
 export type IconGroupParams = {
