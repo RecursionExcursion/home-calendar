@@ -1,6 +1,6 @@
 "use server";
 
-import SurfUI from "../../../components/surf-scraper/SurfUI";
+import SurfUI from "../../../components/surf/SurfUI";
 
 export default async function SurfPage() {
   return (
