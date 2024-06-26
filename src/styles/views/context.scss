@@ -1,7 +1,5 @@
 /* App Context */
-.app-context{
-    @include full;
-    position: relative;
-    height: 80%;
-    padding-top: 10%;
+.app-context {
+  @include full;
+  position: relative;
 }
