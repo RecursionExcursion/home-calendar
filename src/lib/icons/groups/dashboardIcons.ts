@@ -6,6 +6,7 @@ import {
   FaRightFromBracket,
   FaCalendarDays,
   FaDatabase,
+  FaWater,
 } from "react-icons/fa6";
 import {
   IoCalendar,
@@ -14,8 +15,12 @@ import {
   IoListOutline,
   IoSettingsOutline,
   IoLogInOutline,
-  IoServerOutline
+  IoServerOutline,
+  IoSunnyOutline,
 } from "react-icons/io5";
+
+export type DashboardIconPackage = "fa" | "io";
+export type DashboardIconTypes = keyof typeof dashboardIconMappings;
 
 export const dashboardIconMappings = {
   home: {
@@ -45,5 +50,9 @@ export const dashboardIconMappings = {
   logout: {
     fa: FaRightFromBracket,
     io: IoLogInOutline,
+  },
+  surf: {
+    fa: FaWater,
+    io: IoSunnyOutline,
   },
 };

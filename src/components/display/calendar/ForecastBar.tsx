@@ -3,11 +3,8 @@ import { ReactElement } from "react";
 import { DailyForecast, PartialForecast } from "../../../types";
 import { getIconGroup } from "../../../lib/icons/icons";
 import { WiAlien } from "react-icons/wi";
-import {
-  ForecastIcons,
-  ForecastMappings,
-  IconGroupParams,
-} from "../../../lib/icons/types";
+import { FallbackIcons, ForecastIcons, IconGroupParams } from "../../../lib/icons/types";
+import { ForecastIconTypes } from "../../../lib/icons/groups/forecastIcons";
 
 type ForecastBarProps = {
   forecast: DailyForecast | undefined;
@@ -43,8 +40,14 @@ const getForecastType = (forecast: PartialForecast | undefined): ReactElement =>
 
   const iconSize = 27;
 
-  //TODO Replace with a default icon from icons.ts
-  if (!forecast) return <WiAlien size={iconSize} />;
+  if (!forecast) {
+    const fallbackIconGroupParams: IconGroupParams = {
+      iconGroup: "fallback",
+      iconPackage: "wi",
+    };
+    const fbIcons = getIconGroup(fallbackIconGroupParams) as FallbackIcons;
+    return <fbIcons.default size={iconSize} />;
+  }
 
   const iconGroupParams: IconGroupParams = {
     iconGroup: "forecastBar",
@@ -52,7 +55,7 @@ const getForecastType = (forecast: PartialForecast | undefined): ReactElement =>
   };
   const icons = getIconGroup(iconGroupParams) as ForecastIcons;
 
-  const iconMap = new Map<ForecastMappings, ReactElement>([
+  const iconMap = new Map<ForecastIconTypes, ReactElement>([
     ["thunderstorm", <icons.thunderstorm key={"Thunderstorm"} size={iconSize} />],
     ["rain", <icons.rain key={"Rain"} size={iconSize} />],
     ["cloudy", <icons.cloudy key={"Cloudy"} size={iconSize} />],

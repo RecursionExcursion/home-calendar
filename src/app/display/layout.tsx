@@ -17,7 +17,6 @@ type CalendarLayoutProps = {
 export default async function CalendarLayout(props: CalendarLayoutProps) {
   const { children } = props;
 
-  //TODO: Possible decrypt the slug on the client side to obscure the slug
   const userId = await getUserIdFromCookie();
   if (!userId) {
     redirect("/login");

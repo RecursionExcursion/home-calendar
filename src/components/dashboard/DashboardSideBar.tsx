@@ -28,6 +28,9 @@ export default function DashboardSideBar() {
         <SidebarLink href={dashboardRoutes.display}>
           <icons.display size={iconSize} />
         </SidebarLink>
+        <SidebarLink href={dashboardRoutes.surf}>
+          <icons.surf size={iconSize} />
+        </SidebarLink>
         <SidebarLink href={dashboardRoutes.settings}>
           <icons.settings size={iconSize} />
         </SidebarLink>

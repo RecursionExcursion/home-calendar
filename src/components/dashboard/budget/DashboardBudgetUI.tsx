@@ -17,10 +17,6 @@ export type BudgetState = {
 export default function DashboardBudgetUI(props: DashboardBudgetUIProps) {
   const [budget, setBudget] = useState(JSON.parse(props.budgetJSON) as Budget);
 
-  /*TODO Add toast to confirm update was successful, and to show errors
-   * Clear inputs after submission
-   */
-
   return (
     <div className="flex-col gap-1">
       <h2 className="db-h2">Budget</h2>
