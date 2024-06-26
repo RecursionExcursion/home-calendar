@@ -11,7 +11,7 @@
       "S S S S";
     &-area {
       &-flag {
-        @include flex;
+        @include flex-col;
         grid-area: F;
         @include text-lg;
         &-green {
@@ -36,15 +36,22 @@
         grid-area: C;
       }
       &-sun {
-        @include flex;
+        @include flex-col;
+        gap: 1rem;
         grid-area: S;
         @include text-lg;
       }
       &-weather {
-        @include flex;
+        @include flex-col;
+        gap: 0.5rem;
         grid-area: W;
         text-wrap: wrap;
       }
     }
+  }
+  &-suntime {
+    @include flex;
+    align-items: flex-end;
+    gap: 1rem;
   }
 }

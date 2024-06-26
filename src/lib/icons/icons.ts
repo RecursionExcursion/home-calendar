@@ -1,13 +1,21 @@
+import { IconGroupParams } from "./types";
+import { WiAlien } from "react-icons/wi";
 import {
   DashboardIconPackage,
   DashboardIconTypes,
+  dashboardIconMappings,
+} from "./groups/dashboardIcons";
+import {
   ForecastIconPackage,
   ForecastIconTypes,
-  IconGroupParams,
-} from "./types";
-import { WiAlien } from "react-icons/wi";
-import { dashboardIconMappings } from "./dashboardIcons";
-import { forecastIconMappings } from "./forecastIcons";
+  forecastIconMappings,
+} from "./groups/forecastIcons";
+import {
+  FallbackIconPackage,
+  FallbackIconTypes,
+  fallbackIconMappings,
+} from "./groups/fallbackIcons";
+import { SurfIconPackage, SurfIconTypes, surfIconMappings } from "./groups/surficons";
 
 export const getIconGroup = (params: IconGroupParams) => {
   const { iconGroup, iconPackage } = params;
@@ -16,6 +24,10 @@ export const getIconGroup = (params: IconGroupParams) => {
       return getForecastIcons(iconPackage as ForecastIconPackage);
     case "dashboardSidebar":
       return getDashboardIcons(iconPackage as DashboardIconPackage);
+    case "fallback":
+      return getFallbackIcons(iconPackage as FallbackIconPackage);
+    case "surf":
+      return getSurfIcons(iconPackage as SurfIconPackage);
     default:
       return WiAlien;
   }
@@ -39,6 +51,28 @@ const getForecastIcons = (iconPackage: ForecastIconPackage) => {
   >;
   (Object.keys(forecastIconMappings) as ForecastIconTypes[]).forEach((key) => {
     icons[key] = forecastIconMappings[key][iconPackage];
+  });
+  return icons;
+};
+
+const getFallbackIcons = (iconPackage: FallbackIconPackage) => {
+  const icons: Record<FallbackIconTypes, React.ElementType> = {} as Record<
+    FallbackIconTypes,
+    React.ElementType
+  >;
+  (Object.keys(fallbackIconMappings) as FallbackIconTypes[]).forEach((key) => {
+    icons[key] = fallbackIconMappings[key][iconPackage];
+  });
+  return icons;
+};
+
+const getSurfIcons = (iconPackage: SurfIconPackage) => {
+  const icons: Record<SurfIconTypes, React.ElementType> = {} as Record<
+    SurfIconTypes,
+    React.ElementType
+  >;
+  (Object.keys(surfIconMappings) as SurfIconTypes[]).forEach((key) => {
+    icons[key] = surfIconMappings[key][iconPackage];
   });
   return icons;
 };

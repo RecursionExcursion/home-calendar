@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { SurfForecastData } from "../../lib/surf/types";
 import { getSurf } from "../../lib/surf/surfManager";
 import SurfCam from "./SurfCam";
+import { IconGroupParams, SurfIcons } from "../../lib/icons/types";
+import { getIconGroup } from "../../lib/icons/icons";
 
 export default function SurfUI() {
   const [surfData, setSurfData] = useState<SurfForecastData>();
@@ -17,29 +19,34 @@ export default function SurfUI() {
     });
   }, []);
 
-  const swimRiskStyle = surfData?.swimRisk?.includes("low");
+  const iconGroupParams: IconGroupParams = {
+    iconGroup: "surf",
+    iconPackage: "fi",
+  };
+  const icons = getIconGroup(iconGroupParams) as SurfIcons;
+  const iconSize = 30;
 
   return (
     <div className="surf-grid">
       <div className={getSwimRiskStyle(surfData?.swimRisk ?? "")}>
-        <div className="flex-col">
-          <span className="surf-grid-area-flag-risk">Swim Risk- {surfData?.swimRisk}</span>
-          <span>Wave Height- {surfData?.waveHeight}</span>
-          <span>Wave Period- {surfData?.wavePeriod}</span>
-        </div>
+        <span className="surf-grid-area-flag-risk">Swim Risk- {surfData?.swimRisk}</span>
+        <span>Wave Height- {surfData?.waveHeight}</span>
+        <span>Wave Period- {surfData?.wavePeriod}</span>
       </div>
       <div className="surf-grid-area-weather">
-        <div className="flex-col">
-          <span>Temp- {surfData?.highTemp}</span>
-          <span>Water Temp- {surfData?.waterTemp}</span>
-          <span>Forecast- {surfData?.weather}</span>
-          {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
-        </div>
+        <span>Temp- {surfData?.highTemp}</span>
+        <span>Water Temp- {surfData?.waterTemp}</span>
+        <span>Forecast- {surfData?.weather}</span>
+        {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
       </div>
       <div className="surf-grid-area-sun">
-        <div className="flex-col">
-          <span>Sunrise- {surfData?.sunrise}</span>
-          <span>Suneset- {surfData?.sunset}</span>
+        <div className="surf-suntime">
+          <icons.sunrise size={iconSize} />
+          {surfData?.sunrise}
+        </div>
+        <div className="surf-suntime">
+          <icons.sunset size={iconSize} />
+          {surfData?.sunset}
         </div>
       </div>
       <div className="surf-grid-area-cam">

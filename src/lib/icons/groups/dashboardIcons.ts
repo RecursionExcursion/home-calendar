@@ -19,6 +19,9 @@ import {
   IoSunnyOutline,
 } from "react-icons/io5";
 
+export type DashboardIconPackage = "fa" | "io";
+export type DashboardIconTypes = keyof typeof dashboardIconMappings;
+
 export const dashboardIconMappings = {
   home: {
     fa: FaHouse,
