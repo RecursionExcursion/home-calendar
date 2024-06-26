@@ -23,12 +23,12 @@ export default function SurfUI() {
     <div className="surf-grid">
       <div className={getSwimRiskStyle(surfData?.swimRisk ?? "")}>
         <div className="flex-col">
-          <span>Swim Risk- {surfData?.swimRisk}</span>
+          <span className="surf-grid-area-flag-risk">Swim Risk- {surfData?.swimRisk}</span>
           <span>Wave Height- {surfData?.waveHeight}</span>
           <span>Wave Period- {surfData?.wavePeriod}</span>
         </div>
       </div>
-      <div className="surf-grid-area-temp">
+      <div className="surf-grid-area-weather">
         <div className="flex-col">
           <span>Temp- {surfData?.highTemp}</span>
           <span>Water Temp- {surfData?.waterTemp}</span>
@@ -42,7 +42,7 @@ export default function SurfUI() {
           <span>Suneset- {surfData?.sunset}</span>
         </div>
       </div>
-      <div className="surf-grid-area-weather">
+      <div className="surf-grid-area-cam">
         <SurfCam />
       </div>
     </div>
