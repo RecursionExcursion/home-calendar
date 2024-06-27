@@ -19,7 +19,7 @@
 }
 
 .loader-context-wrapper {
-  position: absolute;
+  position: fixed;
   @include full;
   @include flex;
   z-index: 50;
