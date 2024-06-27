@@ -237,7 +237,7 @@ $stagger-delay: 500ms;
   &-container {
     height: 100%;
     opacity: 60%;
-    position: absolute;
+    position: fixed;
     width: fit-content;
     z-index: 5;
     &-enter {
@@ -254,7 +254,7 @@ $stagger-delay: 500ms;
     height: fit-content;
     left: 1rem;
     opacity: 30%;
-    position: absolute;
+    position: fixed;
     top: 0.5rem;
     width: fit-content;
     z-index: 10;
