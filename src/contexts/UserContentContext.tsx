@@ -8,7 +8,7 @@ import { getProjectedForecastJson } from "../service/weatherService";
 import { getUserIdFromCookie } from "../lib/cookieManager";
 import { getUser } from "../service/user/userService";
 
-type UserContentContextState = {
+type ContentContextState = {
   updateContentState: (retrieveContent: ContentUpdateParams) => void;
 
   user: User;
@@ -18,9 +18,7 @@ type UserContentContextState = {
   forecast: DailyForecast[];
 };
 
-const UserContentContext = createContext<UserContentContextState>(
-  {} as UserContentContextState
-);
+const ContentContext = createContext<ContentContextState>({} as ContentContextState);
 
 type ContentProviderProps = {
   children: React.ReactNode;
@@ -28,7 +26,7 @@ type ContentProviderProps = {
 
 type ContentUpdateParams = "tasks" | "charge" | "weather";
 
-export const UserContentProvider = (props: ContentProviderProps) => {
+export const ContentProvider = (props: ContentProviderProps) => {
   const { children } = props;
 
   const [user, setUser] = useState({} as User);
@@ -105,7 +103,7 @@ export const UserContentProvider = (props: ContentProviderProps) => {
 
   if (!contentLoaded) return null;
 
-  const state: UserContentContextState = {
+  const state: ContentContextState = {
     updateContentState,
     user,
     tasks,
@@ -113,9 +111,7 @@ export const UserContentProvider = (props: ContentProviderProps) => {
     forecast,
   };
 
-  return (
-    <UserContentContext.Provider value={state}>{children}</UserContentContext.Provider>
-  );
+  return <ContentContext.Provider value={state}>{children}</ContentContext.Provider>;
 };
 
-export const useUserContentContext = () => useContext(UserContentContext);
+export const useContentContext = () => useContext(ContentContext);

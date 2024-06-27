@@ -1,21 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { removeSession } from "../../../service/sessionService";
 import { deleteUserCookie } from "../../../lib/cookieManager";
 import { useDashboardContext, useUserContext } from "../../../contexts";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
+import useAppLoading from "../../../hooks/useAppLoading";
 
 export default function LogOutInterface() {
   // const { user } = useUserContext();
-  const { user } = useUserContentContext();
+  const { user } = useContentContext();
   const { showToast } = useDashboardContext();
 
   const router = useRouter();
 
   const [logoutOfAllSessions, setLogoutOfAllSessions] = useState<boolean>(false);
+
+  useAppLoading();
 
   const handleLogout = async () => {
     if (logoutOfAllSessions) {
@@ -52,4 +55,7 @@ export default function LogOutInterface() {
       </button>
     </div>
   );
+}
+function useLoadingContext(): { setAppLoading: any } {
+  throw new Error("Function not implemented.");
 }

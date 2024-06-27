@@ -3,10 +3,8 @@
 import { getMongoConnection } from "../../../db/mongoConnection";
 import DatabaseStats from "../../../components/dashboard/database/DatabaseStats";
 import CollectionManager from "../../../components/dashboard/database/CollectionManger";
-import {
-  CollectionData,
-  CollectionStats,
-} from "../../../components/dashboard/database/types";
+import { CollectionData } from "../../../components/dashboard/database/types";
+import ClientLoadState from "../../../components/misc/ClientLoadState";
 
 export default async function DatabasePage() {
   const db = await getMongoConnection();
@@ -45,6 +43,7 @@ export default async function DatabasePage() {
       <div className="db-vert-grid-card-2">
         <CollectionManager collectionInfo={collections} />
       </div>
+      <ClientLoadState />
     </div>
   );
 }

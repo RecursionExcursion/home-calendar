@@ -3,6 +3,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { useModal } from "../hooks/useModal";
 import { ShowToastProps, useToast } from "../hooks/useToast";
+import { AppLoadingProvider } from "./LoadingContext";
 
 type AppContextState = {
   showToast: (props: ShowToastProps) => void;
@@ -28,11 +29,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <div className="app-context">
-        {children}
-        <Modal />
-        <Toast />
-      </div>
+      <AppLoadingProvider>
+        <div className="app-context">
+          {children}
+          <Modal />
+          <Toast />
+        </div>
+      </AppLoadingProvider>
     </AppContext.Provider>
   );
 };

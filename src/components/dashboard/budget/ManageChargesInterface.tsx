@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { noDataText } from "../../../constants/misc";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
 import {
   deleteCharge,
   deserializeCharge,
@@ -13,7 +13,7 @@ import DatePicker from "../../base/datePicker/DatePicker";
 import { saveBudget } from "../../../service/budget/budgetService";
 
 export default function ManageChargesInterface() {
-  const { budget, updateContentState } = useUserContentContext();
+  const { budget, updateContentState } = useContentContext();
 
   const [chargeToEdit, setChargeToEdit] = useState<Charge | null>(null);
   const [initialEdit, setInitialEdit] = useState<Charge | null>(null);

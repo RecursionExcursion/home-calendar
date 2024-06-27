@@ -6,12 +6,16 @@ import NumberInput from "../../base/NumberInput";
 import { createNewCharge, serializeCharge } from "../../../service/chargeService";
 import DatePicker from "../../base/datePicker/DatePicker";
 import { saveBudget } from "../../../service/budget/budgetService";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
 
+type AddChargeInterfaceProps = {
+  setLoading: (toState: boolean, msDelay?: number | undefined) => void;
+};
 
+export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
+  const { setLoading } = props;
 
-export const AddChargeInterface = () => {
-  const { budget, updateContentState } = useUserContentContext();
+  const { budget, updateContentState } = useContentContext();
 
   const { showToast } = useDashboardContext();
 
@@ -27,6 +31,7 @@ export const AddChargeInterface = () => {
 
   const handleAddCharge = async () => {
     if (!budget) return;
+    setLoading(true);
 
     const budgetCopy = { ...budget };
 
@@ -40,12 +45,15 @@ export const AddChargeInterface = () => {
 
     await saveBudget(budgetCopy);
     setChargeDraft(getEmptyCharge());
+    updateContentState("charge");
+
+    setLoading(false, 750);
+
     showToast({
       title: "Success",
       message: "Charge added successfully",
       type: "success",
     });
-    updateContentState("charge");
   };
 
   const handleChargeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

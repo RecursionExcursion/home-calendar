@@ -10,24 +10,31 @@ import React, {
 } from "react";
 import Spinner from "../components/base/Spinner";
 
-type LoadingContextState = {
-  setLoading: Dispatch<SetStateAction<boolean>>;
+type AppLoadingContextState = {
+  setAppLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export const AppContext = createContext<LoadingContextState>({} as LoadingContextState);
+export const AppContext = createContext<AppLoadingContextState>(
+  {} as AppLoadingContextState
+);
 
 type LoadingProviderProps = {
   children: ReactNode;
 };
 
-export const LoadingProvider = ({ children }: LoadingProviderProps) => {
-  const [loading, setLoading] = useState(false);
+export const AppLoadingProvider = ({ children }: LoadingProviderProps) => {
+  const [appLoading, setAppLoading] = useState(false);
 
-  return loading ? (
-    <Spinner />
-  ) : (
-    <AppContext.Provider value={{ setLoading }}>{children}</AppContext.Provider>
+  return (
+    <AppContext.Provider value={{ setAppLoading }}>
+      {appLoading && (
+        <div className="loader-context-wrapper">
+          <Spinner />
+        </div>
+      )}
+      {children}
+    </AppContext.Provider>
   );
 };
 
-export const useLoadingContext = () => useContext(AppContext);
+export const useAppLoadingContext = () => useContext(AppContext);

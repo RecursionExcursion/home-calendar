@@ -6,12 +6,12 @@ import { dateAndTimeToDate, getDateAndTime } from "../../../util";
 import { useDashboardContext } from "../../../contexts";
 import DatePicker from "../../base/datePicker/DatePicker";
 import { createNewTask } from "../../../service/task/taskService";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
 
-  const { updateContentState } = useUserContentContext();
+  const { updateContentState } = useContentContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
   const [newTaskDate, setNewTaskDate] = useState(new Date(newTaskForm.date));

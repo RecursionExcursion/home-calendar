@@ -6,16 +6,19 @@ import { getSurf } from "../../lib/surf/surfManager";
 import SurfCam from "./SurfCam";
 import { IconGroupParams, SurfIcons } from "../../lib/icons/types";
 import { getIconGroup } from "../../lib/icons/icons";
+import useLoadingSpinner from "../../hooks/useLoadingSpinner";
 
 export default function SurfUI() {
   const [surfData, setSurfData] = useState<SurfForecastData>();
+
+  const { Spinner, setLoading } = useLoadingSpinner(true);
 
   useEffect(() => {
     getSurf().then((res) => {
       if (!res) return;
       const data = JSON.parse(res) as SurfForecastData;
-      console.log(`Setting data`);
       setSurfData(data);
+      setLoading(false, 750);
     });
   }, []);
 
@@ -27,32 +30,36 @@ export default function SurfUI() {
   const iconSize = 30;
 
   return (
-    <div className="surf-grid">
-      <div className={getSwimRiskStyle(surfData?.swimRisk ?? "")}>
-        <span className="surf-grid-area-flag-risk">Swim Risk- {surfData?.swimRisk}</span>
-        <span>Wave Height- {surfData?.waveHeight}</span>
-        <span>Wave Period- {surfData?.wavePeriod}</span>
-      </div>
-      <div className="surf-grid-area-weather">
-        <span>Temp- {surfData?.highTemp}</span>
-        <span>Water Temp- {surfData?.waterTemp}</span>
-        <span>Forecast- {surfData?.weather}</span>
-        {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
-      </div>
-      <div className="surf-grid-area-sun">
-        <div className="surf-suntime">
-          <icons.sunrise size={iconSize} />
-          {surfData?.sunrise}
+    <Spinner>
+      <div className="surf-grid">
+        <div className={getSwimRiskStyle(surfData?.swimRisk ?? "")}>
+          <span className="surf-grid-area-flag-risk">
+            Swim Risk- {surfData?.swimRisk}
+          </span>
+          <span>Wave Height- {surfData?.waveHeight}</span>
+          <span>Wave Period- {surfData?.wavePeriod}</span>
         </div>
-        <div className="surf-suntime">
-          <icons.sunset size={iconSize} />
-          {surfData?.sunset}
+        <div className="surf-grid-area-weather">
+          <span>Temp- {surfData?.highTemp}</span>
+          <span>Water Temp- {surfData?.waterTemp}</span>
+          <span>Forecast- {surfData?.weather}</span>
+          {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
+        </div>
+        <div className="surf-grid-area-sun">
+          <div className="surf-suntime">
+            <icons.sunrise size={iconSize} />
+            {surfData?.sunrise}
+          </div>
+          <div className="surf-suntime">
+            <icons.sunset size={iconSize} />
+            {surfData?.sunset}
+          </div>
+        </div>
+        <div className="surf-grid-area-cam">
+          <SurfCam />
         </div>
       </div>
-      <div className="surf-grid-area-cam">
-        <SurfCam />
-      </div>
-    </div>
+    </Spinner>
   );
 }
 

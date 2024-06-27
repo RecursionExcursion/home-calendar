@@ -1,16 +1,16 @@
 "use client";
 
-import { useLoadingContext } from "../../../contexts/LoadingContext";
-import { useUserContext } from "../../../contexts";
 import { useEffect, useState } from "react";
 import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
+import useLoadingSpinner from "../../../hooks/useLoadingSpinner";
 
 export default function DeleteTasksAfterMenu() {
-  const { setLoading } = useLoadingContext();
+  // const { setLoading } = useLoadingContext();
   // const { user } = useUserContext();
-  const { user } = useUserContentContext();
+  const { user } = useContentContext();
+  const { setLoading, Spinner } = useLoadingSpinner(false);
 
   const [deleteAfterNDays, setDeleteAfterNDays] = useState(
     user.settings.deleteTasksAfterNDays
@@ -46,30 +46,32 @@ export default function DeleteTasksAfterMenu() {
   };
 
   return (
-    <div
-      className="flex-col gap-1"
-      style={{
-        padding: "1rem",
-        width: "100%",
-      }}
-    >
-      <label className="text-nowrap">Delete tasks after</label>
-      <div className="flex gap-0_5">
-        <input
-          className="db-input"
-          type="number"
-          value={deleteAfterNDays}
-          onChange={handleNumberChange}
-        />
-        <label>days</label>
-      </div>
-      <button
-        className="db-button"
-        onClick={handleSaveClick}
-        disabled={!enableSaveButton}
+    <Spinner>
+      <div
+        className="flex-col gap-1"
+        style={{
+          padding: "1rem",
+          width: "100%",
+        }}
       >
-        Save
-      </button>
-    </div>
+        <label className="text-nowrap">Delete tasks after</label>
+        <div className="flex gap-0_5">
+          <input
+            className="db-input"
+            type="number"
+            value={deleteAfterNDays}
+            onChange={handleNumberChange}
+          />
+          <label>days</label>
+        </div>
+        <button
+          className="db-button"
+          onClick={handleSaveClick}
+          disabled={!enableSaveButton}
+        >
+          Save
+        </button>
+      </div>
+    </Spinner>
   );
 }

@@ -1,17 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useUserContext } from "../../../contexts";
 import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
-import { useLoadingContext } from "../../../contexts/LoadingContext";
-import { useUserContentContext } from "../../../contexts/UserContentProvider";
+import { useContentContext } from "../../../contexts/UserContentContext";
+import useLoadingSpinner from "../../../hooks/useLoadingSpinner";
 
 export default function WeatherOptionsMenu() {
-  const { setLoading } = useLoadingContext();
+  const { setLoading, Spinner } = useLoadingSpinner(false);
 
-  const { user } = useUserContentContext();
-  // const { user } = useUserContext();
+  const { user } = useContentContext();
 
   const [enableWeather, setEnableWeather] = useState(userHasCoords(user));
 
@@ -67,24 +65,26 @@ export default function WeatherOptionsMenu() {
   };
 
   return (
-    <div
-      className="flex gap-1"
-      style={{
-        width: "100%",
-        padding: "1rem",
-      }}
-    >
-      <label className="text-nowrap" htmlFor="enableWeatherCheckbox">
-        Enable forecast
-      </label>
-      <input
-        name="enableWeatherCheckbox"
-        className="db-checkbox"
-        type="checkbox"
-        checked={enableWeather}
-        onChange={handleEnableWeatherClick}
-      />
-    </div>
+    <Spinner>
+      <div
+        className="flex gap-1"
+        style={{
+          width: "100%",
+          padding: "1rem",
+        }}
+      >
+        <label className="text-nowrap" htmlFor="enableWeatherCheckbox">
+          Enable forecast
+        </label>
+        <input
+          name="enableWeatherCheckbox"
+          className="db-checkbox"
+          type="checkbox"
+          checked={enableWeather}
+          onChange={handleEnableWeatherClick}
+        />
+      </div>
+    </Spinner>
   );
 }
 

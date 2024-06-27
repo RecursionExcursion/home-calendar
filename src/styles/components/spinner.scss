@@ -17,3 +17,12 @@
     transform: rotate(360deg);
   }
 }
+
+.loader-context-wrapper {
+  position: absolute;
+  @include full;
+  @include flex;
+  z-index: 50;
+  background-color: black;
+  opacity: 50%;
+}

@@ -40,7 +40,7 @@ export default function DashboardSlideOutMenu() {
       </div>
       {showMenu && (
         <div className={sidebarClassname}>
-          <DashboardSideBar />
+          <DashboardSideBar hideMenu={() => setShowMenu(false)} />
         </div>
       )}
     </>

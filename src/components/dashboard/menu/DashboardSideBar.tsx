@@ -4,15 +4,46 @@ import Link from "next/link";
 import { dashboardRoutes } from "../../../constants/routes";
 import { getIconGroup } from "../../../lib/icons/icons";
 import { DashboardIcons, IconGroupParams } from "../../../lib/icons/types";
+import { useAppLoadingContext } from "../../../contexts/LoadingContext";
+import { usePathname } from "next/navigation";
 
 const iconSize = 30;
 
-export default function DashboardSideBar() {
+type DashboardSideBarProps = {
+  hideMenu: () => void;
+};
+
+export default function DashboardSideBar(props: DashboardSideBarProps) {
+  const { hideMenu } = props;
+  const { setAppLoading } = useAppLoadingContext();
+
+  const pathname = usePathname();
+
   const iconGroupParams: IconGroupParams = {
     iconGroup: "dashboardSidebar",
     iconPackage: "io",
   };
   const icons = getIconGroup(iconGroupParams) as DashboardIcons;
+
+  type DashBoardLinkProps = React.ComponentPropsWithoutRef<"a"> & {
+    children: React.ReactNode;
+  };
+
+  const SidebarLink = (props: DashBoardLinkProps) => {
+    const { children, href = "/", ...rest } = props;
+
+    const handleLinkClick = () => {
+      if (pathname.localeCompare(href) != 0) setAppLoading(true);
+      hideMenu();
+    };
+
+    return (
+      <Link onClick={handleLinkClick} className="link" href={href} {...rest}>
+        {children}
+      </Link>
+    );
+  };
+
   return (
     <div className="db-sidebar-container">
       <div>
@@ -44,16 +75,3 @@ export default function DashboardSideBar() {
     </div>
   );
 }
-
-type DashBoardLinkProps = React.ComponentPropsWithoutRef<"a"> & {
-  children: React.ReactNode;
-};
-
-const SidebarLink = (props: DashBoardLinkProps) => {
-  const { children, href = "/", ...rest } = props;
-  return (
-    <Link className="link" href={href} {...rest}>
-      {children}
-    </Link>
-  );
-};

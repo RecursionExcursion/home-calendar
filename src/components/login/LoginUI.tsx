@@ -10,11 +10,14 @@ import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../util";
 import Link from "next/link";
 import { serverRedirect } from "../../lib/serverActions";
+import useLoadingSpinner from "../../hooks/useLoadingSpinner";
 
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();
 
   const [showRegistration, setShowRegistration] = useState(false);
+
+  const { setLoading, Spinner } = useLoadingSpinner(false);
 
   const [loginCredentials, setLoginCredentials] = useState({
     username: "",
@@ -50,6 +53,7 @@ export default function LoginUI() {
         />
       );
     } else {
+      setLoading(true);
       await serverRedirect(dashboardRoutes.home);
     }
   };
@@ -60,7 +64,7 @@ export default function LoginUI() {
   };
 
   return (
-    <>
+    <Spinner>
       <div className="login-ui-container">
         <div className="flex">
           <div className="flex-col gap-0_5">
@@ -90,6 +94,6 @@ export default function LoginUI() {
           </div>
         </div>
       </div>
-    </>
+    </Spinner>
   );
 }
