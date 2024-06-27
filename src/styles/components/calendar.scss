@@ -128,3 +128,9 @@
     }
   }
 }
+
+.day-view-wrapper{
+  @include full;
+  @include flex;
+  align-items: flex-start;
+}

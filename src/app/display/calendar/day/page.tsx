@@ -3,9 +3,8 @@
 import Calendar from "../../../../components/display/calendar/Calendar";
 
 export default async function CalendarDayView() {
-  //TODO remove flex start
   return (
-    <div className="full flex" style={{ alignItems: "flex-start" }}>
+    <div className="day-view-wrapper">
       <Calendar mode={"day"} />
     </div>
   );

@@ -1,7 +1,7 @@
-import DashboardSideBar from "../../components/dashboard/DashboardSideBar";
 import { DashboardProvider } from "../../contexts";
+import { UserContentProvider } from "../../contexts/UserContentProvider";
 import { LoadingProvider } from "../../contexts/LoadingContext";
-import { UserProvider } from "../../contexts/UserContext";
+import DashboardSlideOutMenu from "../../components/dashboard/menu/DashboardSlideOutMenu";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -10,15 +10,15 @@ type DashboardLayoutProps = {
 export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
-    <UserProvider>
+    <UserContentProvider>
       <div className="db-layout-container">
-        <DashboardSideBar />
+        <DashboardSlideOutMenu />
         <div className="full flex relative">
           <DashboardProvider>
             <LoadingProvider>{children}</LoadingProvider>
           </DashboardProvider>
         </div>
       </div>
-    </UserProvider>
+    </UserContentProvider>
   );
 }

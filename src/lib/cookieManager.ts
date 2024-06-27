@@ -4,12 +4,18 @@ import { cookies } from "next/headers";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { decryptData } from "./crypto";
 
-export const getUserCookie = async (): Promise<RequestCookie | undefined> => {
-  return cookies().get("user");
+const cookieKeys = {
+  user: "user",
+  surf: "surf",
 };
 
-export const createUserCookie = async (sessionId: string, expirationDate: Date) => {
-  cookies().set("user", sessionId, {
+/* User */
+export const getUserCookie = async (): Promise<RequestCookie | undefined> => {
+  return cookies().get(cookieKeys.user);
+};
+
+export const createUserCookie = async (data: string, expirationDate: Date) => {
+  cookies().set(cookieKeys.user, data, {
     httpOnly: true,
     expires: expirationDate,
     sameSite: "lax",
@@ -17,7 +23,7 @@ export const createUserCookie = async (sessionId: string, expirationDate: Date) 
 };
 
 export const deleteUserCookie = async () => {
-  cookies().delete("user");
+  cookies().delete(cookieKeys.user);
 };
 
 export const getUserIdFromCookie = async (): Promise<string | undefined> => {
@@ -28,4 +34,21 @@ export const getUserIdFromCookie = async (): Promise<string | undefined> => {
   const decryptedUser = await decryptData(userCookie?.value!!);
   const sessionInfo = JSON.parse(decryptedUser);
   return sessionInfo.userId;
+};
+
+/* SurfData */
+export const getSurfCookie = async (): Promise<RequestCookie | undefined> => {
+  return cookies().get(cookieKeys.surf);
+};
+
+export const createSurfCookie = async (data: string, expirationDate: Date) => {
+  cookies().set(cookieKeys.surf, data, {
+    httpOnly: true,
+    expires: expirationDate,
+    sameSite: "lax",
+  });
+};
+
+export const deleteSurfCookie = async () => {
+  cookies().delete(cookieKeys.surf);
 };

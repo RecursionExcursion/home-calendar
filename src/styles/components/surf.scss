@@ -1,0 +1,57 @@
+.surf {
+  &-grid {
+    @include full;
+    display: grid;
+    grid-template-areas:
+      "F F F F"
+      "F F F F"
+      "C C C C"
+      "C C C C"
+      "W W W W"
+      "S S S S";
+    &-area {
+      &-flag {
+        @include flex-col;
+        grid-area: F;
+        @include text-lg;
+        &-green {
+          @extend .surf-grid-area-flag;
+          background-color: $good;
+        }
+        &-yellow {
+          @extend .surf-grid-area-flag;
+          background-color: $warning;
+        }
+        &-red {
+          @extend .surf-grid-area-flag;
+          background-color: $danger;
+        }
+        &-risk {
+          @include text-2xl;
+          font-weight: 700;
+        }
+      }
+      &-cam {
+        @include flex;
+        grid-area: C;
+      }
+      &-sun {
+        @include flex-col;
+        gap: 1rem;
+        grid-area: S;
+        @include text-lg;
+      }
+      &-weather {
+        @include flex-col;
+        gap: 0.5rem;
+        grid-area: W;
+        text-wrap: wrap;
+      }
+    }
+  }
+  &-suntime {
+    @include flex;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+}

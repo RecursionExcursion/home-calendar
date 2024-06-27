@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { dashboardRoutes } from "../../constants/routes";
-import { getIconGroup } from "../../lib/icons/icons";
-import { DashboardIcons, IconGroupParams } from "../../lib/icons/types";
+import { dashboardRoutes } from "../../../constants/routes";
+import { getIconGroup } from "../../../lib/icons/icons";
+import { DashboardIcons, IconGroupParams } from "../../../lib/icons/types";
 
 const iconSize = 30;
 
@@ -27,6 +27,9 @@ export default function DashboardSideBar() {
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.display}>
           <icons.display size={iconSize} />
+        </SidebarLink>
+        <SidebarLink href={dashboardRoutes.surf}>
+          <icons.surf size={iconSize} />
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.settings}>
           <icons.settings size={iconSize} />

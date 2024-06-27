@@ -31,7 +31,6 @@ export const createNewCharge = (
   };
 };
 
-/* TODO needs to be tested */
 export const deleteCharge = async (chargeId: string) => {
   const budgetJson = await getBudget();
   const budget = JSON.parse(budgetJson);

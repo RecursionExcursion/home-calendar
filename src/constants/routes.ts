@@ -16,6 +16,7 @@ const dashboardRoutes = {
   home: `${dashboardBase}/`,
   logout: `${dashboardBase}/logout`,
   settings: `${dashboardBase}/settings`,
+  surf: `${dashboardBase}/surf`,
   tasks: `${dashboardBase}/tasks`,
 };
 
