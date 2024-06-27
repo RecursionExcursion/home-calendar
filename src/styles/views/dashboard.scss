@@ -30,21 +30,6 @@ $checkboxSize: 1.5rem;
   align-items: center;
 }
 
-/* Sidebar */
-.db-sidebar-container {
-  @include pop-in-sequence-no-hue(1);
-  width: 3rem;
-  height: 100%;
-  background-color: $secondary;
-  padding: 0 1rem;
-
-  div {
-    @include flex-col;
-    justify-content: space-evenly;
-    height: 100%;
-  }
-}
-
 /* Budget Overview */
 .db-budget-overview {
   @include full;
@@ -74,6 +59,7 @@ $checkboxSize: 1.5rem;
 .db-layout-container {
   @include full;
   display: flex;
+  position: relative;
 }
 
 .db-layout-content-container {
@@ -243,5 +229,49 @@ $stagger-delay: 500ms;
     &-4 {
       @include grid-card(4);
     }
+  }
+}
+
+/* Pullout Menu */
+.db-slide-out {
+  &-container {
+    position: absolute;
+    z-index: 5;
+    height: 100%;
+    width: fit-content;
+    opacity: 50%;
+    &-enter {
+      @extend .db-slide-out-container;
+      @include pop-io(0, .5, true);
+    }
+    &-exit {
+      @extend .db-slide-out-container;
+      @include pop-io(0, .5, false);
+    }
+  }
+
+  &-toggle {
+    position: absolute;
+    z-index: 10;
+    height: fit-content;
+    width: fit-content;
+    top: 0.5rem;
+    left: 1rem;
+    opacity: 30%;
+  }
+}
+
+/* Sidebar */
+.db-sidebar-container {
+  width: 3rem;
+  height: 96%;
+  background-color: $slate300;
+  z-index: 6;
+  padding: 1rem 1rem;
+
+  div {
+    @include flex-col;
+    justify-content: space-evenly;
+    height: 100%;
   }
 }
