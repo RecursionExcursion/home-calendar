@@ -55,8 +55,8 @@ $stagger-delay: 300ms;
   }
 }
 
-@mixin pop-io($order: 1, $opacity: 1, $dir: true) {
-  @if ($dir) {
+@mixin pop-io($order: 1, $opacity: 1, $dirIn: true) {
+  @if ($dirIn) {
     animation: pop-i 800ms ease-out;
   } @else {
     animation: pop-o 800ms ease-out;

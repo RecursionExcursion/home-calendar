@@ -235,43 +235,43 @@ $stagger-delay: 500ms;
 /* Pullout Menu */
 .db-slide-out {
   &-container {
-    position: absolute;
-    z-index: 5;
     height: 100%;
+    opacity: 60%;
+    position: absolute;
     width: fit-content;
-    opacity: 50%;
+    z-index: 5;
     &-enter {
       @extend .db-slide-out-container;
-      @include pop-io(0, .5, true);
+      @include pop-io(0, 0.6, true);
     }
     &-exit {
       @extend .db-slide-out-container;
-      @include pop-io(0, .5, false);
+      @include pop-io(0, 0.6, false);
     }
   }
 
   &-toggle {
-    position: absolute;
-    z-index: 10;
     height: fit-content;
-    width: fit-content;
-    top: 0.5rem;
     left: 1rem;
     opacity: 30%;
+    position: absolute;
+    top: 0.5rem;
+    width: fit-content;
+    z-index: 10;
   }
 }
 
 /* Sidebar */
 .db-sidebar-container {
-  width: 3rem;
-  height: 96%;
   background-color: $slate300;
-  z-index: 6;
+  height: 96%;
   padding: 1rem 1rem;
+  width: 3rem;
+  z-index: 6;
 
   div {
     @include flex-col;
-    justify-content: space-evenly;
     height: 100%;
+    justify-content: space-evenly;
   }
 }
