@@ -35,3 +35,55 @@ $stagger-delay: 300ms;
     transform: scale(1);
   }
 }
+
+@mixin pop-out-sequence($order: 1) {
+  animation: pop-out 800ms ease-out;
+  animation-delay: calc($order * #{$stagger-delay});
+  animation-fill-mode: backwards;
+}
+
+@keyframes pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.3);
+    filter: hue-rotate(180deg);
+  }
+}
+
+@mixin pop-io($order: 1, $opacity: 1, $dir: true) {
+  @if ($dir) {
+    animation: pop-i 800ms ease-out;
+  } @else {
+    animation: pop-o 800ms ease-out;
+  }
+
+  animation-delay: calc($order * #{$stagger-delay});
+  animation-fill-mode: backwards;
+
+  @keyframes pop-o {
+    from {
+      opacity: $opacity;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+  }
+
+  @keyframes pop-i {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    to {
+      opacity: $opacity;
+      transform: scale(1);
+    }
+  }
+}
