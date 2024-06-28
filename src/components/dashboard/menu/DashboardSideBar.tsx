@@ -32,22 +32,34 @@ export default function DashboardSideBar(props: DashboardSideBarProps) {
   const SidebarLink = (props: DashBoardLinkProps) => {
     const { children, href = "/", ...rest } = props;
 
+    const isCurrentPath = pathname.localeCompare(href) === 0;
+
+    console.log({ pathname });
+
     const handleLinkClick = () => {
-      if (pathname.localeCompare(href) != 0) setAppLoading(true);
+      if (!isCurrentPath) setAppLoading(true);
       hideMenu();
     };
 
+    const wrapperClass = isCurrentPath
+      ? "db-sidebar-link-wrapper-selected"
+      : "db-sidebar-link-wrapper";
+
+    const linkClass = isCurrentPath ? "db-sidebar-link-selected" : "db-sidebar-link";
+
     return (
-      <Link onClick={handleLinkClick} className="link" href={href} {...rest}>
-        {children}
-      </Link>
+      <div className={wrapperClass}>
+        <Link onClick={handleLinkClick} className={linkClass} href={href} {...rest}>
+          {children}
+        </Link>
+      </div>
     );
   };
 
   return (
     <div className="db-sidebar-container">
-      <div>
-        <SidebarLink href="/">
+      <div className="db-sidebar-link-container">
+        <SidebarLink href={dashboardRoutes.base}>
           <icons.home size={iconSize} />
         </SidebarLink>
         <SidebarLink href={dashboardRoutes.tasks}>

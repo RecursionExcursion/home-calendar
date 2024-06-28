@@ -10,6 +10,7 @@ const calendarRoutes = {
 const dashboardBase = "/dashboard";
 
 const dashboardRoutes = {
+  base: dashboardBase,
   budget: `${dashboardBase}/budget`,
   database: `${dashboardBase}/database`,
   display: `${dashboardBase}/display`,

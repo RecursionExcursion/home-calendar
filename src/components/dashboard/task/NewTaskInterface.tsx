@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { NewTask } from "../../../types/task";
-import { dateAndTimeToDate, getDateAndTime } from "../../../util";
+import { dateAndTimeToDate, getDateAndTime } from "../../../lib/dateTimeUtil";
 import { useDashboardContext } from "../../../contexts";
 import DatePicker from "../../base/datePicker/DatePicker";
 import { createNewTask } from "../../../service/task/taskService";

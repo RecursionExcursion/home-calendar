@@ -51,7 +51,8 @@ $checkboxSize: 1.5rem;
 
   &-selected {
     @extend .db-budget-overview-radio-button-wrapper;
-    background-color: $darkGray;
+    background-color: $aqua;
+    color: $primary;
   }
 }
 
@@ -253,25 +254,52 @@ $stagger-delay: 500ms;
   &-toggle {
     height: fit-content;
     left: 1rem;
-    opacity: 30%;
+    opacity: 60%;
     position: fixed;
     top: 0.5rem;
     width: fit-content;
     z-index: 10;
+    &-clicked {
+      @extend .db-slide-out-toggle;
+      color: $primary;
+    }
   }
 }
 
 /* Sidebar */
-.db-sidebar-container {
-  background-color: $slate300;
-  height: 100%;
-  padding: 1rem 1rem;
-  width: 3rem;
-  z-index: 6;
-
-  div {
+.db-sidebar {
+  &-container {
     @include flex-col;
+    background-color: $slate300;
     height: 100%;
-    justify-content: space-evenly;
+    width: 5rem;
+    z-index: 6;
+  }
+
+  &-link {
+    color: $blueLink;
+    height: auto;
+    margin: auto;
+    text-decoration: underline;
+    text-wrap: nowrap;
+    &-selected {
+      @extend .db-sidebar-link;
+      color: $white;
+    }
+
+    &-wrapper {
+      @include flex;
+      @include full;
+      &-selected {
+        @extend .db-sidebar-link-wrapper;
+        background-color: $blueLink;
+      }
+    }
+    &-container {
+      @include full;
+      @include flex-col;
+      justify-content: space-evenly;
+      margin: 4rem 0;
+    }
   }
 }

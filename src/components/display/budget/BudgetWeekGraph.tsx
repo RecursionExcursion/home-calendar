@@ -10,6 +10,8 @@ export type BudgetGraphProps = {
 export default function BudgetWeekGraph(props: BudgetGraphProps) {
   const { limit, total, barPercentage } = props.weekGraphProps;
 
+  console.log({ total });
+
   const spanText = `${total} / ${limit} (${barPercentage}%)`;
 
   const barFillStyle =

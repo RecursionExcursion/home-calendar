@@ -3,7 +3,7 @@
 import ForecastBar from "./ForecastBar";
 import { TaskList } from "./TaskList";
 import { useDisplayContext } from "../../../contexts";
-import { isSameDate, sortTasks } from "../../../util";
+import { isSameDate, sortTasks } from "../../../lib/dateTimeUtil";
 
 type DaySquareProps = {
   date: Date;

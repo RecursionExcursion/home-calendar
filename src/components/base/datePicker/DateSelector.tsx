@@ -1,7 +1,11 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { changeDate, getFirstOnCalender, getFullMonthName } from "../../../util";
+import {
+  changeDate,
+  getFirstOnCalender,
+  getFullMonthName,
+} from "../../../lib/dateTimeUtil";
 import { DateSelectorCell } from "./DateSelectorCell";
 import { MonthSelectorButton } from "./MonthSelectorButton";
 

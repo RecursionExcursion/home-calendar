@@ -5,10 +5,7 @@ import { createSha256Hash, normalizeString } from "../lib/util";
 import { User } from "../types";
 import { manageSession } from "./sessionService";
 
-export const login = async (
-  username: string,
-  password: string
-): Promise<LoginReponse> => {
+const login = async (username: string, password: string): Promise<LoginReponse> => {
   const normalizeUN = normalizeString(username);
 
   let user = await retrieveUser(normalizeUN);
@@ -39,3 +36,5 @@ type LoginReponse = {
   message: string;
   sessionExp?: number;
 };
+
+export default login;

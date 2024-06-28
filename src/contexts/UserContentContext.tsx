@@ -24,7 +24,7 @@ type ContentProviderProps = {
   children: React.ReactNode;
 };
 
-type ContentUpdateParams = "tasks" | "charge" | "weather";
+type ContentUpdateParams = "tasks" | "charge" | "weather" | "user";
 
 export const ContentProvider = (props: ContentProviderProps) => {
   const { children } = props;
@@ -95,9 +95,9 @@ export const ContentProvider = (props: ContentProviderProps) => {
         await retrieveForecast();
         break;
       default:
-        retrieveTasks();
-        retrieveBudget();
-        retrieveForecast();
+        await retrieveForecast();
+        await retrieveTasks();
+        await retrieveBudget();
     }
   };
 

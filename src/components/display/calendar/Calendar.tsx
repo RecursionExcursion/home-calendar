@@ -1,7 +1,11 @@
 "use client";
 
 import { useCalendarRouter } from "../../../hooks/useCalendarRouter";
-import { changeDate, getFirstOnCalender, getFullMonthName } from "../../../util";
+import {
+  changeDate,
+  getFirstOnCalender,
+  getFullMonthName,
+} from "../../../lib/dateTimeUtil";
 import DaySquare from "./DaySquare";
 import DaysOfWeekCalenderHeader from "./DaysOfWeekCalenderHeader";
 

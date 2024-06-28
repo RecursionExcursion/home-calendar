@@ -2,8 +2,8 @@
 
 import BudgetOverview from "../../components/dashboard/budget/BudgetOverview";
 import HomeTaskTable from "../../components/dashboard/home/HomeTaskTable";
-import ClientLoadState from "../../components/misc/ClientLoadState";
 import { noDataText } from "../../constants/misc";
+import ClientSideLoadState from "../../components/misc/ClientLoadState";
 import { getChargeSumsByWeek } from "../../service/graphService";
 import { getAllTasks } from "../../service/task/taskService";
 import { Task } from "../../types";
@@ -24,7 +24,7 @@ export default async function DashboardPage() {
       <div className="db-vert-grid-card-2">
         {chargeSums.length > 0 ? <BudgetOverview /> : noDataText}
       </div>
-      <ClientLoadState msDelay={1500} />
+      <ClientSideLoadState msDelay={1500} />
     </div>
   );
 }

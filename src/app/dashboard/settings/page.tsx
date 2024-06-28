@@ -2,7 +2,7 @@
 
 import DeleteTasksAfterMenu from "../../../components/dashboard/settings/DeleteTasksAfterMenu";
 import WeatherOptionsMenu from "../../../components/dashboard/settings/WeatherOptionsMenu";
-import ClientLoadState from "../../../components/misc/ClientLoadState";
+import ClientSideLoadState from "../../../components/misc/ClientLoadState";
 
 export default async function SettingsPage() {
   return (
@@ -16,7 +16,7 @@ export default async function SettingsPage() {
       <div className="db-vert-grid-card-3">
         <DeleteTasksAfterMenu />
       </div>
-      <ClientLoadState />
+      <ClientSideLoadState />
     </div>
   );
 }

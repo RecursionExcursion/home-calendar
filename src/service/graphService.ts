@@ -3,7 +3,7 @@
 import { getBudget } from "../service/budget/budgetService";
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge } from "../types";
-import { getFirstOfWeek } from "../util";
+import { getFirstOfWeek } from "../lib/dateTimeUtil";
 import { deserializeCharge } from "./chargeService";
 
 export type ChargeSum = {

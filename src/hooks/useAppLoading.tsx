@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useAppLoadingContext } from "../contexts/LoadingContext";
 
-export default function useAppLoading(toState?: boolean, msDelay?: number) {
+export default function useAppLoadingState(toState?: boolean, msDelay?: number) {
   const loadingState = toState ?? false;
-  const delay = msDelay ?? 500;
+  const delay = msDelay ?? 750;
 
   const { setAppLoading } = useAppLoadingContext();
 

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { decryptData, encryptData } from "../lib/crypto";
 import { msTimestamps } from "../lib/util";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { SESSION_LENGTH_DAYS } from "../constants/session";
 
 const checkUserSession = (user: User): boolean => {
   if (user.session) {
@@ -21,7 +22,7 @@ const checkUserSession = (user: User): boolean => {
 const createSessionExiprationDate = (): Date => {
   const now = new Date();
   now.setHours(0, 0, 0, 0); //Set to midnight
-  const weekFromMid = new Date(now.getTime() + msTimestamps.oneDay * 7); //one week from today 00:00:00
+  const weekFromMid = new Date(now.getTime() + msTimestamps.oneDay * SESSION_LENGTH_DAYS); //one week from today 00:00:00
   return weekFromMid;
 };
 

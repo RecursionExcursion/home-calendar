@@ -10,11 +10,11 @@ import {
   getGraphParams,
 } from "../../../service/graphService";
 import BudgetMonthGraph from "../../display/budget/BudgetMonthGraph";
+import { noDataText } from "../../../constants/misc";
 
 export default function BudgetOverview() {
   const [renderedView, setRenderedView] = useState<JSX.Element | null>(null); //TODO Add no data view
   const [selectedView, setSelectedView] = useState<Views>("week");
-
 
   //TODO move fetch calls to parent
   useEffect(() => {
@@ -25,10 +25,11 @@ export default function BudgetOverview() {
             charges: chargeMap,
             view: "week",
           }).then((params) => {
-            if (params === null) return;
-            setRenderedView(
-              <BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />
-            );
+            params === null
+              ? setRenderedView(<div className="flex">{noDataText}</div>)
+              : setRenderedView(
+                  <BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />
+                );
           });
         });
 
@@ -39,8 +40,9 @@ export default function BudgetOverview() {
             charges: chargeMap,
             view: "last4",
           }).then((params) => {
-            if (params === null) return;
-            setRenderedView(<BudgetMonthGraph charges={params as ChargeSum[]} />);
+            params === null
+              ? setRenderedView(<div className="full flex">{noDataText}</div>)
+              : setRenderedView(<BudgetMonthGraph charges={params as ChargeSum[]} />);
           });
         });
         break;

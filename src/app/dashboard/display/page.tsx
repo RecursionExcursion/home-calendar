@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { calendarRoutes } from "../../../constants/routes";
-import ClientLoadState from "../../../components/misc/ClientLoadState";
+import ClientSideLoadState from "../../../components/misc/ClientLoadState";
 
 export default async function DashboardDisplayPage() {
   return (
@@ -25,7 +25,7 @@ export default async function DashboardDisplayPage() {
           Day
         </Link>
       </div>
-      <ClientLoadState msDelay={1500} />
+      <ClientSideLoadState msDelay={1500} />
     </div>
   );
 }

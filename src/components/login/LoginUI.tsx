@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from "react";
 
-import { login } from "../../service/loginService";
+import login from "../../service/loginService";
 import { useAppContext } from "../../contexts/AppContext";
 import { dashboardRoutes, miscRoutes } from "../../constants/routes";
 import { getEnvRegistration } from "../../lib/envManager";
 import RenewSessionModal from "../modals/RenewSessionExpModal";
-import { areDatesLessThanXDaysApart } from "../../util";
+import { areDatesLessThanXDaysApart } from "../../lib/dateTimeUtil";
 import Link from "next/link";
 import { serverRedirect } from "../../lib/serverActions";
-import useLoadingSpinner from "../../hooks/useLoadingSpinner";
+import { useAppLoadingContext } from "../../contexts/LoadingContext";
 
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();
 
   const [showRegistration, setShowRegistration] = useState(false);
 
-  const { setLoading, Spinner } = useLoadingSpinner(false);
+  const { setAppLoading } = useAppLoadingContext();
 
   const [loginCredentials, setLoginCredentials] = useState({
     username: "",
@@ -53,7 +53,7 @@ export default function LoginUI() {
         />
       );
     } else {
-      setLoading(true);
+      setAppLoading(true);
       await serverRedirect(dashboardRoutes.home);
     }
   };
@@ -64,36 +64,34 @@ export default function LoginUI() {
   };
 
   return (
-    <Spinner>
-      <div className="login-ui-container">
-        <div className="flex">
-          <div className="flex-col gap-0_5">
-            <input
-              className="login-input"
-              placeholder="Username"
-              value={loginCredentials.username}
-              onChange={handleInputChange}
-              name="username"
-            />
-            <input
-              className="login-input"
-              placeholder="Password"
-              value={loginCredentials.password}
-              onChange={handleInputChange}
-              name="password"
-              type="password"
-            />
-            <button className="login-button" onClick={handleLogin}>
-              Login
-            </button>
-            {showRegistration && (
-              <Link className="login-button" href={miscRoutes.register}>
-                Create an account
-              </Link>
-            )}
-          </div>
+    <div className="login-ui-container">
+      <div className="flex">
+        <div className="flex-col gap-0_5">
+          <input
+            className="login-input"
+            placeholder="Username"
+            value={loginCredentials.username}
+            onChange={handleInputChange}
+            name="username"
+          />
+          <input
+            className="login-input"
+            placeholder="Password"
+            value={loginCredentials.password}
+            onChange={handleInputChange}
+            name="password"
+            type="password"
+          />
+          <button className="login-button" onClick={handleLogin}>
+            Login
+          </button>
+          {showRegistration && (
+            <Link className="login-button" href={miscRoutes.register}>
+              Create an account
+            </Link>
+          )}
         </div>
       </div>
-    </Spinner>
+    </div>
   );
 }
