@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createNewUser, getUserById, getUserByName, saveUser } from "./userServiceApi";
+import { authenticateRequest } from "../apiUtil";
 
 export async function GET(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const params = request.nextUrl.searchParams;
 
   const search = params.get("search");
@@ -29,6 +36,12 @@ export async function GET(request: NextRequest) {
   });
 }
 export async function POST(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const { username, password } = await request.json();
 
   if (!username || !password) {
@@ -46,6 +59,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const user = await request.json();
 
   if (!user) {

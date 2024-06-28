@@ -1,15 +1,16 @@
 "use server";
 
-import { appendUrlParams, getBudgetApiUrl, revalidateApp } from "../app/api/apiRoutes";
+import {
+  appendUrlParams,
+  getBudgetApiUrl,
+  internalApiFetch,
+  revalidateApp,
+} from "../app/api/apiUtil";
 
 export const createNewBudget = async (userId: string) => {
   const url = await getBudgetApiUrl();
 
-  const res = await fetch(url, {
-    method: "POST",
-    body: userId,
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "POST", userId);
 
   if (!res.ok) return JSON.stringify({});
 
@@ -22,10 +23,7 @@ export const getBudget = async (userId: string) => {
 
   await appendUrlParams(url, { userId });
 
-  const res = await fetch(url, {
-    method: "GET",
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "GET");
 
   if (!res.ok) return JSON.stringify({});
 
@@ -34,11 +32,8 @@ export const getBudget = async (userId: string) => {
 
 export const saveBudget = async (budgetJSON: string) => {
   const url = await getBudgetApiUrl();
-  const res = await fetch(url, {
-    method: "PUT",
-    body: budgetJSON,
-    cache: "no-store",
-  });
+
+  const res = await internalApiFetch(url, "PUT", budgetJSON);
 
   if (!res.ok) return JSON.stringify({});
 

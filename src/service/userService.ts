@@ -1,16 +1,17 @@
 "use server";
 
-import { appendUrlParams, getUserApiUrl, revalidateApp } from "../app/api/apiRoutes";
+import {
+  appendUrlParams,
+  internalApiFetch,
+  getUserApiUrl,
+  revalidateApp,
+} from "../app/api/apiUtil";
 import { User } from "../types";
 
 export const createNewUser = async (username: string, password: string) => {
   const url = await getUserApiUrl();
 
-  const res = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "POST", JSON.stringify({ username, password }));
 
   if (!res.ok) return JSON.stringify({});
 
@@ -22,10 +23,7 @@ export const getUser = async (search: string, searchBy: "id" | "username") => {
 
   await appendUrlParams(url, { search, searchBy });
 
-  const res = await fetch(url, {
-    method: "GET",
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "GET");
 
   if (!res.ok) return JSON.stringify({});
 
@@ -34,20 +32,17 @@ export const getUser = async (search: string, searchBy: "id" | "username") => {
 
 export const saveUser = async (userJSON: string) => {
   const url = await getUserApiUrl();
-  const res = await fetch(url, {
-    method: "PUT",
-    body: userJSON,
-    cache: "no-store",
-  });
+
+  const res = await internalApiFetch(url, "PUT", userJSON);
 
   if (!res.ok) return JSON.stringify({});
+
   const resObj = JSON.parse(await res.text());
   revalidateApp();
 
   const success = resObj.modifiedCount === 1;
 
   const user = JSON.parse(userJSON) as User;
-
   const updatedUserJSON = await getUser(user._id.toString(), "id");
   const updatedUser = JSON.parse(updatedUserJSON);
 

@@ -3,19 +3,17 @@
 import {
   appendUrlParams,
   getTasksApiUrl,
+  internalApiFetch,
   revalidateDashboard,
-} from "../app/api/apiRoutes";
+} from "../app/api/apiUtil";
 import { Tasks } from "../types";
 
 export const getTasks = async (userId: string) => {
   const url = await getTasksApiUrl();
 
-  appendUrlParams(url, { userId });
+  await appendUrlParams(url, { userId });
 
-  const res = await fetch(url, {
-    method: "GET",
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "GET");
 
   if (!res.ok) return JSON.stringify({});
 
@@ -25,11 +23,7 @@ export const getTasks = async (userId: string) => {
 export const createTasks = async (userId: string) => {
   const url = await getTasksApiUrl();
 
-  const res = await fetch(url, {
-    body: JSON.stringify(userId),
-    method: "POST",
-    cache: "no-store",
-  });
+  const res = await internalApiFetch(url, "POST", JSON.stringify({ userId }));
 
   if (!res.ok) return JSON.stringify({});
 
@@ -42,14 +36,7 @@ export const updateTasks = async (tasks: Tasks) => {
 
   const tasksJson = JSON.stringify(tasks);
 
-  const res = await fetch(url, {
-    body: tasksJson,
-    method: "PUT",
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await internalApiFetch(url, "PUT", tasksJson);
 
   if (!res.ok) return JSON.stringify({});
 

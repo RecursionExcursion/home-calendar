@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateApp } from "../app/api/apiRoutes";
+import { revalidateApp } from "../app/api/apiUtil";
 import { getMongoConnection } from "./mongoConnection";
 
 export const dropCollection = async (collectionName: string) => {

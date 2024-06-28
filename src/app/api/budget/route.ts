@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createNewBudget, getBudget, saveBudget } from "./budgetServiceApi";
+import { authenticateRequest } from "../apiUtil";
 
 export async function GET(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const params = request.nextUrl.searchParams;
 
   const userId = params.get("userId");
@@ -23,6 +30,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const userId = await request.json();
 
   if (!userId) {
@@ -41,6 +54,12 @@ export async function POST(request: NextRequest) {
   });
 }
 export async function PUT(request: NextRequest) {
+  /* Auth */
+  const authRes = await authenticateRequest(request);
+  if (!authRes.authorized) {
+    return authRes.resp;
+  }
+
   const budget = await request.json();
 
   if (!budget) {
