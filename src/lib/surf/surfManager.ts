@@ -12,7 +12,6 @@ export const getSurf = async () => {
     return JSON.stringify(surfData);
   }
 
-  console.log("Scrapping for surf data");
   const surfData = await scrapeForSurf();
 
   if (!surfData) return;

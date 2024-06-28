@@ -45,7 +45,7 @@ export const roundToNextMultipleOf100 = (num: number) => {
   return roundedNumber;
 };
 
-export const getTimeDifference = (epoch1: number, epoch2: number) => {
+export const getTimeDifferenceString = (epoch1: number, epoch2: number) => {
   const timeDifference = Math.abs(epoch1 - epoch2);
 
   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -55,6 +55,22 @@ export const getTimeDifference = (epoch1: number, epoch2: number) => {
 
   // Return the formatted string
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
+};
+export const getTimeDifferenceObject = (epoch1: number, epoch2: number) => {
+  const timeDifference = Math.abs(epoch1 - epoch2);
+
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+  // Return the formatted string
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
 };
 
 export const normalizeString = (str: string) => {
@@ -66,7 +82,6 @@ export const toFixedAndLocale = (num: number, fixed: number): string => {
   const fixedNum = Number(fixedString);
   return fixedNum.toLocaleString();
 };
-
 
 export const shortenNumber = (num: number): string => {
   const million = 1_000_000;

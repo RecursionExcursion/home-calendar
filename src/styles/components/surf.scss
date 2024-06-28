@@ -5,15 +5,21 @@
     grid-template-areas:
       "F F F F"
       "F F F F"
-      "C C C C"
-      "C C C C"
-      "W W W W"
-      "S S S S";
+      "C1 C1 C1 C1"
+      "C1 C1 C1 C1"
+      "C2 C2 C2 C2"
+      "C2 C2 C2 C2";
     &-area {
       &-flag {
-        @include flex-col;
-        grid-area: F;
+        // @include flex-col;
         @include text-lg;
+        grid-area: F;
+        display: grid;
+        grid-template-areas:
+          "Sr Sr Sr Sr"
+          "W W W Sn"
+          "W W W Sn";
+
         &-green {
           @extend .surf-grid-area-flag;
           background-color: $good;
@@ -26,14 +32,35 @@
           @extend .surf-grid-area-flag;
           background-color: $danger;
         }
-        &-risk {
-          @include text-2xl;
-          font-weight: 700;
+
+        .grid-cell {
+          @include flex-col;
+          @include text-base;
+          gap: 1rem;
+
+          &-risk {
+            @extend .grid-cell;
+            @include text-2xl;
+            font-weight: 700;
+            grid-area: Sr;
+          }
+          &-weather {
+            @extend .grid-cell;
+            grid-area: W;
+          }
+          &-sun {
+            @extend .grid-cell;
+            grid-area: Sn;
+          }
         }
       }
-      &-cam {
+      &-cam-1 {
         @include flex;
-        grid-area: C;
+        grid-area: C1;
+      }
+      &-cam-2 {
+        @include flex;
+        grid-area: C2;
       }
       &-sun {
         @include flex-col;
@@ -54,4 +81,7 @@
     align-items: flex-end;
     gap: 1rem;
   }
+}
+
+.grid-cell {
 }

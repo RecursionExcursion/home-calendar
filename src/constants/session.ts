@@ -1,0 +1,1 @@
+export const SESSION_LENGTH_DAYS = 7;

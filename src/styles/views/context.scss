@@ -1,5 +1,5 @@
-/* App Context */
-.app-context {
+.db-context {
   @include full;
+  @include flex;
   position: relative;
 }

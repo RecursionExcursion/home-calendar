@@ -1,15 +1,14 @@
-"use server";
-
 import NewTaskInterface from "../../../components/dashboard/task/NewTaskInterface";
-import ClientLoadState from "../../../components/misc/ClientLoadState";
+import ClientSideLoadState from "../../../components/misc/ClientLoadState";
+import VerticalGrid from "../../../components/ui/VerticalGrid";
 
 export default async function NewTaskPage() {
   return (
-    <div className="db-vert-grid">
-      <div className="db-vert-grid-card-1">
+    <>
+      <VerticalGrid>
         <NewTaskInterface />
-        <ClientLoadState />
-      </div>
-    </div>
+      </VerticalGrid>
+      <ClientSideLoadState />
+    </>
   );
 }

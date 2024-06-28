@@ -1,14 +1,11 @@
 "use server";
 
-import { getUser } from "./user/userService";
 import { createSha256Hash, normalizeString } from "../lib/util";
 import { User } from "../types";
 import { manageSession } from "./sessionService";
+import { getUser } from "./userService";
 
-export const login = async (
-  username: string,
-  password: string
-): Promise<LoginReponse> => {
+const login = async (username: string, password: string): Promise<LoginReponse> => {
   const normalizeUN = normalizeString(username);
 
   let user = await retrieveUser(normalizeUN);
@@ -31,7 +28,7 @@ export const login = async (
 
 const retrieveUser = async (username: string): Promise<User> => {
   let userJSON = await getUser(username, "username");
-  return JSON.parse(userJSON) as User;
+  return (JSON.parse(userJSON) as User);
 };
 
 type LoginReponse = {
@@ -39,3 +36,5 @@ type LoginReponse = {
   message: string;
   sessionExp?: number;
 };
+
+export default login;

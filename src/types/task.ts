@@ -1,8 +1,14 @@
 import { ObjectId } from "mongodb";
 
-export type Task = {
+export type Tasks = {
   _id: ObjectId;
-  task: string;
+  userId: string;
+  taskList: Task[];
+};
+
+export type Task = {
+  id: string;
+  description: string;
   date: string;
   allDay: boolean;
   priority: number;
@@ -23,28 +29,11 @@ export enum TaskStatus {
 }
 
 export type NewTask = {
-  task: string;
+  description: string;
   date: string;
   allDay: boolean;
   createdById: string;
   assignedToId: string | null;
   expiration: string | null;
   priortiy: number;
-};
-
-export const TaskFactory = (newTask: NewTask): Task => {
-  return {
-    _id: new ObjectId(),
-    task: newTask.task,
-    date: newTask.date,
-    allDay: newTask.allDay,
-    priority: newTask.priortiy,
-    status: TaskStatus.Pending,
-    createdAt: new Date().toUTCString(),
-    updatedAt: new Date().toUTCString(),
-    createdById: newTask.createdById,
-    updatedById: null,
-    assignedToId: newTask.assignedToId,
-    expiration: newTask.expiration ? newTask.expiration : null,
-  };
 };

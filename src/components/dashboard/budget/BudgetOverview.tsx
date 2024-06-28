@@ -10,37 +10,45 @@ import {
   getGraphParams,
 } from "../../../service/graphService";
 import BudgetMonthGraph from "../../display/budget/BudgetMonthGraph";
+import { noDataText } from "../../../constants/misc";
+import { useUserContext } from "../../../contexts";
 
 export default function BudgetOverview() {
   const [renderedView, setRenderedView] = useState<JSX.Element | null>(null); //TODO Add no data view
   const [selectedView, setSelectedView] = useState<Views>("week");
 
+  const { user } = useUserContext();
 
   //TODO move fetch calls to parent
   useEffect(() => {
     switch (selectedView) {
       case "week":
-        getChargeSumsByWeek().then((chargeMap) => {
+        getChargeSumsByWeek(user._id.toString()).then((chargeMap) => {
           getGraphParams({
             charges: chargeMap,
             view: "week",
+            userId: user._id.toString(),
           }).then((params) => {
-            if (params === null) return;
-            setRenderedView(
-              <BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />
-            );
+            params === null
+              ? setRenderedView(<div className="flex">{noDataText}</div>)
+              : setRenderedView(
+                  <BudgetWeekGraph weekGraphProps={params as WeekGraphProps} />
+                );
           });
         });
 
         break;
       case "last4":
-        getChargeSumsByWeek().then((chargeMap) => {
+        //TODO refactor, passing userid twice
+        getChargeSumsByWeek(user._id.toString()).then((chargeMap) => {
           getGraphParams({
             charges: chargeMap,
             view: "last4",
+            userId: user._id.toString(),
           }).then((params) => {
-            if (params === null) return;
-            setRenderedView(<BudgetMonthGraph charges={params as ChargeSum[]} />);
+            params === null
+              ? setRenderedView(<div className="full flex">{noDataText}</div>)
+              : setRenderedView(<BudgetMonthGraph charges={params as ChargeSum[]} />);
           });
         });
         break;

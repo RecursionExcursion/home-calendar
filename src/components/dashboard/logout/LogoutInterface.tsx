@@ -1,24 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { removeSession } from "../../../service/sessionService";
 import { deleteUserCookie } from "../../../lib/cookieManager";
 import { useDashboardContext, useUserContext } from "../../../contexts";
-import { useContentContext } from "../../../contexts/UserContentContext";
-import useAppLoading from "../../../hooks/useAppLoading";
+import useAppLoadingState from "../../../hooks/useAppLoading";
 
 export default function LogOutInterface() {
-  // const { user } = useUserContext();
-  const { user } = useContentContext();
+  const { user } = useUserContext();
   const { showToast } = useDashboardContext();
 
   const router = useRouter();
 
   const [logoutOfAllSessions, setLogoutOfAllSessions] = useState<boolean>(false);
 
-  useAppLoading();
+  useAppLoadingState();
 
   const handleLogout = async () => {
     if (logoutOfAllSessions) {
@@ -35,9 +33,9 @@ export default function LogOutInterface() {
   };
 
   return (
-    <div className="flex-col gap-2">
+    <div className="lo-wrapper">
       <h2 className="db-h2">Logout</h2>
-      <div className="flex gap-0_5" style={{ textWrap: "nowrap" }}>
+      <div className="lo-all-session-container">
         <label className="text-base" htmlFor="logoutAllSessions">
           Logout of all sessions?
         </label>
@@ -50,12 +48,11 @@ export default function LogOutInterface() {
           onChange={() => setLogoutOfAllSessions(!logoutOfAllSessions)}
         />
       </div>
-      <button className="db-button" onClick={handleLogout}>
-        Logout
-      </button>
+      <div className="lo-button-container">
+        <button className="db-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
-}
-function useLoadingContext(): { setAppLoading: any } {
-  throw new Error("Function not implemented.");
 }

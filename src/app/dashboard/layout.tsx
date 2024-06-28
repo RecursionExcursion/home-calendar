@@ -1,5 +1,4 @@
-import { DashboardProvider } from "../../contexts";
-import { ContentProvider } from "../../contexts/UserContentContext";
+import { DashboardProvider, UserProvider } from "../../contexts";
 import DashboardSlideOutMenu from "../../components/dashboard/menu/DashboardSlideOutMenu";
 
 type DashboardLayoutProps = {
@@ -9,13 +8,9 @@ type DashboardLayoutProps = {
 export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
-    <ContentProvider>
-      <div className="db-layout-container">
-        <DashboardSlideOutMenu />
-        <div className="full flex relative">
-          <DashboardProvider>{children}</DashboardProvider>
-        </div>
-      </div>
-    </ContentProvider>
+    <UserProvider>
+      <DashboardSlideOutMenu />
+      <DashboardProvider>{children}</DashboardProvider>
+    </UserProvider>
   );
 }

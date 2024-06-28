@@ -1,21 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDashboardContext } from "../../../contexts";
+import { useDashboardContext, useUserContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";
-import { createNewCharge, serializeCharge } from "../../../service/chargeService";
+import { createNewCharge } from "../../../service/chargeService";
 import DatePicker from "../../base/datePicker/DatePicker";
-import { saveBudget } from "../../../service/budget/budgetService";
-import { useContentContext } from "../../../contexts/UserContentContext";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
 
-type AddChargeInterfaceProps = {
-  setLoading: (toState: boolean, msDelay?: number | undefined) => void;
-};
-
-export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
-  const { setLoading } = props;
-
-  const { budget, updateContentState } = useContentContext();
+export const AddChargeInterface = () => {
+  const { setAppLoading } = useAppLoadingContext();
+  const { user } = useUserContext();
 
   const { showToast } = useDashboardContext();
 
@@ -30,30 +24,31 @@ export const AddChargeInterface = (props: AddChargeInterfaceProps) => {
   }, [chargeDraft, chargeDraftDate, dateIsValidFlag]);
 
   const handleAddCharge = async () => {
-    if (!budget) return;
-    setLoading(true);
+    setAppLoading(true);
 
-    const budgetCopy = { ...budget };
-
-    const newCharge = createNewCharge(
+    const res = await createNewCharge(
+      user._id.toString(),
       chargeDraftDate.toISOString(),
       chargeDraft.amount,
       chargeDraft.description
     );
 
-    budgetCopy.charges.push(serializeCharge(newCharge));
+    if (res) {
+      setChargeDraft(getEmptyCharge());
 
-    await saveBudget(budgetCopy);
-    setChargeDraft(getEmptyCharge());
-    updateContentState("charge");
-
-    setLoading(false, 750);
-
-    showToast({
-      title: "Success",
-      message: "Charge added successfully",
-      type: "success",
-    });
+      showToast({
+        title: "Success",
+        message: "Charge added successfully",
+        type: "success",
+      });
+    } else {
+      showToast({
+        title: "Error",
+        message: "Failed to add charge",
+        type: "error",
+      });
+    }
+    setAppLoading(false);
   };
 
   const handleChargeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

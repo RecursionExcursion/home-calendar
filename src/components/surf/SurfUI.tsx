@@ -33,30 +33,28 @@ export default function SurfUI() {
     <Spinner>
       <div className="surf-grid">
         <div className={getSwimRiskStyle(surfData?.swimRisk ?? "")}>
-          <span className="surf-grid-area-flag-risk">
-            Swim Risk- {surfData?.swimRisk}
-          </span>
-          <span>Wave Height- {surfData?.waveHeight}</span>
-          <span>Wave Period- {surfData?.wavePeriod}</span>
-        </div>
-        <div className="surf-grid-area-weather">
-          <span>Temp- {surfData?.highTemp}</span>
-          <span>Water Temp- {surfData?.waterTemp}</span>
-          <span>Forecast- {surfData?.weather}</span>
-          {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
-        </div>
-        <div className="surf-grid-area-sun">
-          <div className="surf-suntime">
+          <span className="grid-cell-risk">Swim Risk- {surfData?.swimRisk}</span>
+
+          <div className="grid-cell-weather">
+            <span>Wave Height- {surfData?.waveHeight}</span>
+            <span>Wave Period- {surfData?.wavePeriod}</span>
+            <span>Temp- {surfData?.highTemp}</span>
+            <span>Water Temp- {surfData?.waterTemp}</span>
+            <span>Forecast- {surfData?.weather}</span>
+            {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
+          </div>
+          <div className="grid-cell-sun">
             <icons.sunrise size={iconSize} />
             {surfData?.sunrise}
-          </div>
-          <div className="surf-suntime">
             <icons.sunset size={iconSize} />
             {surfData?.sunset}
           </div>
         </div>
-        <div className="surf-grid-area-cam">
-          <SurfCam />
+        <div className="surf-grid-area-cam-1">
+          <SurfCam view="pier" />
+        </div>
+        <div className="surf-grid-area-cam-2">
+          <SurfCam view="flag" />
         </div>
       </div>
     </Spinner>

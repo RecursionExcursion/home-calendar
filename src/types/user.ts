@@ -21,27 +21,4 @@ export type NewUser = {
   password: string;
 };
 
-export const createEmptyUser = (newUser: NewUser): User => {
-  return {
-    _id: new ObjectId(),
-    username: newUser.username,
-    password: newUser.password,
-    created: new Date().toISOString(),
-    settings: {
-      userCoords: null,
-      deleteTasksAfterNDays: -1,
-    },
-    friends: [],
-    message_ids: [],
-    task_ids: [],
-    session: null,
-  };
-};
 
-export const buildUserFromJSON = (userJSON: string): User => {
-  const user = JSON.parse(userJSON);
-  return {
-    ...user,
-    _id: ObjectId.createFromHexString(user._id),
-  };
-};

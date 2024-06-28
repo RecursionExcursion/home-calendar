@@ -7,18 +7,22 @@ import DashboardSideBar from "./DashboardSideBar";
 
 export default function DashboardSlideOutMenu() {
   const [showMenu, setShowMenu] = useState(false);
+  const [buttonDark, setButtonDark] = useState(false);
 
   const [sidebarClassname, setSidebarClassname] = useState(
     "db-slide-out-container-enter"
   );
 
+  //TODO Does not go white when route is pressed
   const handleClick = () => {
     if (showMenu) {
+      setButtonDark(false);
       setSidebarClassname("db-slide-out-container-exit");
       setTimeout(() => {
         setShowMenu(false);
       }, 700);
     } else {
+      setButtonDark(true);
       setSidebarClassname("db-slide-out-container-enter");
       setShowMenu(true);
     }
@@ -35,12 +39,18 @@ export default function DashboardSlideOutMenu() {
 
   return (
     <>
-      <div className="db-slide-out-toggle" onMouseDown={handleClick}>
+      <div
+        className={buttonDark ? "db-slide-out-toggle-clicked" : "db-slide-out-toggle"}
+        onMouseDown={handleClick}
+      >
         <icons.menu size={iconSize} />
       </div>
       {showMenu && (
         <div className={sidebarClassname}>
-          <DashboardSideBar hideMenu={() => setShowMenu(false)} />
+          <DashboardSideBar
+            setButtonDark={setButtonDark}
+            hideMenu={() => setShowMenu(false)}
+          />
         </div>
       )}
     </>

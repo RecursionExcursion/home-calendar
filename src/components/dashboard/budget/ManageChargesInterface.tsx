@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { noDataText } from "../../../constants/misc";
-import { useContentContext } from "../../../contexts/UserContentContext";
-import {
-  deleteCharge,
-  deserializeCharge,
-  serializeCharge,
-} from "../../../service/chargeService";
-import { Charge } from "../../../types";
+import { deleteCharge } from "../../../service/chargeService";
+import { Budget, Charge } from "../../../types";
 import DatePicker from "../../base/datePicker/DatePicker";
-import { saveBudget } from "../../../service/budget/budgetService";
+import { getBudget, saveBudget } from "../../../service/budgetService";
+import { useUserContext } from "../../../contexts";
+import { deserializeCharge, serializeCharge } from "../../../util";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
 
 export default function ManageChargesInterface() {
-  const { budget, updateContentState } = useContentContext();
+  const { user } = useUserContext();
+  const { setAppLoading } = useAppLoadingContext();
+
+  const [budget, setBudget] = useState<Budget>();
 
   const [chargeToEdit, setChargeToEdit] = useState<Charge | null>(null);
   const [initialEdit, setInitialEdit] = useState<Charge | null>(null);
@@ -22,13 +23,17 @@ export default function ManageChargesInterface() {
 
   const [showSave, setShowSave] = useState(false);
 
-  budget?.charges.sort((a, b) => {
-    const aBud = deserializeCharge(a);
-    const bBud = deserializeCharge(b);
-    return new Date(aBud.utcDate).getTime() - new Date(bBud.utcDate).getTime();
-  });
+  const fetchUserBudget = async () => {
+    const budgetJson = await getBudget(user._id.toString());
+    const budget = JSON.parse(budgetJson);
+    setBudget(budget);
+  };
 
   /* Use Effects */
+  useEffect(() => {
+    fetchUserBudget();
+  }, []);
+
   useEffect(() => {
     setEditedDate(!chargeToEdit ? new Date() : new Date(chargeToEdit.utcDate));
   }, [chargeToEdit]);
@@ -67,8 +72,10 @@ export default function ManageChargesInterface() {
     );
 
     if (res) {
-      await deleteCharge(charge.id);
-      updateContentState("charge");
+      setAppLoading(true);
+      await deleteCharge(charge.id, user._id.toString());
+      await fetchUserBudget();
+      setAppLoading(false);
     }
   };
 
@@ -91,6 +98,7 @@ export default function ManageChargesInterface() {
 
   const handleSaveClick = async () => {
     if (!budget || !chargeToEdit) return;
+    setAppLoading(true);
 
     const budgetCopy = structuredClone(budget);
 
@@ -100,10 +108,13 @@ export default function ManageChargesInterface() {
 
     budgetCopy.charges[oldChargeIndex] = serializeCharge(chargeToEdit);
 
-    await saveBudget(budgetCopy);
-    updateContentState("charge");
+    await saveBudget(JSON.stringify(budgetCopy));
+
+    await fetchUserBudget();
+
     setChargeToEdit(null);
     setInitialEdit(null);
+    setAppLoading(false);
   };
 
   if (!budget || budget.charges.length === 0) return <div>{noDataText}</div>;

@@ -1,15 +1,12 @@
-"use server";
-
 import LogOutInterface from "../../../components/dashboard/logout/LogoutInterface";
-import ClientLoadState from "../../../components/misc/ClientLoadState";
+import SessionManagmentUI from "../../../components/dashboard/logout/SessionManagementUI";
+import VerticalGrid from "../../../components/ui/VerticalGrid";
 
 export default async function LogOutPage() {
   return (
-    <div className="db-vert-grid">
-      <div className="db-vert-grid-card-1">
-        <LogOutInterface />
-      </div>
-      <ClientLoadState />
-    </div>
+    <VerticalGrid>
+      <SessionManagmentUI />
+      <LogOutInterface />
+    </VerticalGrid>
   );
 }

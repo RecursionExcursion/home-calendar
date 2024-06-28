@@ -16,9 +16,6 @@ export default function useLoadingSpinner(initialState?: boolean) {
       setLoadingState(toState);
     }, delay);
   };
-
-  return {
-    Spinner,
-    setLoading,
-  };
+  
+  return { Spinner, setLoading };
 }

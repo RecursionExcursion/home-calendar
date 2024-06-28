@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { saveUser } from "../../../service/user/userService";
+import { useUserContext } from "../../../contexts";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
+import { saveUser } from "../../../service/userService";
 import { User } from "../../../types";
-import { useContentContext } from "../../../contexts/UserContentContext";
-import useLoadingSpinner from "../../../hooks/useLoadingSpinner";
 
 export default function DeleteTasksAfterMenu() {
-  // const { setLoading } = useLoadingContext();
-  // const { user } = useUserContext();
-  const { user } = useContentContext();
-  const { setLoading, Spinner } = useLoadingSpinner(false);
+  const { setAppLoading } = useAppLoadingContext();
+  const { user } = useUserContext();
 
   const [deleteAfterNDays, setDeleteAfterNDays] = useState(
     user.settings.deleteTasksAfterNDays
@@ -33,45 +31,47 @@ export default function DeleteTasksAfterMenu() {
 
   useEffect(() => {
     setEnableSaveButton(originalState !== deleteAfterNDays);
-  }, [deleteAfterNDays]);
+  }, [deleteAfterNDays, originalState]);
 
   const handleSaveClick = async () => {
-    setLoading(true);
+    setAppLoading(true);
     user.settings.deleteTasksAfterNDays = deleteAfterNDays;
     const res = await saveUser(JSON.stringify(user));
-    const resUser = JSON.parse(res) as User;
-    setDeleteAfterNDays(resUser.settings.deleteTasksAfterNDays);
-    setOriginalState(resUser.settings.deleteTasksAfterNDays);
-    setLoading(false);
+
+    const resObj = JSON.parse(res);
+    const resUser = resObj.updatedUser as User;
+    const deleteTime = resUser.settings.deleteTasksAfterNDays;
+
+    setDeleteAfterNDays(deleteTime);
+    setOriginalState(deleteTime);
+    setAppLoading(false);
   };
 
   return (
-    <Spinner>
-      <div
-        className="flex-col gap-1"
-        style={{
-          padding: "1rem",
-          width: "100%",
-        }}
-      >
-        <label className="text-nowrap">Delete tasks after</label>
-        <div className="flex gap-0_5">
-          <input
-            className="db-input"
-            type="number"
-            value={deleteAfterNDays}
-            onChange={handleNumberChange}
-          />
-          <label>days</label>
-        </div>
-        <button
-          className="db-button"
-          onClick={handleSaveClick}
-          disabled={!enableSaveButton}
-        >
-          Save
-        </button>
+    <div
+      className="flex-col gap-1"
+      style={{
+        padding: "1rem",
+        width: "100%",
+      }}
+    >
+      <label className="text-nowrap">Delete tasks after</label>
+      <div className="flex gap-0_5">
+        <input
+          className="db-input"
+          type="number"
+          value={deleteAfterNDays}
+          onChange={handleNumberChange}
+        />
+        <label>days</label>
       </div>
-    </Spinner>
+      <button
+        className="db-button"
+        onClick={handleSaveClick}
+        disabled={!enableSaveButton}
+      >
+        Save
+      </button>
+    </div>
   );
 }

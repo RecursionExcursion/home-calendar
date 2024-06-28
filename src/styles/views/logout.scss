@@ -1,0 +1,41 @@
+@mixin LoButtonContainer() {
+  width: 12rem;
+  color: red;
+}
+
+/* Session Management */
+.sm {
+  &-wrapper {
+    @include flex-col;
+    @include full;
+    @include text-xl;
+
+    p {
+      text-align: center;
+      width: 60%;
+    }
+    span {
+      color: aqua;
+      text-wrap: nowrap;
+    }
+  }
+  &-button-container {
+    @include LoButtonContainer;
+  }
+}
+
+/* Logout Interface */
+.lo {
+  &-wrapper {
+    @include flex-col;
+    gap: 2rem;
+  }
+  &-all-session-container {
+    @include flex;
+    gap: 0.5rem;
+    text-wrap: nowrap;
+  }
+  &-button-container {
+    @include LoButtonContainer;
+  }
+}

@@ -3,7 +3,7 @@
 import { dashboardRoutes } from "../../constants/routes";
 import { useAppContext } from "../../contexts/AppContext";
 import { serverRedirect } from "../../lib/serverActions";
-import { getTimeDifference } from "../../lib/util";
+import { getTimeDifferenceString } from "../../lib/util";
 import { renewSession } from "../../service/sessionService";
 
 type RenewSessionModalProps = {
@@ -18,7 +18,7 @@ export default function RenewSessionModal(props: RenewSessionModalProps) {
 
   const { sessionExp, currentTime } = props;
 
-  const timeDifference = getTimeDifference(sessionExp, currentTime);
+  const timeDifference = getTimeDifferenceString(sessionExp, currentTime);
 
   const handleYesClick = async () => {
     await renewSession();
