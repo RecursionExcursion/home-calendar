@@ -1,60 +1,40 @@
 "use server";
 
 import { ObjectId } from "mongodb";
-import { createBudget, readAllBudgets, updateBudget } from "./budgetRepoApi";
+import { createBudget, readUserBudget, updateBudget } from "./budgetRepoApi";
 import { Budget } from "../../../types";
+import { deserializeCharge } from "../../../util";
 
-const getAllBudgets = async (): Promise<Budget[]> => {
-  return (await readAllBudgets()) as Budget[];
-};
-
-export const newBudget = async (): Promise<boolean> => {
-  const allBudgets = await getAllBudgets();
-
-  if (allBudgets.length >= 1) {
-    return false;
-  }
-
+export const createNewBudget = async (userId: string) => {
   const newBudget: Budget = {
+    _id: new ObjectId(),
+    userId,
     limit: 0,
     charges: [],
   };
-
-  await createBudget(newBudget);
-  return true;
+  return createBudget(newBudget);
 };
 
-export const getBudget = async () => {
-  let budgets = await getAllBudgets();
+export const getBudget = async (userId: string) => {
+  let budget = await readUserBudget(userId);
 
-  if (budgets.length === 0) {
-    await newBudget();
-    budgets = await getAllBudgets();
+  if (!budget) {
+    await createNewBudget(userId);
+    budget = await readUserBudget(userId);
   }
 
-  const budget = budgets[0];
-
-  return budgetToJSON(budget);
+  return budget;
 };
 
 export const saveBudget = async (budget: Budget) => {
-  //Ensure that the budget has valid ID
-  const regenBudget = await budgetFromJSON(JSON.stringify(budget));
-
-  const res = await updateBudget(regenBudget);
-
-  return JSON.stringify(res);
+  sortCharges(budget);
+  return updateBudget(budget);
 };
 
-export const budgetFromJSON = async (json: string): Promise<Budget> => {
-  const parsed = JSON.parse(json);
-  return {
-    _id: parsed._id ? ObjectId.createFromHexString(parsed._id) : undefined,
-    limit: parsed.limit,
-    charges: parsed.charges,
-  };
-};
-
-export const budgetToJSON = async (budget: Budget): Promise<string> => {
-  return JSON.stringify(budget);
+const sortCharges = (budget: Budget) => {
+  budget.charges.sort((a, b) => {
+    const aBud = deserializeCharge(a);
+    const bBud = deserializeCharge(b);
+    return new Date(aBud.utcDate).getTime() - new Date(bBud.utcDate).getTime();
+  });
 };

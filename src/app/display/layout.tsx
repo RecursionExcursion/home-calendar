@@ -6,9 +6,9 @@ import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords, User } from "../../types";
-import { getBudget } from "../api/budget/budgetServiceApi";
 import { getUser } from "../../service/userService";
 import { getTasks } from "../../service/tasksService";
+import { getBudget } from "../../service/budgetService";
 
 type CalendarLayoutProps = {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
 
   const forecastFetch = getProjectedForecastJson(coords);
   const tasksFetch = getTasks(userId);
-  const budgetFetch = getBudget();
+  const budgetFetch = getBudget(userId);
 
   try {
     [forecastJSON, tasksJSON, budgetJSON] = await Promise.all([

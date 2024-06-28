@@ -1,14 +1,14 @@
 "use server";
 
-import { appendUrlParams, getTasksApiPath } from "../app/api/apiRoutes";
+import {
+  appendUrlParams,
+  getTasksApiUrl,
+  revalidateDashboard,
+} from "../app/api/apiRoutes";
 import { Tasks } from "../types";
 
-import { revalidatePath } from "next/cache";
-
-const revalidateDashboard = () => revalidatePath("/dashboard");
-
 export const getTasks = async (userId: string) => {
-  const url = await getTasksApiPath();
+  const url = await getTasksApiUrl();
 
   appendUrlParams(url, { userId });
 
@@ -23,7 +23,7 @@ export const getTasks = async (userId: string) => {
 };
 
 export const createTasks = async (userId: string) => {
-  const url = await getTasksApiPath();
+  const url = await getTasksApiUrl();
 
   const res = await fetch(url, {
     body: JSON.stringify(userId),
@@ -38,7 +38,7 @@ export const createTasks = async (userId: string) => {
 };
 
 export const updateTasks = async (tasks: Tasks) => {
-  const url = await getTasksApiPath();
+  const url = await getTasksApiUrl();
 
   const tasksJson = JSON.stringify(tasks);
 

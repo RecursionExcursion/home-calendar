@@ -1,13 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { appendUrlParams, getUserApiPath } from "../app/api/apiRoutes";
+import { appendUrlParams, getUserApiUrl, revalidateApp } from "../app/api/apiRoutes";
 import { User } from "../types";
 
-const revalidateAll = () => revalidatePath("/", "layout");
-
 export const createNewUser = async (username: string, password: string) => {
-  const url = await getUserApiPath();
+  const url = await getUserApiUrl();
 
   const res = await fetch(url, {
     method: "POST",
@@ -21,7 +18,7 @@ export const createNewUser = async (username: string, password: string) => {
 };
 
 export const getUser = async (search: string, searchBy: "id" | "username") => {
-  const url = await getUserApiPath();
+  const url = await getUserApiUrl();
 
   await appendUrlParams(url, { search, searchBy });
 
@@ -36,7 +33,7 @@ export const getUser = async (search: string, searchBy: "id" | "username") => {
 };
 
 export const saveUser = async (userJSON: string) => {
-  const url = await getUserApiPath();
+  const url = await getUserApiUrl();
   const res = await fetch(url, {
     method: "PUT",
     body: userJSON,
@@ -45,7 +42,7 @@ export const saveUser = async (userJSON: string) => {
 
   if (!res.ok) return JSON.stringify({});
   const resObj = JSON.parse(await res.text());
-  revalidateAll();
+  revalidateApp();
 
   const success = resObj.modifiedCount === 1;
 

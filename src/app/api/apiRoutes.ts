@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 const getUrlWithBase = async (path: string) => {
   const headersList = headers();
@@ -12,9 +13,12 @@ const getUrlWithBase = async (path: string) => {
   return url;
 };
 
-export const getUserApiPath = async () => await getUrlWithBase("/api/user");
-export const getTasksApiPath = async () => await getUrlWithBase("/api/tasks");
-export const getBudgetsApiPath = async () => await getUrlWithBase("/api/budgets");
+export const revalidateDashboard = () => revalidatePath("/dashboard");
+export const revalidateApp = () => revalidatePath("/", "layout");
+
+export const getUserApiUrl = async () => await getUrlWithBase("/api/user");
+export const getTasksApiUrl = async () => await getUrlWithBase("/api/tasks");
+export const getBudgetApiUrl = async () => await getUrlWithBase("/api/budget");
 
 export const appendUrlParams = async (url: URL, paramObject: Object) => {
   Object.entries(paramObject).forEach((e) => url.searchParams.append(e[0], e[1]));

@@ -12,7 +12,7 @@ export default async function DashboardPage() {
   if (!userId) return;
 
   const fetchTasks = getTasks(userId);
-  const fetchChargeSums = getChargeSumsByWeek();
+  const fetchChargeSums = getChargeSumsByWeek(userId);
 
   const [chargeSums, tasksJson] = await Promise.all([fetchChargeSums, fetchTasks]);
   const tasks = JSON.parse(tasksJson) as Tasks;

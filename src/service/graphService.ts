@@ -3,16 +3,17 @@
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge } from "../types";
 import { getFirstOfWeek } from "../lib/dateTimeUtil";
-import { deserializeCharge } from "./chargeService";
-import { getBudget } from "../app/api/budget/budgetServiceApi";
+import { getBudget } from "./budgetService";
+import { deserializeCharge } from "../util";
 
 export type ChargeSum = {
   utcDate: string;
   chargeSum: number;
 };
 
-export const getChargeSumsByWeek = async (): Promise<ChargeSum[]> => {
-  const budgetJson = await getBudget();
+export const getChargeSumsByWeek = async (userId: string): Promise<ChargeSum[]> => {
+  const budgetJson = await getBudget(userId);
+
   const budget = JSON.parse(budgetJson) as Budget;
 
   const charges = budget.charges.map((chargeString) => deserializeCharge(chargeString));
@@ -49,6 +50,7 @@ export const getChargeSumsByWeek = async (): Promise<ChargeSum[]> => {
 type GraphParams = {
   charges: ChargeSum[];
   view: "week" | "last4";
+  userId: string;
 };
 
 export type WeekGraphProps = {
@@ -59,13 +61,13 @@ export type WeekGraphProps = {
 
 type ReturnType = WeekGraphProps | ChargeSum[] | null;
 
-export const getGraphParams = async (GraphParams: GraphParams): Promise<ReturnType> => {
+export const getGraphParams = async (graphParams: GraphParams): Promise<ReturnType> => {
+  const { charges, view, userId } = graphParams;
+
   //TODO This is a temporary fix, need to track the budget by date
-  const budgetJson = await getBudget();
+  const budgetJson = await getBudget(userId);
   const budget = JSON.parse(budgetJson) as Budget;
   /*  */
-
-  const { charges, view } = GraphParams;
 
   if (charges.length === 0) return null;
   switch (view) {

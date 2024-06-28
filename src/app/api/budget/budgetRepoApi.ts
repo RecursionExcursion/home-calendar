@@ -1,5 +1,6 @@
 "use server";
 
+import { ObjectId } from "mongodb";
 import { budgetCollectionName } from "../../../db/collectionConstants";
 import { getMongoConnection } from "../../../db/mongoConnection";
 import { Budget } from "../../../types";
@@ -13,19 +14,17 @@ export const createBudget = async (budget: Budget) => {
   };
 };
 
-export const readAllBudgets = async () => {
+export const readUserBudget = async (userId: string) => {
   const db = await getMongoConnection();
-  return await db.collection(budgetCollectionName).find().toArray();
+  const budget = await db.collection(budgetCollectionName).findOne({ userId: userId });
+  return budget;
 };
 
 export const updateBudget = async (budget: Budget) => {
   const db = await getMongoConnection();
+  const { _id, ...updatedBudget } = budget;
   const updateResult = await db
     .collection(budgetCollectionName)
-    .updateOne({ _id: budget._id }, { $set: budget });
+    .updateOne({ _id: new ObjectId(budget._id) }, { $set: updatedBudget });
   return updateResult;
-};
-
-export const deleteBudget = async () => {
-  const db = await getMongoConnection();
 };

@@ -53,7 +53,7 @@ export const TaskList = (props: TaskListProps) => {
       <h3>Tasks</h3>
       <div ref={divAreaRef} className="task-area">
         {tasks.map((t) => (
-          <TaskDiv key={t._id.toString()} task={t} />
+          <TaskDiv key={t.id} task={t} />
         ))}
       </div>
     </div>
@@ -73,7 +73,7 @@ const TaskDiv = (props: TaskDivProps) => {
 
   return (
     <div className={`task-container-${task.priority}`}>
-      <div className="task-item">{task.task}</div>
+      <div className="task-item">{task.description}</div>
       <div className="task-item">{timeString}</div>
     </div>
   );

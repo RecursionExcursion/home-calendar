@@ -1,5 +1,4 @@
 import { DashboardProvider, UserProvider } from "../../contexts";
-import { ContentProvider } from "../../contexts/UserContentContext";
 import DashboardSlideOutMenu from "../../components/dashboard/menu/DashboardSlideOutMenu";
 
 type DashboardLayoutProps = {

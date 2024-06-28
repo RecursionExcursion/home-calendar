@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 
 export type Budget = {
-  _id?: ObjectId;
-  // userId: string;
+  _id: ObjectId;
+  userId: string;
   limit: number;
   charges: string[];
 };
