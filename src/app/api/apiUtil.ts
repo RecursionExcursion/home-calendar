@@ -30,7 +30,7 @@ export const getAuthKey = async () => {
 };
 
 export const authenticateRequest = async (request: NextRequest) => {
-  const auth = request.headers.get("authorization");
+  const auth = request.headers.get("x_internal_auth");
 
   const isAuth = auth === process.env.API_KEY;
 
@@ -43,10 +43,10 @@ export const authenticateRequest = async (request: NextRequest) => {
   };
 };
 
-export const getAuthHeader = async () => {
+const getAuthHeader = async () => {
   const authKey = await getAuthKey();
   return {
-    authorization: authKey,
+    x_internal_auth: authKey,
   };
 };
 
