@@ -58,4 +58,3 @@ export async function PUT(request: NextRequest) {
     status: 200,
   });
 }
-export async function PATCH(request: NextRequest) {}
