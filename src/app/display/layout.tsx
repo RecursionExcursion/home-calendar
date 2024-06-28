@@ -1,14 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getUser } from "../../service/user/userService";
 import { DisplayProvider } from "../../contexts/DisplayContext";
 import { UserProvider } from "../../contexts/UserContext";
 import { getUserIdFromCookie } from "../../lib/cookieManager";
 import { getProjectedForecastJson } from "../../service/weatherService";
 import { Coords, User } from "../../types";
-import { getAllTasks } from "../../service/task/taskService";
-import { getBudget } from "../../service/budget/budgetService";
+import { getBudget } from "../api/budget/budgetServiceApi";
+import { getUser } from "../../service/userService";
+import { getTasks } from "../../service/tasksService";
 
 type CalendarLayoutProps = {
   children: React.ReactNode;
@@ -33,10 +33,16 @@ export default async function CalendarLayout(props: CalendarLayoutProps) {
   let forecastJSON: string | undefined;
   let budgetJSON: string | undefined;
 
+  const forecastFetch = getProjectedForecastJson(coords);
+  const tasksFetch = getTasks(userId);
+  const budgetFetch = getBudget();
+
   try {
-    forecastJSON = await getProjectedForecastJson(coords);
-    tasksJSON = await getAllTasks();
-    budgetJSON = await getBudget();
+    [forecastJSON, tasksJSON, budgetJSON] = await Promise.all([
+      forecastFetch,
+      tasksFetch,
+      budgetFetch,
+    ]);
   } catch (e) {}
 
   return (

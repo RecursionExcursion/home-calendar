@@ -5,8 +5,8 @@ import { useDashboardContext } from "../../../contexts";
 import NumberInput from "../../base/NumberInput";
 import { createNewCharge, serializeCharge } from "../../../service/chargeService";
 import DatePicker from "../../base/datePicker/DatePicker";
-import { saveBudget } from "../../../service/budget/budgetService";
 import { useContentContext } from "../../../contexts/UserContentContext";
+import { saveBudget } from "../../../app/api/budget/budgetServiceApi";
 
 type AddChargeInterfaceProps = {
   setLoading: (toState: boolean, msDelay?: number | undefined) => void;

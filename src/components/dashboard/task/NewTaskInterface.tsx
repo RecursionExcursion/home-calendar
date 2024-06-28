@@ -3,15 +3,16 @@
 import React, { useState } from "react";
 import { NewTask } from "../../../types/task";
 import { dateAndTimeToDate, getDateAndTime } from "../../../lib/dateTimeUtil";
-import { useDashboardContext } from "../../../contexts";
+import { useDashboardContext, useUserContext } from "../../../contexts";
 import DatePicker from "../../base/datePicker/DatePicker";
-import { createNewTask } from "../../../service/task/taskService";
-import { useContentContext } from "../../../contexts/UserContentContext";
+import { createNewTask } from "../../../service/taskService";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
 
 export default function NewTaskInterface() {
   const { showToast } = useDashboardContext();
+  const { setAppLoading } = useAppLoadingContext();
 
-  const { updateContentState } = useContentContext();
+  const { user } = useUserContext();
 
   const [newTaskForm, setNewTaskForm] = useState<NewTaskForm>(getBaseTaskForm());
   const [newTaskDate, setNewTaskDate] = useState(new Date(newTaskForm.date));
@@ -27,7 +28,7 @@ export default function NewTaskInterface() {
     });
 
     const taskToSubmit: NewTask = {
-      task: newTaskForm.task,
+      description: newTaskForm.description,
       date: newDate.toUTCString(),
       allDay: form.allDay.checked,
       createdById: newTaskForm.createdById,
@@ -38,9 +39,10 @@ export default function NewTaskInterface() {
       priortiy: newTaskForm.priortiy,
     };
 
-    const response = await createNewTask(JSON.stringify(taskToSubmit));
+    setAppLoading(true);
+    const res = await createNewTask(taskToSubmit, user._id.toString());
 
-    if (response.acknowledged) {
+    if (res) {
       showToast({
         title: "Task Created",
         message: "Task has been created successfully",
@@ -55,7 +57,7 @@ export default function NewTaskInterface() {
     }
 
     setNewTaskForm(getBaseTaskForm());
-    updateContentState("tasks");
+    setAppLoading(false);
   };
 
   const priorities: number[] = [0, 1, 2, 3];
@@ -94,9 +96,9 @@ export default function NewTaskInterface() {
               className="db-input"
               type="text"
               id="task"
-              name="task"
+              name="description"
               placeholder="Task"
-              value={newTaskForm.task}
+              value={newTaskForm.description}
               onChange={handleFormChange}
               required
             />
@@ -202,7 +204,7 @@ const getBaseTaskForm = () => {
   const now = getDateAndTime(new Date());
 
   const baseTaskForm: NewTaskForm = {
-    task: "",
+    description: "",
     date: now.date,
     time: now.time,
     allDay: false,

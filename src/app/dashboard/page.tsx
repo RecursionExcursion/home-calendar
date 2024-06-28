@@ -1,29 +1,27 @@
-"use server";
-
 import BudgetOverview from "../../components/dashboard/budget/BudgetOverview";
-import HomeTaskTable from "../../components/dashboard/home/HomeTaskTable";
 import { noDataText } from "../../constants/misc";
-import ClientSideLoadState from "../../components/misc/ClientLoadState";
 import { getChargeSumsByWeek } from "../../service/graphService";
-import { getAllTasks } from "../../service/task/taskService";
-import { Task } from "../../types";
 import VerticalGrid from "../../components/ui/VerticalGrid";
+import { getUserIdFromCookie } from "../../lib/cookieManager";
+import { getTasks } from "../../service/tasksService";
+import HomeTaskTable from "../../components/dashboard/home/HomeTaskTable";
+import { Tasks } from "../../types";
 
 export default async function DashboardPage() {
-  const allTasksJson = await getAllTasks();
-  const allTasks = (JSON.parse(allTasksJson) as Task[]).sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
-  });
+  const userId = await getUserIdFromCookie();
+  if (!userId) return;
 
-  const chargeSums = await getChargeSumsByWeek();
+  const fetchTasks = getTasks(userId);
+  const fetchChargeSums = getChargeSumsByWeek();
+
+  const [chargeSums, tasksJson] = await Promise.all([fetchChargeSums, fetchTasks]);
+  const tasks = JSON.parse(tasksJson) as Tasks;
+  const tasksList = tasks.taskList;
 
   return (
-    <>
-      <VerticalGrid>
-        {allTasks.length > 0 ? <HomeTaskTable tasks={allTasks} /> : noDataText}
-        {chargeSums.length > 0 ? <BudgetOverview /> : noDataText}
-      </VerticalGrid>
-      <ClientSideLoadState msDelay={1500} />
-    </>
+    <VerticalGrid>
+      {tasksList.length > 0 ? <HomeTaskTable tasks={tasksList} /> : noDataText}
+      {chargeSums.length > 0 ? <BudgetOverview /> : noDataText}
+    </VerticalGrid>
   );
 }

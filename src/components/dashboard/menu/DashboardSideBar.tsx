@@ -4,7 +4,7 @@ import Link from "next/link";
 import { dashboardRoutes } from "../../../constants/routes";
 import { getIconGroup } from "../../../lib/icons/icons";
 import { DashboardIcons, IconGroupParams } from "../../../lib/icons/types";
-import { useAppLoadingContext } from "../../../contexts/LoadingContext";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
 import { usePathname } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
@@ -35,8 +35,6 @@ export default function DashboardSideBar(props: DashboardSideBarProps) {
     const { children, href = "/", ...rest } = props;
 
     const isCurrentPath = pathname.localeCompare(href) === 0;
-
-    console.log({ pathname });
 
     const handleLinkClick = () => {
       if (!isCurrentPath) setAppLoading(true);

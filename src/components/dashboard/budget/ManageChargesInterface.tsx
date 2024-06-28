@@ -10,7 +10,8 @@ import {
 } from "../../../service/chargeService";
 import { Charge } from "../../../types";
 import DatePicker from "../../base/datePicker/DatePicker";
-import { saveBudget } from "../../../service/budget/budgetService";
+import { saveBudget } from "../../../app/api/budget/budgetServiceApi";
+
 
 export default function ManageChargesInterface() {
   const { budget, updateContentState } = useContentContext();

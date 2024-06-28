@@ -10,7 +10,7 @@ import RenewSessionModal from "../modals/RenewSessionExpModal";
 import { areDatesLessThanXDaysApart } from "../../lib/dateTimeUtil";
 import Link from "next/link";
 import { serverRedirect } from "../../lib/serverActions";
-import { useAppLoadingContext } from "../../contexts/LoadingContext";
+import { useAppLoadingContext } from "../../contexts/AppLoadingContext";
 
 export default function LoginUI() {
   const { showModal, showToast } = useAppContext();

@@ -1,5 +1,3 @@
-"use server";
-
 import DeleteTasksAfterMenu from "../../../components/dashboard/settings/DeleteTasksAfterMenu";
 import WeatherOptionsMenu from "../../../components/dashboard/settings/WeatherOptionsMenu";
 import VerticalGrid from "../../../components/ui/VerticalGrid";

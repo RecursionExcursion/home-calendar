@@ -3,7 +3,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { useModal } from "../hooks/useModal";
 import { ShowToastProps, useToast } from "../hooks/useToast";
-import { AppLoadingProvider } from "./LoadingContext";
+import { AppLoadingProvider } from "./AppLoadingContext";
 
 type AppContextState = {
   showToast: (props: ShowToastProps) => void;

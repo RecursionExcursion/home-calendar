@@ -1,10 +1,13 @@
 "use client";
 
 import { FaTrash } from "react-icons/fa";
-import { Task } from "../../../types";
+import { Task, Tasks } from "../../../types";
 import { useEffect, useState } from "react";
-import { deleteTask, getAllTasks } from "../../../service/task/taskService";
-import { useDashboardContext } from "../../../contexts";
+import { useDashboardContext, useUserContext } from "../../../contexts";
+import { deleteTask } from "../../../service/taskService";
+import { getTasks } from "../../../service/tasksService";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
+
 
 type HomeTaskTableProps = {
   tasks: Task[];
@@ -12,7 +15,9 @@ type HomeTaskTableProps = {
 
 export default function HomeTaskTable(props: HomeTaskTableProps) {
   const { tasks: propTasks } = props;
+  const { user } = useUserContext();
   const { showToast } = useDashboardContext();
+  const { setAppLoading } = useAppLoadingContext();
 
   const [tasks, setTasks] = useState<Task[]>(propTasks);
 
@@ -24,17 +29,18 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
   }, [propTasks]);
 
   const handleDeleteTaskClick = async (id: string) => {
-    const res = await deleteTask(id);
+    setAppLoading(true);
+    const res = await deleteTask(id, user._id.toString());
 
-    if (res.deletedCount === 1) {
+    if (res) {
       showToast({
         title: "Success",
         message: "Task deleted",
         type: "success",
       });
-      getAllTasks().then((tasks) => {
-        const castedTasks = JSON.parse(tasks) as Task[];
-        setTasks(castedTasks);
+      getTasks(user._id.toString()).then((tasks) => {
+        const castedTasks = JSON.parse(tasks) as Tasks;
+        setTasks(castedTasks.taskList);
       });
     } else {
       showToast({
@@ -43,6 +49,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         type: "error",
       });
     }
+    setAppLoading(false);
   };
 
   return (
@@ -64,7 +71,7 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
         <table className="basic-border full">
           <tbody>
             {tasks.map((task, i) => {
-              const key = i + task?._id?.toString();
+              const key = i + task?.id?.toString();
 
               const taskDate = new Date(task.date);
 
@@ -77,10 +84,10 @@ export default function HomeTaskTable(props: HomeTaskTableProps) {
 
               return (
                 <tr className="db-task-table-table-tr" key={key}>
-                  <td className="db-task-table-table-td-desc">{task.task} </td>
+                  <td className="db-task-table-table-td-desc">{task.description} </td>
                   <td className={dateStyle}>{displayDate}</td>
                   <td className="db-task-table-table-td-delete">
-                    <button onClick={() => handleDeleteTaskClick(task._id.toString())}>
+                    <button onClick={() => handleDeleteTaskClick(task.id.toString())}>
                       <FaTrash />
                     </button>
                   </td>

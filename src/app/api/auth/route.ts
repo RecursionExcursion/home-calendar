@@ -1,7 +1,5 @@
 import { validateClientSessionCookie } from "../../../service/sessionService";
 
-export const dynamic = "force-dynamic";
-
 export async function GET(request: Request) {}
 export async function POST(request: Request) {
   const cookieData = await request.json();

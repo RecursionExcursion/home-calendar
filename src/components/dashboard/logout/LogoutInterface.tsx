@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 
 import { removeSession } from "../../../service/sessionService";
 import { deleteUserCookie } from "../../../lib/cookieManager";
-import { useDashboardContext } from "../../../contexts";
-import { useContentContext } from "../../../contexts/UserContentContext";
+import { useDashboardContext, useUserContext } from "../../../contexts";
 import useAppLoadingState from "../../../hooks/useAppLoading";
 
 export default function LogOutInterface() {
-  const { user } = useContentContext();
+  const { user } = useUserContext();
   const { showToast } = useDashboardContext();
 
   const router = useRouter();

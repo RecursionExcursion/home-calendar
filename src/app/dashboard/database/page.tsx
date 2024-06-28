@@ -1,10 +1,7 @@
-"use server";
-
 import { getMongoConnection } from "../../../db/mongoConnection";
 import DatabaseStats from "../../../components/dashboard/database/DatabaseStats";
 import CollectionManager from "../../../components/dashboard/database/CollectionManger";
 import { CollectionData } from "../../../components/dashboard/database/types";
-import ClientSideLoadState from "../../../components/misc/ClientLoadState";
 import VerticalGrid from "../../../components/ui/VerticalGrid";
 
 export default async function DatabasePage() {

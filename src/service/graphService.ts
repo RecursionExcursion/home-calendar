@@ -1,10 +1,10 @@
 "use sever";
 
-import { getBudget } from "../service/budget/budgetService";
 import { stripTimeFromDate } from "../lib/util";
 import { Budget, Charge } from "../types";
 import { getFirstOfWeek } from "../lib/dateTimeUtil";
 import { deserializeCharge } from "./chargeService";
+import { getBudget } from "../app/api/budget/budgetServiceApi";
 
 export type ChargeSum = {
   utcDate: string;

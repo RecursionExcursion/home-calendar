@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppLoadingContext } from "../contexts/LoadingContext";
+import { useAppLoadingContext } from "../contexts/AppLoadingContext";
 
 export default function useAppLoadingState(toState?: boolean, msDelay?: number) {
   const loadingState = toState ?? false;

@@ -1,17 +1,12 @@
 "use client";
 
 import { Session, User } from "../../../types";
-import {
-  getTimeDifferenceObject,
-  getTimeDifferenceString,
-  msTimestamps,
-  stripTimeFromDate,
-} from "../../../lib/util";
+import { getTimeDifferenceObject, getTimeDifferenceString } from "../../../lib/util";
 import { FallbackIcon } from "../../misc/FallbackIcon";
 import { renewSession } from "../../../service/sessionService";
 import { useEffect, useState } from "react";
 import { getUserIdFromCookie } from "../../../lib/cookieManager";
-import { getUser } from "../../../service/user/userService";
+import { getUser } from "../../../service/userService";
 
 export default function SessionManagmentUI() {
   const [session, setSession] = useState<Session | null>();

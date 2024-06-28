@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { saveUser } from "../../../service/user/userService";
 import { User } from "../../../types";
-import { useContentContext } from "../../../contexts/UserContentContext";
-import useLoadingSpinner from "../../../hooks/useLoadingSpinner";
+import { useUserContext } from "../../../contexts";
+import { saveUser } from "../../../service/userService";
+import { useAppLoadingContext } from "../../../contexts/AppLoadingContext";
 
 export default function WeatherOptionsMenu() {
-  const { setLoading, Spinner } = useLoadingSpinner(false);
+  const { setAppLoading } = useAppLoadingContext();
 
-  const { user } = useContentContext();
+  const { user } = useUserContext();
 
   const [enableWeather, setEnableWeather] = useState(userHasCoords(user));
 
   const handleEnableWeatherClick = async () => {
-    setLoading(true);
+    setAppLoading(true);
     if (!enableWeather) {
       await enableWeatherService();
     } else {
@@ -32,14 +32,12 @@ export default function WeatherOptionsMenu() {
         };
 
         await saveUser(JSON.stringify(user)).then((res) => {
-          const resUser = JSON.parse(res) as User;
+          const resObj = JSON.parse(res);
+          const resUser = resObj.updatedUser as User;
           setEnableWeather(userHasCoords(resUser as User));
         });
 
-        //Prevent the loading state from flashing
-        setTimeout(() => {
-          setLoading(false);
-        }, 250);
+        setAppLoading(false);
       };
 
       const error = (error: GeolocationPositionError) => {
@@ -54,37 +52,33 @@ export default function WeatherOptionsMenu() {
     user.settings.userCoords = null;
 
     await saveUser(JSON.stringify(user)).then((res) => {
-      const resUser = JSON.parse(res) as User;
+      const resObj = JSON.parse(res);
+      const resUser = resObj.updatedUser as User;
       setEnableWeather(userHasCoords(resUser as User));
     });
 
-    //Prevent the loading state from flashing
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    setAppLoading(false);
   };
 
   return (
-    <Spinner>
-      <div
-        className="flex gap-1"
-        style={{
-          width: "100%",
-          padding: "1rem",
-        }}
-      >
-        <label className="text-nowrap" htmlFor="enableWeatherCheckbox">
-          Enable forecast
-        </label>
-        <input
-          name="enableWeatherCheckbox"
-          className="db-checkbox"
-          type="checkbox"
-          checked={enableWeather}
-          onChange={handleEnableWeatherClick}
-        />
-      </div>
-    </Spinner>
+    <div
+      className="flex gap-1"
+      style={{
+        width: "100%",
+        padding: "1rem",
+      }}
+    >
+      <label className="text-nowrap" htmlFor="enableWeatherCheckbox">
+        Enable forecast
+      </label>
+      <input
+        name="enableWeatherCheckbox"
+        className="db-checkbox"
+        type="checkbox"
+        checked={enableWeather}
+        onChange={handleEnableWeatherClick}
+      />
+    </div>
   );
 }
 

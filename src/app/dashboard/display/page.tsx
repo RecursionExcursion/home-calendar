@@ -1,8 +1,5 @@
-"use server";
-
 import Link from "next/link";
 import { calendarRoutes } from "../../../constants/routes";
-import ClientSideLoadState from "../../../components/misc/ClientLoadState";
 import VerticalGrid from "../../../components/ui/VerticalGrid";
 
 export default async function DashboardDisplayPage() {
@@ -14,7 +11,7 @@ export default async function DashboardDisplayPage() {
       </Link>
       <Link className="link" href={calendarRoutes.week}>
         Week
-      </Link>{" "}
+      </Link>
       <Link className="link" href={calendarRoutes.day}>
         Day
       </Link>

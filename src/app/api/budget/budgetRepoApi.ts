@@ -1,12 +1,12 @@
 "use server";
 
-import { getMongoConnection } from "../../db/mongoConnection";
-import { Budget } from "../../types";
-import { budgetCollectionName as collectionName } from "../../db/collectionConstants";
+import { budgetCollectionName } from "../../../db/collectionConstants";
+import { getMongoConnection } from "../../../db/mongoConnection";
+import { Budget } from "../../../types";
 
 export const createBudget = async (budget: Budget) => {
   const db = await getMongoConnection();
-  const result = await db.collection(collectionName).insertOne(budget);
+  const result = await db.collection(budgetCollectionName).insertOne(budget);
   return {
     acknowledged: result.acknowledged,
     insertedId: result.insertedId.toString(),
@@ -15,13 +15,13 @@ export const createBudget = async (budget: Budget) => {
 
 export const readAllBudgets = async () => {
   const db = await getMongoConnection();
-  return await db.collection(collectionName).find().toArray();
+  return await db.collection(budgetCollectionName).find().toArray();
 };
 
 export const updateBudget = async (budget: Budget) => {
   const db = await getMongoConnection();
   const updateResult = await db
-    .collection(collectionName)
+    .collection(budgetCollectionName)
     .updateOne({ _id: budget._id }, { $set: budget });
   return updateResult;
 };

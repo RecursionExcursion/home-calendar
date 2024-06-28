@@ -1,12 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getAllTasks } from "../service/task/taskService";
 import { Budget, Coords, DailyForecast, Task, User } from "../types";
-import { getBudget } from "../service/budget/budgetService";
 import { getProjectedForecastJson } from "../service/weatherService";
 import { getUserIdFromCookie } from "../lib/cookieManager";
-import { getUser } from "../service/user/userService";
+import { getBudget } from "../app/api/budget/budgetServiceApi";
+import { getUser } from "../service/userService";
 
 type ContentContextState = {
   updateContentState: (retrieveContent: ContentUpdateParams) => void;
@@ -37,15 +36,17 @@ export const ContentProvider = (props: ContentProviderProps) => {
 
   const [contentLoaded, setContentLoaded] = useState(false);
 
+
+  //TODO refactor errtahng
   useEffect(() => {
-    retrieveUser();
+    // retrieveUser();
   }, []);
 
-  useEffect(() => {
-    if (!!user._id) {
-      updateContentState().then(() => setContentLoaded(true));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!!user._id) {
+  //     updateContentState().then(() => setContentLoaded(true));
+  //   }
+  // }, [user]);
 
   const retrieveUser = async () => {
     const userId = await getUserIdFromCookie();
@@ -59,9 +60,9 @@ export const ContentProvider = (props: ContentProviderProps) => {
   };
 
   const retrieveTasks = async () => {
-    const tasksJson = await getAllTasks();
-    const parsedTasks = JSON.parse(tasksJson) as Task[];
-    setTasks(parsedTasks);
+    // const tasksJson = await getAllTasks();
+    // const parsedTasks = JSON.parse(tasksJson) as Task[];
+    // setTasks(parsedTasks);
   };
 
   const retrieveBudget = async () => {
@@ -101,7 +102,7 @@ export const ContentProvider = (props: ContentProviderProps) => {
     }
   };
 
-  if (!contentLoaded) return null;
+  // if (!contentLoaded) return null;
 
   const state: ContentContextState = {
     updateContentState,

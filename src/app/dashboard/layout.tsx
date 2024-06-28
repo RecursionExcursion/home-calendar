@@ -1,4 +1,4 @@
-import { DashboardProvider } from "../../contexts";
+import { DashboardProvider, UserProvider } from "../../contexts";
 import { ContentProvider } from "../../contexts/UserContentContext";
 import DashboardSlideOutMenu from "../../components/dashboard/menu/DashboardSlideOutMenu";
 
@@ -9,9 +9,9 @@ type DashboardLayoutProps = {
 export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
-    <ContentProvider>
+    <UserProvider>
       <DashboardSlideOutMenu />
       <DashboardProvider>{children}</DashboardProvider>
-    </ContentProvider>
+    </UserProvider>
   );
 }

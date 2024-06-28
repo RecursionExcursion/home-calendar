@@ -1,6 +1,5 @@
 "use server";
 
-import { getUser, saveUser } from "./user/userService";
 import { createUserCookie, deleteUserCookie, getUserCookie } from "../lib/cookieManager";
 import { Session, User } from "../types";
 import { v4 as uuidv4 } from "uuid";
@@ -8,6 +7,7 @@ import { decryptData, encryptData } from "../lib/crypto";
 import { msTimestamps } from "../lib/util";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { SESSION_LENGTH_DAYS } from "../constants/session";
+import { getUser, saveUser } from "./userService";
 
 const checkUserSession = (user: User): boolean => {
   if (user.session) {
