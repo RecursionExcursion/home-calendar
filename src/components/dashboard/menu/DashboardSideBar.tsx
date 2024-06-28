@@ -6,15 +6,17 @@ import { getIconGroup } from "../../../lib/icons/icons";
 import { DashboardIcons, IconGroupParams } from "../../../lib/icons/types";
 import { useAppLoadingContext } from "../../../contexts/LoadingContext";
 import { usePathname } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 const iconSize = 30;
 
 type DashboardSideBarProps = {
   hideMenu: () => void;
+  setButtonDark: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function DashboardSideBar(props: DashboardSideBarProps) {
-  const { hideMenu } = props;
+  const { hideMenu, setButtonDark } = props;
   const { setAppLoading } = useAppLoadingContext();
 
   const pathname = usePathname();
@@ -38,6 +40,7 @@ export default function DashboardSideBar(props: DashboardSideBarProps) {
 
     const handleLinkClick = () => {
       if (!isCurrentPath) setAppLoading(true);
+      setButtonDark(false);
       hideMenu();
     };
 

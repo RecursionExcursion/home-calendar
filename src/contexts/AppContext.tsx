@@ -30,11 +30,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }}
     >
       <AppLoadingProvider>
-        <div className="app-context">
-          {children}
-          <Modal />
-          <Toast />
-        </div>
+        {children}
+        <Modal />
+        <Toast />
       </AppLoadingProvider>
     </AppContext.Provider>
   );

@@ -10,12 +10,8 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
   const { children } = props;
   return (
     <ContentProvider>
-      <div className="db-layout-container">
-        <DashboardSlideOutMenu />
-        <div className="full flex relative">
-          <DashboardProvider>{children}</DashboardProvider>
-        </div>
-      </div>
+      <DashboardSlideOutMenu />
+      <DashboardProvider>{children}</DashboardProvider>
     </ContentProvider>
   );
 }

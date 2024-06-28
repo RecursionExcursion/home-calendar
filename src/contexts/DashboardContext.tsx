@@ -24,7 +24,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         showToast: ({ title, message, type }) => showToast({ title, message, type }),
       }}
     >
-      <div className="full flex" style={{ position: "relative" }}>
+      <div className="db-context">
         {children}
         <Toast />
       </div>

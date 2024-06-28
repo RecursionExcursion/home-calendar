@@ -13,6 +13,7 @@ export default function DashboardSlideOutMenu() {
     "db-slide-out-container-enter"
   );
 
+  //TODO Does not go white when route is pressed
   const handleClick = () => {
     if (showMenu) {
       setButtonDark(false);
@@ -46,7 +47,10 @@ export default function DashboardSlideOutMenu() {
       </div>
       {showMenu && (
         <div className={sidebarClassname}>
-          <DashboardSideBar hideMenu={() => setShowMenu(false)} />
+          <DashboardSideBar
+            setButtonDark={setButtonDark}
+            hideMenu={() => setShowMenu(false)}
+          />
         </div>
       )}
     </>

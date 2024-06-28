@@ -7,6 +7,7 @@ import ClientSideLoadState from "../../components/misc/ClientLoadState";
 import { getChargeSumsByWeek } from "../../service/graphService";
 import { getAllTasks } from "../../service/task/taskService";
 import { Task } from "../../types";
+import VerticalGrid from "../../components/ui/VerticalGrid";
 
 export default async function DashboardPage() {
   const allTasksJson = await getAllTasks();
@@ -17,14 +18,12 @@ export default async function DashboardPage() {
   const chargeSums = await getChargeSumsByWeek();
 
   return (
-    <div className="db-vert-grid">
-      <div className="db-vert-grid-card-1">
+    <>
+      <VerticalGrid>
         {allTasks.length > 0 ? <HomeTaskTable tasks={allTasks} /> : noDataText}
-      </div>
-      <div className="db-vert-grid-card-2">
         {chargeSums.length > 0 ? <BudgetOverview /> : noDataText}
-      </div>
+      </VerticalGrid>
       <ClientSideLoadState msDelay={1500} />
-    </div>
+    </>
   );
 }
