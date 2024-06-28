@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidateApp } from "../app/api/apiRoutes";
 import { getMongoConnection } from "./mongoConnection";
 
 export const dropCollection = async (collectionName: string) => {
@@ -8,5 +9,6 @@ export const dropCollection = async (collectionName: string) => {
   if (res) {
     await db.createCollection(collectionName);
   }
+  revalidateApp();
   return res;
 };

@@ -21,7 +21,6 @@ export const getUserTasks = async (userId: string) => {
   let dbTasks = await readTasksByUserId(userId);
 
   if (!dbTasks) {
-    console.log("Tasks not found, creating new tasks");
     await createNewTasks(userId);
     dbTasks = await readTasksByUserId(userId);
   }
