@@ -36,12 +36,10 @@ export const authenticateRequest = async (request: NextRequest) => {
 
   return {
     authorized: isAuth,
-    resp: isAuth
-      ? null
-      : new Response("Unauthorized", {
-          status: 401,
-          statusText: "Unauthorized",
-        }),
+    resp: new Response("Unauthorized", {
+      status: 401,
+      statusText: "Unauthorized",
+    }),
   };
 };
 
