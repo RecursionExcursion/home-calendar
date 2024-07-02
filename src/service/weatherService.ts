@@ -26,6 +26,8 @@ export const getProjectedForecastJson = async (coords: Coords): Promise<string> 
       temp: period.temperature,
       shortForecast: period.shortForecast,
       windSpeed: period.windSpeed,
+      windDirection: period.windDirection,
+      detailedForecast: period.detailedForecast,
     };
 
     if (forecastMap.has(dateString)) {
@@ -74,4 +76,45 @@ const fetchApi = async (url: string) => {
     .catch((error) => {
       console.error("There has been a problem with your fetch operation:", error);
     });
+};
+
+export type Suntime = {
+  date: string;
+  sunrise: string;
+  sunset: string;
+  firstLight: string;
+  lastLight: string;
+  dawn: string;
+  dusk: string;
+  solarNoon: string;
+  goldenHour: string;
+  dayLength: string;
+  timeZone: string;
+  utcOffset: string;
+};
+
+// https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873
+export const fetchSunTimes = async (coords: Coords) => {
+  const res = await fetchApi(
+    `https://api.sunrisesunset.io/json?lat=${coords.lat}&lng=${coords.lng}`
+  );
+
+  const results = res.results;
+
+  const sunTimes: Suntime = {
+    date: results.date,
+    sunrise: results.sunrise,
+    sunset: results.sunset,
+    firstLight: results.first_light,
+    lastLight: results.last_light,
+    dawn: results.dawn,
+    dusk: results.dusk,
+    solarNoon: results.solar_noon,
+    goldenHour: results.golden_hour,
+    dayLength: results.day_length,
+    timeZone: results.timezone,
+    utcOffset: results.utc_offset,
+  };
+
+  return sunTimes;
 };

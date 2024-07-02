@@ -6,6 +6,7 @@ import {
   getUserApiUrl,
   revalidateApp,
 } from "../app/api/apiUtil";
+import { getUserIdFromCookie } from "../lib/cookieManager";
 import { User } from "../types";
 
 export const createNewUser = async (username: string, password: string) => {
@@ -47,4 +48,14 @@ export const saveUser = async (userJSON: string) => {
   const updatedUser = JSON.parse(updatedUserJSON);
 
   return JSON.stringify({ success, updatedUser });
+};
+
+export const getUserByCookie = async () => {
+  const userId = await getUserIdFromCookie();
+
+  if (!userId) {
+    return JSON.stringify({});
+  }
+
+  return getUser(userId, "id");
 };

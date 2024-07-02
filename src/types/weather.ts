@@ -7,7 +7,9 @@ export type PartialForecast = {
   date: string;
   temp: number;
   shortForecast: string;
+  detailedForecast: string;
   windSpeed: string;
+  windDirection: string;
 };
 
 export type DailyForecast = {

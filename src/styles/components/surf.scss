@@ -19,6 +19,8 @@
           "Sr Sr Sr Sr"
           "W W W Sn"
           "W W W Sn";
+        padding: 0.5rem;
+        box-sizing: border-box;
 
         &-green {
           @extend .surf-grid-area-flag;
@@ -39,18 +41,30 @@
           gap: 1rem;
 
           &-risk {
-            @extend .grid-cell;
             @include text-2xl;
+            margin: auto;
             font-weight: 700;
             grid-area: Sr;
           }
           &-weather {
-            @extend .grid-cell;
+            @include flex-col;
+            padding: 0.5rem;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+            align-items: flex-start;
             grid-area: W;
           }
           &-sun {
-            @extend .grid-cell;
+            @include flex-col;
+            gap: 1rem;
             grid-area: Sn;
+            .suntime-container {
+              @include flex-col;
+              gap: 0.25rem;
+              span {
+                text-wrap: nowrap;
+              }
+            }
           }
         }
       }
@@ -62,18 +76,6 @@
         @include flex;
         grid-area: C2;
       }
-      &-sun {
-        @include flex-col;
-        gap: 1rem;
-        grid-area: S;
-        @include text-lg;
-      }
-      &-weather {
-        @include flex-col;
-        gap: 0.5rem;
-        grid-area: W;
-        text-wrap: wrap;
-      }
     }
   }
   &-suntime {
@@ -81,7 +83,4 @@
     align-items: flex-end;
     gap: 1rem;
   }
-}
-
-.grid-cell {
 }

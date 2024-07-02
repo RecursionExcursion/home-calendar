@@ -44,10 +44,14 @@ export default function SurfUI() {
             {surfData?.uvIndex && <span>UV- {surfData?.uvIndex}</span>}
           </div>
           <div className="grid-cell-sun">
-            <icons.sunrise size={iconSize} />
-            {surfData?.sunrise}
-            <icons.sunset size={iconSize} />
-            {surfData?.sunset}
+            <div className="suntime-container">
+              <icons.sunrise size={iconSize} />
+              <span>{surfData?.sunrise}</span>
+            </div>
+            <div className="suntime-container">
+              <icons.sunset size={iconSize} />
+              <span>{surfData?.sunset}</span>
+            </div>
           </div>
         </div>
         <div className="surf-grid-area-cam-1">
