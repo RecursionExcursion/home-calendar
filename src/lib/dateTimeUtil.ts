@@ -97,3 +97,15 @@ export const getFirstOnCalender = (date: Date): Date => {
 export const getFullMonthName = (date: Date): string => {
   return date.toLocaleString("default", { month: "long" });
 };
+
+export const getMonthDayAndDOW=(date:Date):string=>{
+
+  const month = date.getMonth() +1;
+  const day = date.getDate() +1;
+
+  const dow = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+  }).format(date).slice(0,3);
+
+  return `${dow} ${month}/${day}`
+}

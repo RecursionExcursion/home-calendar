@@ -69,6 +69,9 @@ export default function DashboardSideBar(props: DashboardSideBarProps) {
         <SidebarLink href={dashboardRoutes.budget}>
           <icons.budget size={iconSize} />
         </SidebarLink>
+        <SidebarLink href={dashboardRoutes.fitness}>
+          <icons.fitness size={iconSize} />
+        </SidebarLink>
         <SidebarLink href={dashboardRoutes.display}>
           <icons.display size={iconSize} />
         </SidebarLink>

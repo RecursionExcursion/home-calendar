@@ -8,6 +8,7 @@ import {
   FaDatabase,
   FaWater,
   FaBars,
+  FaPersonRunning,
 } from "react-icons/fa6";
 import {
   FiDatabase,
@@ -19,6 +20,7 @@ import {
   FiMonitor,
   FiSettings,
   FiSun,
+  FiDribbble,
 } from "react-icons/fi";
 import {
   IoCalendar,
@@ -30,6 +32,7 @@ import {
   IoServerOutline,
   IoSunnyOutline,
   IoMenuOutline,
+  IoPizzaOutline,
 } from "react-icons/io5";
 
 export type DashboardIconPackage = "fa" | "io" | "fi";
@@ -75,6 +78,11 @@ export const dashboardIconMappings = {
     fa: FaWater,
     io: IoSunnyOutline,
     fi: FiSun,
+  },
+  fitness: {
+    fa: FaPersonRunning,
+    io: IoPizzaOutline,
+    fi: FiDribbble,
   },
   menu: {
     fa: FaBars,
