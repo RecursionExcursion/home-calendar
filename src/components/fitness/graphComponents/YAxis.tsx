@@ -12,7 +12,7 @@ const YAxis = (props: YAxisProps) => {
 
   return (
     <div className="y-axis">
-      {data?.map((e) => {
+      {data?.map((e,i) => {
         if (!e.date) {
           return;
         }
@@ -20,7 +20,7 @@ const YAxis = (props: YAxisProps) => {
         const dateString = getMonthDayAndDOW(new Date(e.date));
 
         return (
-          <div>
+          <div key={i+Math.random()*1000}>
             <div className="date">{dateString}</div>
           </div>
         );

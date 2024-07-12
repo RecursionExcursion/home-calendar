@@ -1,5 +1,6 @@
 export type RunnningWorkout = {
   date?: string;
+  
   heartRate?: StatRange;
   runningSpeed?: StatRange;
 

@@ -1,5 +1,5 @@
 import { RunnningWorkout } from "@/types/fitness";
-import { FitnessGraphParams } from "./types";
+import { BarMetrics, FitnessGraphParams } from "./types";
 
 export const createGraphParams = (params: FitnessGraphParams) => {
   const { data, divisor, slice } = params;
@@ -17,8 +17,8 @@ export const createGraphParams = (params: FitnessGraphParams) => {
 
   const slicedData = sortedData?.slice(startIndex);
 
-  const maxDistance = calcMaxDist(slicedData);
-  const y_ceiling = roundToNextDivisor(maxDistance, divisor);
+  // const maxDistance = calcMaxDist(slicedData);
+  // const y_ceiling = roundToNextDivisor(maxDistance, divisor);
 
   const totalDistance = slicedData
     .map((data) => parseFloat(data.distance?.sum ?? "0"))
@@ -28,8 +28,8 @@ export const createGraphParams = (params: FitnessGraphParams) => {
   return {
     slicedData,
     distanceUnits,
-    y_ceiling,
-    totalDistance
+    // y_ceiling,
+    totalDistance,
   };
 };
 
@@ -50,4 +50,50 @@ const calcMaxDist = (workouts: RunnningWorkout[]) => {
     .reduce((max, curr) => {
       return Math.max(max, curr);
     });
+};
+
+export const createBarData = (params: BarMetrics) => {
+  const { data, divisor, metric } = params;
+  let dataString = "";
+  let numerator = 0;
+  let ceiling = 0;
+
+  const calculateHeight = (ceiling: number, numerator: number) => {
+    console.log("numerator", numerator, "ceiling", ceiling);
+    return (numerator / ceiling) * 100;
+  };
+
+  switch (metric) {
+    case "distance": {
+      dataString = data.distance?.sum ?? "";
+
+      if (dataString) {
+        numerator = parseFloat(dataString);
+        ceiling = roundToNextDivisor(numerator, divisor);
+      }
+
+      return {
+        height: calculateHeight(numerator, ceiling),
+        display: dataString,
+      };
+    }
+    case "heart-rate": {
+      dataString = data.heartRate?.average ?? "";
+
+      if (dataString) {
+        numerator = parseFloat(dataString);
+      }
+
+      return {
+        height: calculateHeight(numerator, ceiling),
+        display: dataString,
+      };
+    }
+    default: {
+      return {
+        height: 0,
+        display: dataString,
+      };
+    }
+  }
 };

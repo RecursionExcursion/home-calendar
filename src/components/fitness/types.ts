@@ -14,3 +14,9 @@ export type FitnessGraphParams = {
     divisor: number;
     slice: number;
   };
+
+  export type BarMetrics = {
+    data: RunnningWorkout;
+    divisor:number;
+    metric: string;
+  };
