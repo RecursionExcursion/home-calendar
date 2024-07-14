@@ -3,14 +3,16 @@
 import { useAppLoadingContext } from "@/contexts/AppLoadingContext";
 import parseAppleHealthData from "../../lib/appleHealthParser/appleHealthParser";
 import { Dispatch, SetStateAction, useRef } from "react";
-import { RunnningWorkout } from "@/types/fitness";
+import { Fitness, RunnningWorkout } from "@/types/fitness";
+import { saveFitnessData } from "@/service/fitnessService";
 
 type FileInputProps = {
   setState: Dispatch<SetStateAction<RunnningWorkout[]>>;
+  fitnessData: Fitness;
 };
 
 const FileInput = (props: FileInputProps) => {
-  const { setState } = props;
+  const { setState, fitnessData } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const { setAppLoading } = useAppLoadingContext();
@@ -25,8 +27,12 @@ const FileInput = (props: FileInputProps) => {
     setAppLoading(true);
 
     const results = await parseAppleHealthData(appleFitnessExport);
-    
+
     if (results) {
+      const fitnessCopy = structuredClone(fitnessData);
+      fitnessCopy.runningWorkouts = results;
+
+      saveFitnessData(JSON.stringify(fitnessCopy));
       setState(results);
     }
 

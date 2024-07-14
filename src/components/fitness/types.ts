@@ -8,15 +8,14 @@ export type ControlState = {
   setDivisor: Dispatch<SetStateAction<number>>;
 };
 
-
 export type FitnessGraphParams = {
-    data: RunnningWorkout[];
-    divisor: number;
-    slice: number;
-  };
+  data: RunnningWorkout[];
+  divisor: number;
+  slice: number;
+};
 
-  export type BarMetrics = {
-    data: RunnningWorkout;
-    divisor:number;
-    metric: string;
-  };
+export type BarMetrics = {
+  data: RunnningWorkout;
+  divisor: number;
+  metric: string;
+};

@@ -1,9 +1,59 @@
+import { v4 as uuidV4 } from "uuid";
 import { RunnningWorkout } from "@/types/fitness";
-import { BarMetrics, FitnessGraphParams } from "./types";
+import { FitnessGraphParams } from "./types";
 
 export const createGraphParams = (params: FitnessGraphParams) => {
-  const { data, divisor, slice } = params;
+  const { divisor, data, slice } = params;
 
+  const slicedData = sortAndSpliceData(data, slice);
+
+  const foo = (parser: (run: RunnningWorkout) => number) => {
+    const maxDistance = slicedData
+      .map((run) => {
+        const runSum = parser(run);
+        // const runSum = parseFloat(run.stepCount?.sum ?? "0");
+        return runSum;
+      })
+      .reduce((max, curr) => {
+        return Math.max(max, curr);
+      });
+    return roundToNextDivisor(maxDistance, divisor);
+  };
+
+  const y_ceiling = {
+    heartRate: foo((run) => parseFloat(run.heartRate?.average ?? "0")),
+    runningSpeed: foo((run) => parseFloat(run.runningSpeed?.average ?? "0")),
+    distance: foo((run) => parseFloat(run.distance?.sum ?? "0")),
+    basalEnergyBurned: foo((run) =>
+      parseFloat(run.basalEnergyBurned?.sum ?? "0")
+    ),
+    activeEnergyBurned: foo((run) =>
+      parseFloat(run.activeEnergyBurned?.sum ?? "0")
+    ),
+    stepCount: foo((run) => parseFloat(run.stepCount?.sum ?? "0")),
+  };
+
+  const totalDistance = slicedData
+    .map((data) => parseFloat(data.distance?.sum ?? "0"))
+    .reduce((a, b) => a + b, 0);
+
+  const totalSteps = slicedData
+    .map((data) => parseInt(data.stepCount?.sum ?? "0"))
+    .reduce((a, b) => a + b, 0);
+
+  const distanceUnits = slicedData[0].distance?.unit ?? "Unknown";
+
+  console.log(y_ceiling);
+  return {
+    slicedData,
+    distanceUnits,
+    y_ceiling,
+    totalDistance,
+    totalSteps,
+  };
+};
+
+const sortAndSpliceData = (data: RunnningWorkout[], slice: number) => {
   const sortedData = data?.sort((a, b) => {
     if (!a.date || !b.date) {
       return 0;
@@ -15,21 +65,30 @@ export const createGraphParams = (params: FitnessGraphParams) => {
 
   const startIndex = sortedData.length - slice;
 
-  const slicedData = sortedData?.slice(startIndex);
+  return sortedData?.slice(startIndex);
+};
 
-  // const maxDistance = calcMaxDist(slicedData);
-  // const y_ceiling = roundToNextDivisor(maxDistance, divisor);
-
+export const createWorkoutMetrics = (slicedData: RunnningWorkout[]) => {
   const totalDistance = slicedData
     .map((data) => parseFloat(data.distance?.sum ?? "0"))
     .reduce((a, b) => a + b, 0);
 
   const distanceUnits = slicedData[0].distance?.unit ?? "Unknown";
+  
+  const totalSteps = slicedData
+  .map((data) => parseInt(data.stepCount?.sum ?? "0"))
+  .reduce((a, b) => a + b, 0);
+  
+  const averageHeartRate =
+  slicedData
+  .map((data) => parseInt(data.heartRate?.average ?? "0"))
+  .reduce((a, b) => a + b, 0) / slicedData.length;
+  
   return {
-    slicedData,
-    distanceUnits,
-    // y_ceiling,
     totalDistance,
+    distanceUnits,
+    totalSteps,
+    averageHeartRate,
   };
 };
 
@@ -39,61 +98,6 @@ const roundToNextDivisor = (num: number, divisor: number) => {
   return num + remaining;
 };
 
-const calcMaxDist = (workouts: RunnningWorkout[]) => {
-  if (!workouts || workouts.length === 0) return 0;
-
-  return workouts
-    ?.map((run) => {
-      const runSum = parseFloat(run.distance?.sum ?? "0");
-      return runSum;
-    })
-    .reduce((max, curr) => {
-      return Math.max(max, curr);
-    });
-};
-
-export const createBarData = (params: BarMetrics) => {
-  const { data, divisor, metric } = params;
-  let dataString = "";
-  let numerator = 0;
-  let ceiling = 0;
-
-  const calculateHeight = (ceiling: number, numerator: number) => {
-    console.log("numerator", numerator, "ceiling", ceiling);
-    return (numerator / ceiling) * 100;
-  };
-
-  switch (metric) {
-    case "distance": {
-      dataString = data.distance?.sum ?? "";
-
-      if (dataString) {
-        numerator = parseFloat(dataString);
-        ceiling = roundToNextDivisor(numerator, divisor);
-      }
-
-      return {
-        height: calculateHeight(numerator, ceiling),
-        display: dataString,
-      };
-    }
-    case "heart-rate": {
-      dataString = data.heartRate?.average ?? "";
-
-      if (dataString) {
-        numerator = parseFloat(dataString);
-      }
-
-      return {
-        height: calculateHeight(numerator, ceiling),
-        display: dataString,
-      };
-    }
-    default: {
-      return {
-        height: 0,
-        display: dataString,
-      };
-    }
-  }
+export const generateGuid = () => {
+  return uuidV4();
 };

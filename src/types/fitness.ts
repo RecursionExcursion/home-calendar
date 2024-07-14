@@ -1,3 +1,11 @@
+import { ObjectId } from "mongodb";
+
+export type Fitness = {
+  _id: ObjectId;
+  userId: string;
+  runningWorkouts: RunnningWorkout[];
+}
+
 export type RunnningWorkout = {
   date?: string;
   

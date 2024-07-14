@@ -2,17 +2,26 @@
 
 import { useState } from "react";
 import FileInput from "./FileInput";
-import { RunnningWorkout } from "@/types/fitness";
+import { Fitness, RunnningWorkout } from "@/types/fitness";
 import { GraphControls } from "./graphComponents/GraphControls";
 import { ControlState } from "./types";
 import { createGraphParams } from "./util";
 import Graph from "./graphComponents/Graph";
 import WorkoutMetrics from "./WorkoutMetrics";
-import RadioTabs from "../dashboard/nav/RadioTabs";
 import useRadioTabs from "@/hooks/useRadioTabs";
+import { getFitnessData } from "@/service/fitnessService";
+import { useUserContext } from "@/contexts";
 
-const FitnessParent = () => {
-  const [data, setData] = useState<RunnningWorkout[]>([]);
+type FitnessParentProps = {
+  fitnessData: string;
+};
+const FitnessParent = ({ fitnessData }: FitnessParentProps) => {
+  const userFitness = JSON.parse(fitnessData) as Fitness;
+
+  const { user } = useUserContext();
+  const [data, setData] = useState<RunnningWorkout[]>(
+    userFitness.runningWorkouts
+  );
   const [slice, setSlice] = useState(7);
   const [divisor, setDivisor] = useState(5);
 
@@ -24,7 +33,7 @@ const FitnessParent = () => {
   };
 
   const showGraph = () => {
-    const { slicedData, distanceUnits,  totalDistance } =
+    const { slicedData, distanceUnits, y_ceiling, totalDistance } =
       createGraphParams({
         slice,
         divisor,
@@ -34,12 +43,8 @@ const FitnessParent = () => {
     return (
       <>
         <GraphControls {...controlState} />
-        <WorkoutMetrics
-          data={slicedData}
-          distance={totalDistance}
-          distanceUnts={distanceUnits}
-        />
-        <Graph data={slicedData} divisor={divisor}  />
+        <WorkoutMetrics data={slicedData} />
+        <Graph data={slicedData} divisor={divisor} ceilings={y_ceiling} />
       </>
     );
   };
@@ -47,11 +52,26 @@ const FitnessParent = () => {
   const tabs = [
     {
       name: "View",
-      jsx: <> {data.length > 0 ? showGraph() : "Import Data"}</>,
+      jsx: (
+        <>
+          {" "}
+          {data.length > 0 ? (
+            showGraph()
+          ) : (
+            <button
+              onClick={async () => {
+                console.log(await getFitnessData(user._id.toString()));
+              }}
+            >
+              "Import Data"
+            </button>
+          )}
+        </>
+      ),
     },
     {
-      name: "Import Date",
-      jsx: <FileInput setState={setData} />,
+      name: "Import Data",
+      jsx: <FileInput setState={setData} fitnessData={userFitness} />,
     },
   ];
 

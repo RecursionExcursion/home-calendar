@@ -21,10 +21,16 @@ const Counter = (props: CounterProps) => {
 
   return (
     <div className="fitness-counter">
-      <span>{num}</span>
       <div className="button-container">
-        <button onClick={incNum}>+</button>
-        <button onClick={decNum}>-</button>
+        <button className="minus" onClick={decNum}>
+          -
+        </button>
+      </div>
+      <span className="value">{num}</span>
+      <div className="button-container">
+        <button className="plus" onClick={incNum}>
+          +
+        </button>
       </div>
     </div>
   );

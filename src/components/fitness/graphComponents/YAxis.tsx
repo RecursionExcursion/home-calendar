@@ -2,6 +2,7 @@
 
 import { getMonthDayAndDOW } from "@/lib/dateTimeUtil";
 import { RunnningWorkout } from "@/types/fitness";
+import { generateGuid } from "../util";
 
 type YAxisProps = {
   data: RunnningWorkout[];
@@ -20,7 +21,7 @@ const YAxis = (props: YAxisProps) => {
         const dateString = getMonthDayAndDOW(new Date(e.date));
 
         return (
-          <div key={i+Math.random()*1000}>
+          <div key={generateGuid()}>
             <div className="date">{dateString}</div>
           </div>
         );

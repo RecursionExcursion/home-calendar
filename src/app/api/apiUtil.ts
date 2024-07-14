@@ -20,6 +20,7 @@ export const revalidateApp = () => revalidatePath("/", "layout");
 export const getUserApiUrl = async () => await getUrlWithBase("/api/user");
 export const getTasksApiUrl = async () => await getUrlWithBase("/api/tasks");
 export const getBudgetApiUrl = async () => await getUrlWithBase("/api/budget");
+export const getFitnessApiUrl = async () => await getUrlWithBase("/api/fitness");
 
 export const appendUrlParams = async (url: URL, paramObject: Object) => {
   Object.entries(paramObject).forEach((e) => url.searchParams.append(e[0], e[1]));
