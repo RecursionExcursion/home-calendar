@@ -14,14 +14,29 @@ type GraphProps = {
 
 const Graph = (props: GraphProps) => {
   const { data, ceilings, divisor } = props;
+
   return (
     <div className="graph-container">
       <div className="graph">
         {/* <XAxis ceiling={ceiling} divisor={divisor} /> */}
         <div className="graph-data">
           {data.map((e, i) => {
+            let date;
+            let day;
+            let month;
+
+            if (e?.date) {
+              date = new Date(e?.date);
+              day = new Date(e?.date).getDate();
+              month = new Date(e?.date).getMonth();
+            }
             return (
               <div className="bar-container" key={generateGuid()}>
+                {date && (
+                  <div className="date">
+                    {month}/{day}
+                  </div>
+                )}
                 <Bar
                   dataType="distance"
                   className="distance"
@@ -44,7 +59,7 @@ const Graph = (props: GraphProps) => {
             );
           })}
         </div>
-        <YAxis data={data} />
+        {/* <YAxis data={data} /> */}
       </div>
     </div>
   );

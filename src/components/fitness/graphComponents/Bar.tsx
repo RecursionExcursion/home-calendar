@@ -40,6 +40,7 @@ const Bar = (props: BarProps) => {
 
   const height = (value / ceiling) * 100;
 
+
   const roundedValue =
     dataType == "distance" ? value.toFixed(2) : value.toFixed(0);
   return (
@@ -47,8 +48,10 @@ const Bar = (props: BarProps) => {
       <div
         className={`bar-value ${className}`}
         style={{ "--bar-height": `${height}%` } as CSSProperties}
-      ></div>
-      <div>{roundedValue}</div>
+      >
+        <div className="label">{roundedValue}</div>
+      </div>
+      
     </div>
   );
 };

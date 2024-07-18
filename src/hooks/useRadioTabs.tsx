@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Tab = {
   name: string;
@@ -10,16 +10,17 @@ type Tab = {
 type RadioTabsProps = {
   tabs: Tab[];
   className?: string;
-  initialTabIndex?:number;
+  initialTabIndex?: number;
 };
 
 const useRadioTabs = (props: RadioTabsProps) => {
   const { tabs, initialTabIndex = 0, className } = props;
-  const [selectedTab, setSelectedTab] = useState(tabs[initialTabIndex]);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(initialTabIndex);
+  const selectedTab = tabs[selectedTabIndex];
 
   const tabsJSX = () => {
-    const handleTabClick = (tab: Tab) => {
-      setSelectedTab(tab);
+    const handleTabClick = (index: number) => {
+      setSelectedTabIndex(index);
     };
 
     const styleProps = className ?? "";
@@ -34,7 +35,7 @@ const useRadioTabs = (props: RadioTabsProps) => {
             <div
               key={tab.name + index}
               className={className}
-              onClick={() => handleTabClick(tab)}
+              onClick={() => handleTabClick(index)}
             >
               {tab.name}
             </div>
@@ -45,7 +46,8 @@ const useRadioTabs = (props: RadioTabsProps) => {
   };
 
   return {
-    tab:tabsJSX(), selectedTab
+    tab: tabsJSX(),
+    selectedTab: selectedTab,
   };
 };
 

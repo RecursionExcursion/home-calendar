@@ -5,7 +5,7 @@ import { FitnessGraphParams } from "./types";
 export const createGraphParams = (params: FitnessGraphParams) => {
   const { divisor, data, slice } = params;
 
-  const slicedData = sortAndSpliceData(data, slice);
+  const slicedData = sortAndSliceData(data, slice);
 
   const foo = (parser: (run: RunnningWorkout) => number) => {
     const maxDistance = slicedData
@@ -43,7 +43,6 @@ export const createGraphParams = (params: FitnessGraphParams) => {
 
   const distanceUnits = slicedData[0].distance?.unit ?? "Unknown";
 
-  console.log(y_ceiling);
   return {
     slicedData,
     distanceUnits,
@@ -53,7 +52,7 @@ export const createGraphParams = (params: FitnessGraphParams) => {
   };
 };
 
-const sortAndSpliceData = (data: RunnningWorkout[], slice: number) => {
+const sortAndSliceData = (data: RunnningWorkout[], slice: number) => {
   const sortedData = data?.sort((a, b) => {
     if (!a.date || !b.date) {
       return 0;

@@ -8,6 +8,8 @@
     "m"
     "g";
   grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 5rem) 13rem 1fr;
+  overflow: hidden;
   //TODO: dom says this is invalid
   // grid-template-rows: repeat(3, 5rem), auto;
 
@@ -59,29 +61,6 @@
     grid-template-columns: auto auto;
     grid-area: m;
     gap: 1rem;
-
-    .total-workouts,
-    .total-distance,
-    .total-steps,
-    .total-average-heart-rate {
-      @include flex-col;
-      @include basic-border();
-      height: 100%;
-      width: 100%;
-      height: 100px;
-      width: 100px;
-      border-radius: 50%;
-      background: $tertiary;
-      text-align: center;
-      margin: auto;
-      gap: 0.25rem;
-      box-shadow: 0 0 8px $white;
-
-      .value {
-        font-weight: 700;
-        color: black;
-      }
-    }
   }
 
   .graph-controls {
@@ -121,7 +100,7 @@
           display: flex;
           flex-direction: column;
           height: 100%;
-          width: 33%;
+          width: 60%;
 
           button {
             @include button-lite;
@@ -152,14 +131,17 @@
     scrollbar-width: thin;
     overflow-y: scroll;
     grid-area: g;
+    box-shadow: 0 0 12px $black;
 
     .graph {
       display: grid;
       width: 100%;
+      height: 100%;
+
 
       grid-template-areas:
         ". X"
-        "Y G";
+        "G G";
       grid-template-columns: 3rem auto;
       //TODO: figure out why inspect says this is invalid
       grid-template-rows: 1rem, auto;
@@ -183,31 +165,52 @@
 
       .graph-data {
         grid-area: G;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        height: 100%;
+        background: $white;
 
         .bar-container {
           @include basic-border;
-          padding: 0.25rem 0.5rem 0.25rem 0;
+          border-color: $tertiary;
+          scroll-snap-align: end;
+          height: 50%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 0.25rem 0;
+          
+
+          .date {
+            color: $black;
+            text-align: end;
+            padding-right: 0.5rem;
+            position: absolute;
+            right: 0;
+          }
 
           .bar {
             width: 100%;
             display: flex;
-            align-items: center;
             gap: 0.25rem;
+
 
             .bar-value {
               width: var(--bar-height);
-              height: 0.25rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
 
               &.distance {
-                background: blue;
+                background: rgba(76, 73, 230, 0.454);
               }
 
               &.heartRate {
-                background: red;
+                background: rgb(218, 99, 99);
               }
 
               &.stepCount {
-                background: green;
+                background: rgb(63, 123, 63);
               }
             }
           }

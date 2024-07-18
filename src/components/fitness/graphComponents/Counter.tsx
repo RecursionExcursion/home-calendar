@@ -10,7 +10,7 @@ type CounterProps = {
 };
 const Counter = (props: CounterProps) => {
   const { num, setNum, min = 0, max = Number.MAX_SAFE_INTEGER } = props;
-
+  
   const incNum = () => {
     if (num !== max) setNum((prev) => prev + 1);
   };

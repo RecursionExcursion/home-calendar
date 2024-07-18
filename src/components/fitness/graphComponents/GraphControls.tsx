@@ -1,5 +1,3 @@
-"use client";
-
 import { ControlState } from "../types";
 import Counter from "./Counter";
 

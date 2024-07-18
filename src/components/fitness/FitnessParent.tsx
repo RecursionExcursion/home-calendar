@@ -11,6 +11,7 @@ import WorkoutMetrics from "./WorkoutMetrics";
 import useRadioTabs from "@/hooks/useRadioTabs";
 import { getFitnessData } from "@/service/fitnessService";
 import { useUserContext } from "@/contexts";
+import Counter from "./graphComponents/Counter";
 
 type FitnessParentProps = {
   fitnessData: string;
@@ -32,42 +33,21 @@ const FitnessParent = ({ fitnessData }: FitnessParentProps) => {
     setDivisor,
   };
 
-  const showGraph = () => {
-    const { slicedData, distanceUnits, y_ceiling, totalDistance } =
-      createGraphParams({
-        slice,
-        divisor,
-        data,
-      });
-
-    return (
-      <>
-        <GraphControls {...controlState} />
-        <WorkoutMetrics data={slicedData} />
-        <Graph data={slicedData} divisor={divisor} ceilings={y_ceiling} />
-      </>
-    );
-  };
-
   const tabs = [
     {
       name: "View",
-      jsx: (
-        <>
-          {" "}
-          {data.length > 0 ? (
-            showGraph()
-          ) : (
-            <button
-              onClick={async () => {
-                console.log(await getFitnessData(user._id.toString()));
-              }}
-            >
-              "Import Data"
-            </button>
-          )}
-        </>
-      ),
+      jsx:
+        data.length > 0 ? (
+          <ShowGraph controlState={controlState} data={data} />
+        ) : (
+          <button
+            onClick={async () => {
+              console.log(await getFitnessData(user._id.toString()));
+            }}
+          >
+            "Import Data"
+          </button>
+        ),
     },
     {
       name: "Import Data",
@@ -82,6 +62,30 @@ const FitnessParent = ({ fitnessData }: FitnessParentProps) => {
       {tab}
       {selectedTab.jsx}
     </div>
+  );
+};
+
+type ShowGraphProps = {
+  controlState: ControlState;
+  data: RunnningWorkout[];
+};
+
+const ShowGraph = (props: ShowGraphProps) => {
+  const { controlState, data } = props;
+  const { divisor, slice } = controlState;
+
+  const { slicedData, y_ceiling } = createGraphParams({
+    slice,
+    divisor,
+    data,
+  });
+
+  return (
+    <>
+      <GraphControls {...controlState} />
+      <WorkoutMetrics data={slicedData} />
+      <Graph data={slicedData} divisor={divisor} ceilings={y_ceiling} />
+    </>
   );
 };
 

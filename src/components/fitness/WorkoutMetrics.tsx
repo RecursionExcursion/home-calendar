@@ -3,6 +3,7 @@
 import { RunnningWorkout } from "@/types/fitness";
 import { createWorkoutMetrics } from "./util";
 import { heartRateUnits } from "./constants";
+import CircleDot from "../ui/CircleDot";
 
 type WorkoutMetricsProps = {
   data: RunnningWorkout[];
@@ -16,30 +17,36 @@ const WorkoutMetrics = (props: WorkoutMetricsProps) => {
 
   return (
     <div className="workout-metrics">
-      <div className="total-workouts">
+      {/* <div className="total-workouts">
         <span className="label">Total Workouts: </span>
         <span className="value">{data?.length}</span>
-      </div>
-      <div className="total-distance">
-        <span className="label">Total Distance: </span>
-        <span className="value">
-          {totalDistance.toFixed(2)} {distanceUnits}
-        </span>
-      </div>
+      </div> */}
 
-      <div className="total-steps">
-        <span className="label">Total Steps: </span>
-        <span className="value">
-          {totalSteps}
-        </span>
-      </div>
+      <CircleDot
+        className="total-workouts"
+        label="Total Workouts"
+        value={data?.length}
+      />
 
-      <div className="total-average-heart-rate">
-        <span className="label">Average Heart Rate: </span>
-        <span className="value">
-          {averageHeartRate.toFixed(0)} {heartRateUnits}
-        </span>
-      </div>
+      <CircleDot
+        className="total-distance"
+        label="Total Distance"
+        value={totalDistance.toFixed(2)}
+        units={distanceUnits}
+      />
+
+      <CircleDot
+        className="total-steps"
+        label="Total Steps"
+        value={totalSteps}
+      />
+
+      <CircleDot
+        className="total-average-heart-rate"
+        label="Average Heart Rate"
+        value={averageHeartRate.toFixed(0)}
+        units={heartRateUnits}
+      />
     </div>
   );
 };
