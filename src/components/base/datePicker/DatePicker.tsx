@@ -1,6 +1,12 @@
 "use client";
 
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import DateSelector from "./DateSelector";
 
 //TODO Move to icon service
@@ -45,7 +51,11 @@ export default function DatePicker(props: DatePickerProps) {
   }, [date]);
 
   useEffect(() => {
-    const newDate = new Date(inputDate.year, inputDate.month - 1, inputDate.day);
+    const newDate = new Date(
+      inputDate.year,
+      inputDate.month - 1,
+      inputDate.day
+    );
 
     const monthsAreEqual = newDate.getMonth() === inputDate.month - 1;
     const daysAreEqual = newDate.getDate() == inputDate.day;
@@ -92,7 +102,13 @@ export default function DatePicker(props: DatePickerProps) {
 
   useEffect(() => {
     if (showDialog) {
-      showModal(<DateSelector setParentDate={setDate} setShowDialog={setShowDialog} />);
+      showModal(
+        <DateSelector
+          date={date}
+          setParentDate={setDate}
+          setShowDialog={setShowDialog}
+        />
+      );
     } else {
       closeModal();
     }
@@ -129,7 +145,10 @@ export default function DatePicker(props: DatePickerProps) {
             value={inputDate.year}
             onChange={handleDateChange}
           />
-          <button className="dp-button-black" onClick={() => setShowDialog(!showDialog)}>
+          <button
+            className="dp-button-black"
+            onClick={() => setShowDialog(!showDialog)}
+          >
             <FaCalendar />
           </button>
         </div>

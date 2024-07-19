@@ -25,6 +25,7 @@
     border-radius: 12px;
     position: relative;
     grid-area: t;
+    box-shadow: 0 0 2rem $black;
 
     .rt-tab {
       font-weight: 700;
@@ -63,66 +64,82 @@
     gap: 1rem;
   }
 
-  .graph-controls {
-    @include flex;
+  // .graph-controls {
+  //   @include flex;
+  //   gap: 2rem;
+  //   grid-area: c;
+
+  //   .control-container {
+  //     @include flex-col();
+  //     align-items: center;
+  //     gap: 0.25rem;
+
+  //     label {
+  //       padding: 0 0.5rem;
+  //     }
+
+  //     .fitness-counter {
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: space-between;
+  //       height: 70px;
+  //       width: 150px;
+  //       box-shadow: 0 0 2rem $black;
+
+  //       .value {
+  //         @include basic-border;
+  //         height: 100%;
+  //         width: 100%;
+  //         justify-content: center;
+  //         font-size: 2rem;
+  //         display: inline-flex;
+  //         align-items: center;
+  //         color: $tertiary;
+  //       }
+
+  //       .button-container {
+  //         @include text-lg;
+  //         display: flex;
+  //         flex-direction: column;
+  //         height: 100%;
+  //         width: 70%;
+
+  //         button {
+  //           @include button-lite;
+  //           @include basic-border;
+
+  //           display: inline-flex;
+  //           align-items: center;
+  //           height: 100%;
+
+  //           &.plus {
+  //             border-top-right-radius: 12px;
+  //             border-bottom-right-radius: 12px;
+  //           }
+
+  //           &.minus {
+  //             border-top-left-radius: 12px;
+  //             border-bottom-left-radius: 12px;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  .date-pickers-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
-    grid-area: c;
+.dp-wrapper{
+  min-width: 150px;
+  .dp-input{
+    padding: 0;
+  }
+}
 
-    .control-container {
-      @include flex-col();
-      align-items: center;
-      gap: 0.25rem;
-
-      label {
-        padding: 0 0.5rem;
-      }
-
-      .fitness-counter {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 50px;
-        width: 150px;
-
-        .value {
-          @include basic-border;
-          height: 100%;
-          width: 100%;
-          justify-content: center;
-          font-size: 2rem;
-          display: inline-flex;
-          align-items: center;
-          color: $tertiary;
-        }
-
-        .button-container {
-          @include text-lg;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          width: 60%;
-
-          button {
-            @include button-lite;
-            @include basic-border;
-
-            display: inline-flex;
-            align-items: center;
-            height: 100%;
-
-            &.plus {
-              border-top-right-radius: 12px;
-              border-bottom-right-radius: 12px;
-            }
-
-            &.minus {
-              border-top-left-radius: 12px;
-              border-bottom-left-radius: 12px;
-            }
-          }
-        }
-      }
-    }
   }
 
   .graph-container {
@@ -131,13 +148,12 @@
     scrollbar-width: thin;
     overflow-y: scroll;
     grid-area: g;
-    box-shadow: 0 0 12px $black;
+    box-shadow: 0 0 2rem $black;
 
     .graph {
       display: grid;
       width: 100%;
       height: 100%;
-
 
       grid-template-areas:
         ". X"
@@ -168,7 +184,6 @@
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         height: 100%;
-        background: $white;
 
         .bar-container {
           @include basic-border;
@@ -179,13 +194,11 @@
           flex-direction: column;
           justify-content: space-between;
           padding: 0.25rem 0;
-          
 
           .date {
-            color: $black;
+            color: $white;
             text-align: end;
             padding-right: 0.5rem;
-            position: absolute;
             right: 0;
           }
 
@@ -194,7 +207,6 @@
             display: flex;
             gap: 0.25rem;
 
-
             .bar-value {
               width: var(--bar-height);
               display: flex;
@@ -202,15 +214,19 @@
               align-items: center;
 
               &.distance {
-                background: rgba(76, 73, 230, 0.454);
+                background: $accent-orange-default;
               }
 
               &.heartRate {
-                background: rgb(218, 99, 99);
+                background: $accent-red-default;
               }
 
               &.stepCount {
-                background: rgb(63, 123, 63);
+                background: $accent-green-default;
+              }
+
+              .label {
+                color: $black;
               }
             }
           }

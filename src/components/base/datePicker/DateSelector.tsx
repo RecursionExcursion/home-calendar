@@ -12,12 +12,13 @@ import { MonthSelectorButton } from "./MonthSelectorButton";
 type DateSelectorProps = {
   setParentDate: Dispatch<SetStateAction<Date>>;
   setShowDialog: Dispatch<SetStateAction<boolean>>;
+  date: Date;
 };
 
 export default function DateSelector(props: DateSelectorProps) {
-  const { setParentDate, setShowDialog } = props;
+  const { setParentDate, setShowDialog, date: dateProp } = props;
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(dateProp);
   const monthName = `${getFullMonthName(date)} ${date.getFullYear()}`;
 
   const firstOnCalender = getFirstOnCalender(date);
@@ -32,6 +33,7 @@ export default function DateSelector(props: DateSelectorProps) {
         <DateSelectorCell
           key={i}
           date={date}
+          selectedDate={dateProp}
           setter={setParentDate}
           setShowDialog={setShowDialog}
         />

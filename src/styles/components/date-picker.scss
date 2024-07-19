@@ -89,6 +89,11 @@ $border-curve: 10px;
       @extend .ds-cell;
       background-color: $ds-green;
     }
+
+    &-selected {
+      @extend .ds-cell;
+      background-color: $aqua-shade-4;
+    }
   }
 
   &-month {

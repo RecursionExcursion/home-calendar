@@ -3,7 +3,7 @@
 import { useState } from "react";
 import FileInput from "./FileInput";
 import { Fitness, RunnningWorkout } from "@/types/fitness";
-import { GraphControls } from "./graphComponents/GraphControls";
+// import { GraphControls } from "./graphComponents/GraphControls";
 import { ControlState } from "./types";
 import { createGraphParams } from "./util";
 import Graph from "./graphComponents/Graph";
@@ -12,6 +12,7 @@ import useRadioTabs from "@/hooks/useRadioTabs";
 import { getFitnessData } from "@/service/fitnessService";
 import { useUserContext } from "@/contexts";
 import Counter from "./graphComponents/Counter";
+import DateRangePicker from "../base/DateRangePicker";
 
 type FitnessParentProps = {
   fitnessData: string;
@@ -26,11 +27,19 @@ const FitnessParent = ({ fitnessData }: FitnessParentProps) => {
   const [slice, setSlice] = useState(7);
   const [divisor, setDivisor] = useState(5);
 
+  const todaysDate = new Date();
+  const oneMonthAgo = new Date(todaysDate);
+  oneMonthAgo.setMonth(todaysDate.getMonth() - 1);
+
+  const [startDate, setStartDate] = useState(oneMonthAgo);
+  const [endDate, setEndDate] = useState(todaysDate);
+
   const controlState: ControlState = {
-    slice,
-    setSlice,
-    divisor,
-    setDivisor,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    divisor
   };
 
   const tabs = [
@@ -72,17 +81,22 @@ type ShowGraphProps = {
 
 const ShowGraph = (props: ShowGraphProps) => {
   const { controlState, data } = props;
-  const { divisor, slice } = controlState;
+  const { startDate, setStartDate, endDate, setEndDate, divisor } = controlState;
 
   const { slicedData, y_ceiling } = createGraphParams({
-    slice,
-    divisor,
     data,
+    divisor,
+    startDate,
+    endDate
   });
 
   return (
     <>
-      <GraphControls {...controlState} />
+      {/* <GraphControls {...controlState} /> */}
+      <DateRangePicker
+        startDate={{ date: startDate, setDate: setStartDate }}
+        endDate={{ date: endDate, setDate: setEndDate }}
+      />
       <WorkoutMetrics data={slicedData} />
       <Graph data={slicedData} divisor={divisor} ceilings={y_ceiling} />
     </>

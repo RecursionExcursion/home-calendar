@@ -1,11 +1,12 @@
 import { v4 as uuidV4 } from "uuid";
 import { RunnningWorkout } from "@/types/fitness";
 import { FitnessGraphParams } from "./types";
+import { changeDate } from "@/lib/dateTimeUtil";
 
 export const createGraphParams = (params: FitnessGraphParams) => {
-  const { divisor, data, slice } = params;
+  const { divisor, data, startDate, endDate } = params;
 
-  const slicedData = sortAndSliceData(data, slice);
+  const slicedData = sortAndSliceData(data, startDate, endDate);
 
   const foo = (parser: (run: RunnningWorkout) => number) => {
     const maxDistance = slicedData
@@ -52,7 +53,11 @@ export const createGraphParams = (params: FitnessGraphParams) => {
   };
 };
 
-const sortAndSliceData = (data: RunnningWorkout[], slice: number) => {
+const sortAndSliceData = (
+  data: RunnningWorkout[],
+  startDate: Date,
+  endDate: Date
+) => {
   const sortedData = data?.sort((a, b) => {
     if (!a.date || !b.date) {
       return 0;
@@ -62,9 +67,15 @@ const sortAndSliceData = (data: RunnningWorkout[], slice: number) => {
     return aDate.getTime() - bDate.getTime();
   });
 
-  const startIndex = sortedData.length - slice;
 
-  return sortedData?.slice(startIndex);
+  const filteredData = sortedData.filter((workout) => {
+    if (workout.date) {
+      const workoutDate = new Date(workout.date);
+      return workoutDate >= startDate && workoutDate < changeDate( endDate, 1, "day");
+    }
+  });
+
+  return filteredData;
 };
 
 export const createWorkoutMetrics = (slicedData: RunnningWorkout[]) => {
@@ -73,16 +84,16 @@ export const createWorkoutMetrics = (slicedData: RunnningWorkout[]) => {
     .reduce((a, b) => a + b, 0);
 
   const distanceUnits = slicedData[0].distance?.unit ?? "Unknown";
-  
+
   const totalSteps = slicedData
-  .map((data) => parseInt(data.stepCount?.sum ?? "0"))
-  .reduce((a, b) => a + b, 0);
-  
+    .map((data) => parseInt(data.stepCount?.sum ?? "0"))
+    .reduce((a, b) => a + b, 0);
+
   const averageHeartRate =
-  slicedData
-  .map((data) => parseInt(data.heartRate?.average ?? "0"))
-  .reduce((a, b) => a + b, 0) / slicedData.length;
-  
+    slicedData
+      .map((data) => parseInt(data.heartRate?.average ?? "0"))
+      .reduce((a, b) => a + b, 0) / slicedData.length;
+
   return {
     totalDistance,
     distanceUnits,
